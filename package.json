@@ -1,0 +1,28 @@
+{
+  "name": "z-h-c",
+  "version": "1.0.0",
+  "description": "Simple game that pits zombies against cyborgs in an epic struggle to claim their human-held prize... BRAINS!  Food for thought: Fresh brains are what both of these monsters need to survive in this post-apocolyptic world. Players have a front row seat is this battle of the brains.  Unfortunately, as a player, your brain is on the menu.  We may have cured every disease and even eradicated death itself, but who knew that we'd lose our humanity in the process.  There are worse things than dying, and living happens to be one of them.  Good Luck, Back-up to our Back-up!  You're gonna need it!",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ThoughtFool/Z-H-C.git"
+  },
+  "author": "Heyou ThoughtFool",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/ThoughtFool/Z-H-C/issues"
+  },
+  "homepage": "https://github.com/ThoughtFool/Z-H-C#readme",
+  "dependencies": {
+    "ejs": "^2.7.1",
+    "express": "^4.17.1",
+    "express-ejs-layouts": "^2.5.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.4"
+  }
+}
