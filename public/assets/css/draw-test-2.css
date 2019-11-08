@@ -1,0 +1,295 @@
+body {
+    color: white;
+    background-image: linear-gradient(to bottom right, rgb(121, 19, 180), rgb(231, 63, 253));
+}
+
+.btn {
+    background-image: linear-gradient(to top right, rgb(10, 184, 228), rgb(204, 86, 219));
+    border: none;
+    width: 25%;
+    color: white;
+    padding: 15px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    margin: 4px 2px;
+    border-radius: 15px 50px 30px 5px;
+}
+
+.cryo-lab-wrapper {
+    background-image: url("../images/Cryo-Wars-lab.png");
+    width: 100vw;
+    height: 100vh;
+    text-align: center;
+    background-repeat: no-repeat;
+    background-size: 100vw 100vh;
+}
+
+.mission-control-panel {
+    display: inline-block;
+    border-radius: 25px;
+    background-color: rgba(128, 0, 128, 0.301);
+    opacity: 0.25;
+    filter: alpha(opacity=25); /* For IE8 and earlier */    
+    padding: 10px;
+    width: 75%;
+    height: 75%;
+    filter: blur(15px);
+}
+
+.mission-control-panel:hover {
+    opacity: .85;
+    box-shadow: 0 0 30px rgba(128, 0, 128, 0.377);
+    z-index: -1;
+    filter: blur(0px);
+}
+
+/* .mission-control-panel:before {
+
+} */
+
+.mission-control-panel:after {
+    border: 10px solid purple;
+    box-shadow: 0 0 20px purple;
+    z-index: -1;
+    filter: blur(15px);
+}
+
+.main-screen {
+    border-radius: 10px;
+    background-color: silver;
+    padding: 5px 15px 10px 5px;
+    width: 95%;
+    height: 95%;
+    margin: 10px;
+    float: left;
+}
+
+.game-screen {
+    background-color: rgba(255, 255, 255, 0.781);
+    width: 60%;
+    height: 95%;
+    margin: 10px;
+    float: left;
+    text-align: center;
+    border-radius: 15px;
+}
+
+.big-screen-1 {
+    border-radius: 15px;
+    background-color: rgba(0, 0, 0, 0.774);
+    width: 75%;
+    margin: auto;
+    float: left;
+    height: 0;
+    padding: 3px;
+    padding-bottom: 75%;
+    /* position: relative; */
+    text-align: center;
+}
+
+#board-holder {
+    margin: auto;
+    width: 80%;
+    border-radius: 5px;
+    padding-bottom: 80%;
+    margin: 2px;
+}
+
+.dyna-square {
+    position: relative;
+    width: 50%;
+    background-image: linear-gradient(to top right, rgb(121, 76, 243), rgb(64, 219, 240));
+    border: 3px solid #000;
+    border-radius: 15px;
+}
+
+.dyna-square:after {
+    content: "";
+    display: block;
+    padding-bottom: 100%;
+    border-radius: 15%;
+}
+
+.dyna-square:hover {
+    background-image: linear-gradient(to top right, rgb(64, 219, 240), rgb(22, 5, 70));
+}
+
+.dyna-square-content {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+
+.circle-shape {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 95%;
+    position: relative;
+}
+
+.holding {
+    background-color: #ffffe28f;
+    border: 3px solid #f1224481;
+    border-radius: 5px;
+}
+
+.health-score {
+    background-image: linear-gradient(to top right, rgb(40, 193, 253), rgb(221, 107, 221));
+    width: 25%;
+    height: 25%;
+    position: absolute;
+    text-align: center;
+    z-index: 99;
+    transform: initial;
+    top: 0;
+    right: 0;
+    border-radius: 1px 1px 1px 50%;
+}
+
+/* RIGHT-SIDE */
+
+.small-screen-holder {
+    border-radius: 15px;
+    background-color: white;
+    width: 30%;
+    height: 95%;
+    margin: 10px 5px 10px 0px;
+    float: right;
+}
+
+.small-screen-1 {
+    border-radius: 15px;
+    background-color: #000;
+    width: 90%;
+    height: 85%;
+    margin: 5% 5% 5% 5%;
+    float: left;
+}
+
+#hazmat {
+    background-image: url("../images/hazmat.png");
+}
+
+.status-bar {
+    border-radius: 15px;
+    background-color: rgb(15, 235, 15);
+    text-align: center;
+    width: 90%;
+    height: 5%;
+    margin: 5% 5% 0% 5%;
+    float: right;
+}
+
+.status-lite {
+    border-radius: 50%;
+    width: 30%;
+    height: 3px;
+    width: 3px;
+    float: left;
+}
+
+#alert-1 {
+    background-image: cross-fade(red yellow);
+}
+
+#alert-2 {
+    background-image: cross-fade(yellow blue);
+}
+
+#alert-3 {
+    background-image: cross-fade(yellow blue);
+}
+
+.bulb {
+    border-radius: 45%;
+    height: 75%;
+    width: 100%;
+    float: left;
+}
+
+#red-bulb {
+    background-color: red;
+}
+
+#yellow-bulb {
+    background-color: yellow;
+}
+
+#blue-bulb {
+    background-color: blue;
+}
+
+#purple-bulb {
+    background-color: purple;
+}
+
+.bulb-outlet-holder {
+    background-color: rgba(128, 0, 128, 0.301);
+    /* background-color: gray; */
+    height: 30%;
+    width: 100%;
+    border-radius: 5px 5px 5px 5px;
+    float: left;
+}
+
+.bulb-pack {
+    margin: 0 0 0 10%;
+    height: 100%;
+    width: 5%;
+    float: left;
+}
+
+#test-nums {
+    border: none;
+    padding: 15px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 15px 50px 30px 5px;
+}
+
+.light-array {
+    padding: 10% 0 0 10%;
+    height: 10vh;
+    width: 100vw;
+}
+
+.pawn-lites {
+    border-radius: 15px;
+    background-color: white;
+    width: 5%;
+    height: 95%;
+    margin: 10px 5px;
+    float: left;
+}
+
+.pawn-lites {
+    text-align: center;
+}
+
+.lite {
+    /* display: inline-block; */
+    margin-top: 50%;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    float: left;
+}
+
+#red-lite {
+    background-color: red;
+}
+
+#yellow-lite {
+    background-color: yellow;
+}
+
+#blue-lite {
+    background-color: blue;
+}
+
+#purple-lite {
+    background-color: purple;
+}

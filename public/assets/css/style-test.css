@@ -1,0 +1,86 @@
+.main-row {
+    background-image: linear-gradient(to top right, gray, blue);
+    width: 1024px;
+}
+
+.pawn-type-lites {
+    background-color: aquamarine;
+}
+
+.control-panel-lights {
+    height: 120px;
+    width: 1024px;
+    background-color: blueviolet;
+}
+
+#human-count {
+    background-color: blue;
+}
+
+.board-holder {
+    margin: auto;
+    width: 25%;
+    padding: 10px;
+}
+
+div {
+    border: 1px solid gray;
+}
+
+.speaker-panel {
+    position: relative;
+    height: 0;
+    width: 100%;
+    padding-bottom: 100%;
+    background-image: radial-gradient(red, silver);
+}
+
+#speaker {
+    margin: auto;
+    position: absolute;
+    height: 0;
+    width: 100%;
+    padding-bottom: 100%;
+    background-image: radial-gradient(black, silver);
+    border-radius: 50%;
+    border: black dashed 2px;
+}
+
+.panel-buttons {
+    position: relative;
+}
+
+.btn-holder {
+    position: relative;
+    height: 0;
+    width: 33%;
+    padding-bottom: 33%;
+}
+
+.tri-btn {
+    position: absolute;
+    margin-left: 0px;
+    height: 0;
+    width: 75%;
+    padding-bottom: 75%;
+    border-radius: 50%;
+}
+
+.round {
+    border-radius: 50%;
+}
+
+#red-lite {
+    height: 33%;
+    background-image: radial-gradient(red, silver);
+}
+
+#yellow-lite {
+    height: 33%;
+    background-image: radial-gradient(yellow, silver);
+}
+
+#blue-lite {
+    height: 33%;
+    background-image: radial-gradient(blue, silver);
+}

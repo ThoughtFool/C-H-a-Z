@@ -5,6 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
+    "build": "webpack",
     "dev": "nodemon server.js"
   },
   "repository": {
@@ -20,7 +21,9 @@
   "dependencies": {
     "ejs": "^2.7.1",
     "express": "^4.17.1",
-    "express-ejs-layouts": "^2.5.0"
+    "express-ejs-layouts": "^2.5.0",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10"
   },
   "devDependencies": {
     "nodemon": "^1.19.4"
