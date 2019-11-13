@@ -45,7 +45,7 @@ module.exports = checkPawnStatus = function () {
             console.log(`${humanPawnSpawn[i].id} is beyond the reach of the NANITES... ${humanPawnSpawn[i].id} has been eliminated!`);
         
         } else {
-            console.log("an calculation error has occurred");
+            console.log("a calculation error has occurred");
         };
     };
     // health = +10;

@@ -105,5 +105,8 @@ module.exports = friendOrFoe = function (homeSquare_ID, adjacentSquaresArr) {
         } else {
             console.log(`destination space: ${destinationID} is out of the playable area`);
         };
+
+        // weightedMove = require("./weightedMove");
+        // weightedMove(enemyId, adjacentSquaresArr);
     };
 };
