@@ -5,7 +5,6 @@ body {
 .cryo-lab-wrapper {
     /* background-image: url("../images/ZHC-Lab-3.png"); */
     background-image: url("../images/Cryo-Wars-lab.png");
-    
     width: 100vw;
     height: 100vh;
     text-align: center;
@@ -16,28 +15,20 @@ body {
 .mission-control-panel {
     display: inline-block;
     border-radius: 25px;
-    background-color: gray;
-    opacity: 0.25;
-    filter: alpha(opacity=25);
-    /* For IE8 and earlier */
+    background-color: rgba(64, 219, 240, 0.774);
     padding: 10px;
-    width: 75%;
-    height: 75%;
+    width: 75vw;
+    height: 75vh;
     filter: blur(15px);
 }
 
 .mission-control-panel {
-/* .mission-control-panel:hover { */
-        opacity: .85;
-        /* border: 10px solid purple; */
-        box-shadow: 0 0 30px purple;
-        z-index: -1;
-        filter: blur(0px);
-    }
-
-/* .mission-control-panel:before {
-
-} */
+    /* .mission-control-panel:hover { */
+    opacity: .85;
+    box-shadow: 0 0 30px purple;
+    z-index: -1;
+    filter: blur(0px);
+}
 
 .mission-control-panel:after {
     border: 10px solid purple;
@@ -47,20 +38,18 @@ body {
 }
 
 .light-array {
-    /*   background-color: yellow; */
     padding: 10% 0 0 10%;
     height: 10vh;
     width: 100vw;
 }
 
 .main-screen {
-    /*   border-radius: 10% 10% 2% 2%; */
     border-radius: 10px;
     background-color: silver;
-    padding: 5px 15px 10px 5px;
+    padding: 0px 15px 15px 5px;
     width: 95%;
-    height: 85%;
-    margin: 10px;
+    height: 95%;
+    margin: 15px;
     float: left;
 }
 
@@ -81,23 +70,11 @@ body {
   position: absolute;
 } */
 
-/* .game-screen {
-    background-color: white;
-    width: 60%;
-    height: 95%;
-    margin: 10px; */
-    /*   display: block; */
-    /* float: left;
-    text-align: center;
-    border-radius: 15px;
-} */
-
 .game-screen {
-    background-color: white;
-    width: 50%;
-    height: 100%;
+    background-color: rgba(255, 255, 255, 0.418);
+    width: 60vw;
+    height: 95%;
     margin: 10px;
-    /*   display: block; */
     float: left;
     text-align: center;
     border-radius: 15px;
@@ -109,7 +86,6 @@ body {
     width: 30%;
     height: 95%;
     margin: 10px 5px 10px 0px;
-    /*   display: block; */
     float: right;
 }
 
@@ -124,7 +100,6 @@ body {
 
 .small-screen-2 {
     border-radius: 15px;
-    /* background-color: #000; */
     width: 90%;
     height: 0%;
     margin: 5% 5% 0% 5%;
@@ -143,16 +118,14 @@ body {
 .big-screen-1 {
     border-radius: 15px;
     background-color: #000;
-    width: 75%;
+    width: 60%;
     margin: auto;
-    /* height: 75%; */
-    /* margin: 5% 5% 0% 5%; */
+    margin-top: 0px;
     float: left;
-    height: 0;
+    height: 95%;
     padding: 3%;
-    padding-bottom: 75%; 
+    padding-bottom: 60%;
     position: relative;
-    /* width: 25% what is width based on? */
     text-align: center;
     display: inline-block;
 
@@ -164,7 +137,6 @@ body {
 
 .lite {
     display: inline-block;
-    /*    margin: 5% 5% 0% 5%; */
     margin-top: 50%;
     width: 25px;
     height: 25px;
@@ -188,14 +160,10 @@ body {
 }
 
 .bulb {
-    /*   border-radius: 25px 25px 25px 25px; */
     border-radius: 45%;
-    /*   margin: 5% 0 0 5%; */
     height: 75%;
     width: 100%;
     float: left;
-    /*   position: absolute; */
-    /*   top: -20px; */
 }
 
 #red-bulb {
@@ -215,40 +183,34 @@ body {
 }
 
 .bulb-outlet-holder {
-    /*   margin: 0 0 0 5%; */
-    /*   margin-bottom: 0px; */
     background-color: gray;
     height: 30%;
     width: 100%;
     border-radius: 5px 5px 5px 5px;
     float: left;
-    /*   position: relative; */
 }
 
 .bulb-pack {
     margin: 0 0 0 10%;
-    /*   backround-color: purple; */
     height: 100%;
     width: 5%;
     float: left;
 }
 
 body {
-    /* max-height: 100vh; */
+    max-height: 100vh;
     color: white;
     background-image: linear-gradient(to bottom right, rgb(121, 19, 180), rgb(231, 63, 253));
 }
 
 .btn {
     background-image: linear-gradient(to top right, rgb(10, 184, 228), rgb(204, 86, 219));
-    /* background-color: #4CAF50; */
     border: none;
     width: 25%;
     color: white;
     padding: 15px;
     text-align: center;
     text-decoration: none;
-    /* display: inline-block; */
     font-size: 16px;
     margin: 4px 2px;
     border-radius: 15px 50px 30px 5px;
@@ -269,29 +231,18 @@ body {
 }
 
 #board-holder {
-    /* background: rgba(214, 214, 214, 0.438); */
-    /* background-image: linear-gradient(to top right, rgba(162, 133, 250, 0.61), rgba(116, 224, 238, 0.431)); */
-    /* width: 50vw;
-    height: 50vw; */
     margin: auto;
     width: 80%;
-    /* padding: 100%; */
     border-radius: 5px;
-    /* width: 100%; */
     /* height: aspect-ratio(16/9); */
-    /* min-height: 50rem; */
     padding-bottom: 80%;
-    /* transform: translate(-50%, -50%); */
-    /* position: relative; */
+    position: relative;
 }
 
 .dyna-square {
-    /* min-width: 25px;
-    min-height: 25px; */
     position: relative;
     width: 50%;
     background-image: linear-gradient(to top right, rgb(121, 76, 243), rgb(64, 219, 240));
-    /* background-color: blue; */
     border: 3px solid #000;
     border-radius: 15px;
 }
@@ -304,7 +255,6 @@ body {
 }
 
 .dyna-square:hover {
-    /* background-color: aqua; */
     background-image: linear-gradient(to top right, rgb(64, 219, 240), rgb(22, 5, 70));
 }
 
@@ -321,19 +271,6 @@ body {
     margin-right: auto;
     width: 95%;
     position: relative;
-    /* height: 25px;
-    width: 25px; */
-    /* height: 50%;
-    width: 50%; */
-    /* background-color: rgb(90, 252, 90); */
-    /* border-radius: 50%; */
-    /* display: inherit; */
-    /* display: inline-block; */
-
-    /* background-image: url("../images/human-pawn.png");
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-position: center; */
 }
 
 .holding {
@@ -342,16 +279,10 @@ body {
     border-radius: 5px;
 }
 
-/* .empty-health {
-
-} */
 .health-score {
-    /* background-color: #f70930c2; */
     background-image: linear-gradient(to top right, rgb(40, 193, 253), rgb(221, 107, 221));
-
     width: 25%;
     height: 25%;
-    /* font-size: auto; */
     position: absolute;
     text-align: center;
     z-index: 99;
@@ -359,5 +290,4 @@ body {
     top: 0;
     right: 0;
     border-radius: 1px 1px 1px 50%;
-    /* border-radius: 50%; */
 }

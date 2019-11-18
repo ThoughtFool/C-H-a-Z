@@ -12,13 +12,12 @@ module.exports = adjacentSpaces = function (location) {
 
     adjacentSpaceArray = [];
 
+    console.log("location");
     console.log(location);
 
     x_Loc = parseInt(location[0]);
     y_Loc = parseInt(location[1]);
 
-    // for (let i = 0; i <= 6; i++) {
-    // adjacentSpaceArray.push({
     adjacentSpaceArray = {
         x: [
             x_Loc + 0,
@@ -31,10 +30,6 @@ module.exports = adjacentSpaces = function (location) {
             y_Loc - 1
         ]
     };
-    // console.log(adjacentSpaceArray);
-    // console.log(adjacentSpaceArray.x[0]);
-    // console.log(adjacentSpaceArray.x[2]);
-    // };
 
     for (let i = 0; i < 3; i++) {
         coord_x = adjacentSpaceArray.x[i]; // ???
