@@ -22,7 +22,7 @@ createSpaces = function (totSquares) {
     return boardSpaces;
 };
 
-gameBoard = createSpaces(121);
+gameBoard = createSpaces(25);
 
 const enemyMoves = function (homeSpace, destin) {
     console.log("enemyMoves function fires");
@@ -40,8 +40,8 @@ const enemyMoves = function (homeSpace, destin) {
         ////////////////////////////////////need define:
         adjArr = adjacentSpaces(homeSpace);
         // costHolder = 0;
-        console.log("adjArr");
-        console.log(adjArr);
+        // console.log("adjArr");
+        // console.log(adjArr);
         last_Diff = null;
         last_Arr = null;
 
@@ -51,8 +51,8 @@ const enemyMoves = function (homeSpace, destin) {
             current_Array = [
                 adjArr[i][0], adjArr[i][1]
             ];
-            console.log("current_Array =");
-            console.log(current_Array);
+            // console.log("current_Array:");
+            // console.log(current_Array);
 
             main_Diff = [
                 destin[0] - homeSpace[0],
@@ -63,17 +63,17 @@ const enemyMoves = function (homeSpace, destin) {
                 destin[0] - current_Array[0],
                 destin[1] - current_Array[1]
             ];            
-            console.log("current_Diff =");
-            console.log(current_Diff);
+            // console.log("current_Diff:");
+            // console.log(current_Diff);
 
             if (last_Diff == null) {
                 last_Diff = main_Diff;
-                console.log(last_Diff);
+                // console.log(last_Diff);
             };
 
             if (last_Arr == null) {
                 last_Arr = homeSpace;
-                console.log(last_Arr);
+                // console.log(last_Arr);
             };
 
             if (destin[0] === current_Array[0] && destin[1] === current_Array[1]) {
@@ -87,20 +87,20 @@ const enemyMoves = function (homeSpace, destin) {
                 if (current_Diff[0] >= last_Diff[0] && current_Diff[1] >= last_Diff[1]) {
                     console.log("current_Diff: GREATER than");
 
-                    console.log("current_Diff");
-                    console.log(current_Diff);
-                    console.log("last_Diff");
-                    console.log(last_Diff);
-                    console.log("current_Array:");
-                    console.log(current_Array);
-                    console.log("last_Arr:");
-                    console.log(last_Arr);
+                    // console.log("current_Diff");
+                    // console.log(current_Diff);
+                    // console.log("last_Diff");
+                    // console.log(last_Diff);
+                    // console.log("current_Array:");
+                    // console.log(current_Array);
+                    // console.log("last_Arr:");
+                    // console.log(last_Arr);
 
                     last_Diff = current_Diff;
                     last_Arr = current_Array;
 
-                    console.log("last_Arr (after):");
-                    console.log(last_Arr);
+                    // console.log("last_Arr (after):");
+                    // console.log(last_Arr);
                 } else {
                     console.log("else...");
                     last_Diff = last_Diff;
@@ -113,20 +113,20 @@ const enemyMoves = function (homeSpace, destin) {
                 if (current_Diff[0] <= last_Diff[0] && current_Diff[1] <= last_Diff[1]) {
                     console.log("current_Diff: LESSER than");
 
-                    console.log("current_Diff");
-                    console.log(current_Diff);
-                    console.log("last_Diff");
-                    console.log(last_Diff);
-                    console.log("current_Array:");
-                    console.log(current_Array);
-                    console.log("last_Arr:");
-                    console.log(last_Arr);
+                    // console.log("current_Diff");
+                    // console.log(current_Diff);
+                    // console.log("last_Diff");
+                    // console.log(last_Diff);
+                    // console.log("current_Array:");
+                    // console.log(current_Array);
+                    // console.log("last_Arr:");
+                    // console.log(last_Arr);
 
                     last_Diff = current_Diff;
                     last_Arr = current_Array;
 
-                    console.log("last_Arr (after):");
-                    console.log(last_Arr);
+                    // console.log("last_Arr (after):");
+                    // console.log(last_Arr);
                 } else {
                     console.log("else...");
                     last_Diff = last_Diff;
@@ -137,9 +137,7 @@ const enemyMoves = function (homeSpace, destin) {
         movesMade.push(last_Arr);
         enemyMoves(last_Arr, destin, last_Diff);
     };
-    console.log("movesMade");
-    console.log(movesMade);
-
+    return movesMade;
 };
 
 adjacentSpaces = function (location) {
@@ -200,5 +198,9 @@ adjacentSpaces = function (location) {
 };
 
 // adjacentSpaces(gameBoard[0]);
-console.log(gameBoard[0], gameBoard[8]);
-enemyMoves(gameBoard[0], gameBoard[8]);
+console.log(gameBoard[8], gameBoard[0]);
+movesArray = enemyMoves(gameBoard[24], gameBoard[0]);
+console.log("movesArray");
+console.log(movesArray);
+// console.log(gameBoard[0], gameBoard[8]);
+// enemyMoves(gameBoard[0], gameBoard[8]);

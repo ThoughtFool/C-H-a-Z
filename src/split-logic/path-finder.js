@@ -1,80 +1,16 @@
-pathFinder = function (coordArrStart, coordArrEnd) {
-    coordArrStart = ;
-    coordArrEnd = destin;
-    // for (let i = 0; i < adjArr.length; i++) {
-        currentCostArr = [
-            // adjArr[i][0], adjArr[i][1]
-            coordArrStart[0], coordArrStart[1]
-        ];
-        currentCostDiff = [
-                    destin[0] - currentCostArr[0],
-                    destin[1] - currentCostArr[1]
-                ];
-        
-    // };
+// module.exports = 
+// adjacentArray function runs and calls enemy moves while a condition is true?
+// starts with enemyMoves function and then calls adjacentArray every time until condition is met?
 
-    if (currentCostDiff[0] > 0 && currentCostDiff[1] > 0) {
-        
-    } else if (currentCostDiff[0] < 0 && currentCostDiff[1] < 0) {
+const adjacentSquares = [];
+const adjacentSpacesHolder = [];
+const firstSquare = {};
+firstSquare.x = 1;
+firstSquare.y = 1;
 
-    };
-    
-    if (destin[0] === currentCostArr[0] && destin[1] === currentCostArr[1]) {
-        console.log("Done!");
-        costArr = currentCostArr;
-        break;
+const movesMade = [];
 
-    } else if (currentCostDiff[0] != 0 && currentCostDiff[1] != 0) {
-        console.log("!= 0");
-    } else {
-
-        if (currentCostDiff[0] < 0 && currentCostDiff[1] < 0) {
-            // currentCostDiff = [
-            //     currentCostDiff[0] - currentCostArr[0],
-            //     currentCostDiff[1] - currentCostArr[1]
-            // ];
-
-        } else if (currentCostDiff[0] < 0 && currentCostDiff[1] > 0) {
-            // currentCostDiff = [
-            //     currentCostDiff[0] - currentCostArr[0],
-            //     currentCostArr[1] - currentCostDiff[1]
-            // ];
-
-        } else if (currentCostDiff[0] > 0 && currentCostDiff[1] < 0) {
-            // currentCostDiff = [
-            //     currentCostArr[0] - currentCostDiff[0],
-            //     currentCostDiff[1] - currentCostArr[1],
-            // ];
-
-        } else if (currentCostDiff[0] > 0 && currentCostDiff[1] > 0) {
-            // currentCostDiff = [
-            //     currentCostArr[0] - destin[0],
-            //     currentCostArr[1] - destin[1]
-            // ];
-
-        } else {
-            console.log("error");
-
-        };
-
-        // currentCostDiff = (destin[0] - currentCostArr[0]) + (destin[1] - currentCostArr[1]); // && not equal to destin
-        if (currentCostDiff[0] <= lastCostDiff[0] && currentCostDiff[0] <= lastCostDiff[1]) {
-        } else if (currentCostDiff[0] > lastCostDiff[0] && currentCostDiff[0] > lastCostDiff[1]) {
-            console.log("currentCostDiff is less");
-            lastCostDiff = currentCostDiff;
-            costArr = currentCostArr;
-            // };
-            console.log("costArr:");
-            console.log(costArr);
-            // enemyMoves(costArr, destin);
-        };
-        movesMade.push(costArr);
-        // enemyMoves(costArr, destin);
-        console.log("movesMade");
-        console.log(movesMade);
-    };
-};
-
+// create the coords for dynamic game board:
 createSpaces = function (totSquares) {
     const squareRoot = Math.sqrt(totSquares);
     const boardSpaces = [];
@@ -86,6 +22,148 @@ createSpaces = function (totSquares) {
     return boardSpaces;
 };
 
-gameBoard = createSpaces(25);
-pathFinder([1, 1], [3, 4]);
-pathFinder([3, 4], [1, 1]);
+gameBoard = createSpaces(625);
+
+const enemyMoves = function (homeSpace, destin) {
+    console.log("enemyMoves function fires");
+    console.log("homeSpace");
+    console.log(homeSpace);
+    console.log("destin");
+    console.log(destin);
+
+    if (destin[0] === homeSpace[0] && destin[1] === homeSpace[1]) {
+        console.log("Congratulations, you've arrived!");
+    } else {
+
+        adjArr = adjacentSpaces(homeSpace);
+        last_Diff = null;
+        last_Arr = null;
+
+        for (let i = 0; i < adjArr.length; i++) {
+            current_Array = [
+                adjArr[i][0], adjArr[i][1]
+            ];
+
+            main_Diff = [
+                destin[0] - homeSpace[0],
+                destin[1] - homeSpace[1]
+            ];
+
+            current_Diff = [
+                destin[0] - current_Array[0],
+                destin[1] - current_Array[1]
+            ];
+
+            if (last_Diff == null) {
+                last_Diff = main_Diff;
+            };
+
+            if (last_Arr == null) {
+                last_Arr = homeSpace;
+            };
+
+            if (destin[0] === current_Array[0] && destin[1] === current_Array[1]) {
+                console.log("Done!");
+                last_Arr = current_Array;
+                break;
+
+                // negative difference:
+            } else if (current_Diff[0] < 0 || current_Diff[1] < 0) {
+                console.log(`negative current difference: ${current_Diff}, current_Array = ${current_Array}`);
+                if (current_Diff[0] >= last_Diff[0] && current_Diff[1] >= last_Diff[1]) {
+                    console.log("current_Diff: GREATER than");
+
+                    last_Diff = current_Diff;
+                    last_Arr = current_Array;
+
+                } else {
+                    console.log("else...");
+                    last_Diff = last_Diff;
+                    last_Arr = last_Arr;
+                };
+
+                // negative difference:
+            } else if (current_Diff[0] > 0 || current_Diff[1] > 0) {
+                console.log(`positive current difference: ${current_Diff}, current_Array = ${current_Array}`);
+                if (current_Diff[0] <= last_Diff[0] && current_Diff[1] <= last_Diff[1]) {
+                    console.log("current_Diff: LESSER than");
+
+                    last_Diff = current_Diff;
+                    last_Arr = current_Array;
+
+                } else {
+                    console.log("else...");
+                    last_Diff = last_Diff;
+                    last_Arr = last_Arr;
+                };
+            };
+        };
+        movesMade.push(last_Arr);
+        enemyMoves(last_Arr, destin, last_Diff);
+    };
+    return movesMade;
+};
+
+adjacentSpaces = function (location) {
+    const adjacentSquares = [];
+
+    // console.log("adjacentSpaces function fires");
+
+    adjacentSpaceObj = {};
+
+    // console.log("location");
+    // console.log(location);
+
+    x_Loc = parseInt(location[0]);
+    // console.log("x_Loc");
+    // console.log(x_Loc);
+
+    y_Loc = parseInt(location[1]);
+    // console.log("y_Loc");
+    // console.log(y_Loc);
+
+
+    adjacentSpaceObj = {
+        x: [
+            x_Loc + 0,
+            x_Loc + 1,
+            x_Loc - 1
+        ],
+        y: [
+            y_Loc + 0,
+            y_Loc + 1,
+            y_Loc - 1
+        ]
+    };
+
+    for (let i = 0; i < 3; i++) {
+        coord_x = adjacentSpaceObj.x[i]; // ???
+
+        for (let j = 0; j < 3; j++) {
+            coord_y = adjacentSpaceObj.y[j]; // ???
+            contentID = [coord_x, coord_y];
+            // contentID = `content-x${coord_x}-y${coord_y}`;
+            // console.log("contentID");
+            // console.log(contentID);
+            // console.log("location");
+            // console.log(location);
+            if (contentID[0] >= firstSquare.x && contentID[1] >= firstSquare.y) {
+                if (contentID[0] === location[0] && contentID[1] === location[1]) {
+                    // console.log(`homeSpace: ${contentID}`);
+                } else {
+                    // console.log(`${contentID} != ${location}`);
+                    adjacentSquares.push(contentID); // ???
+                };
+            };
+        };
+    };
+
+    return adjacentSquares;
+};
+
+// adjacentSpaces(gameBoard[0]);
+console.log(gameBoard[8], gameBoard[0]);
+// movesArray = enemyMoves(gameBoard[624], gameBoard[0]);
+movesArray = enemyMoves(gameBoard[0], gameBoard[624]);
+console.log("movesArray");
+console.log(movesArray);
