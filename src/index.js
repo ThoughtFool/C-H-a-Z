@@ -11,6 +11,20 @@ var endRoundBtn = document.getElementById("end-round");
 // set the local storage to client gameboard size:
 var getTestNum = document.getElementById("test-nums");
 var startBtn = document.getElementById("submit-test-num");
+var acc = document.getElementsByClassName("accordion");
+
+for (let i = 0; i < acc.length; i++) {
+    acc[i].addEventListener("click", function () {
+        this.classList.toggle("active");
+        var panel = this.nextElementSibling;
+        if (panel.style.maxHeight) {
+            panel.style.maxHeight = null;
+        } else {
+            panel.style.maxHeight = panel.scrollHeight + "px";
+        };
+    });
+};
+
 startBtn.addEventListener("click", function () {
     console.log("startBtn 'click' function fires");
 
@@ -60,11 +74,15 @@ randBtn.addEventListener("click", function () {
     } else {
         endRoundBtn.style.display = "block";
     };
+////////////////////////////////////////////////////////////////
+    
 
     // TODO: create a variable to be passed in as an argument (below is for testing ONLY):
     randomPlace(rootNum, rootNum - 1);
     // randomPlace(rootNum, rootNum - 1, "zombie");
     // randomPlace(rootNum, rootNum - 1, "cyborg");
+    dragAndDrop();
+
 });
 
 endRoundBtn.addEventListener("click", function () {
@@ -72,4 +90,4 @@ endRoundBtn.addEventListener("click", function () {
     endRound();
 });
 
-dragAndDrop();
+// dragAndDrop();

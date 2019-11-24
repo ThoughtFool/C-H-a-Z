@@ -1,7 +1,208 @@
-body {
+/* body {
     background-color: lightblue;
+} */
+
+
+:root {
+    --ctrl-panel: calc(100vw - 100vh);
+    --accordion-padding: 18px;
+    --side-panel-height: calc(100vh - calc(3 * var(--accordion-padding)));
 }
 
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+.main-wrapper {
+    display: flex;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+}
+
+.game-panel {
+    display: flex;
+    align-items: center;
+    height: 100vh;
+    width: 100vh;
+    box-shadow: inset 0 0 10px #000000;
+}
+
+.gameboard {
+    /* padding-top: 50px; */
+    padding-left: 2em;
+
+
+    height: 100%;
+    width: 100%;
+    background-color: rgba(108, 58, 245, 0.904);
+    box-shadow: inset 0 0 10px #5c0464;
+
+    /* background-image: cross-fade(rgba(117, 52, 238, 0.904), rgba(185, 57, 245, 0.884)); */
+}
+
+.gameboard::after {
+    box-shadow: 0 2 10 #444;
+}
+
+.control-panel {
+    display: flex;
+    align-items: center;
+    height: 100vh;
+    width: var(--ctrl-panel);
+}
+
+.drone-drops {
+    height: 100%;
+    width: 20%;
+    /* width: calc(100vh - (100vh * .20)); */
+    background-color: rgba(0, 0, 0, 0.884);
+    box-shadow: 5 2 15 inset rgb(61, 61, 54);
+}
+
+.game-menu {
+    height: 100%;
+    width: 80%;
+    background-color: rgba(64, 58, 97, 0.904);
+}
+
+.accordion {
+    background-color: rgb(124, 17, 247);
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    /* font-size: 15px; */
+    font-size: .5em;
+    box-shadow: 5 5 5 #ddd;
+    transition: 0.4s;
+}
+
+.active,
+.accordion:hover {
+    background-color: rgb(211, 15, 250);
+}
+
+.panel {
+    padding: 0 18px;
+    background-color: rgba(64, 58, 97, 0.904);
+    /* background-color: rgba(255, 255, 255, 0.301); */
+    max-height: 0;
+    width: 100%;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+    color: whitesmoke;
+}
+
+.progress-bar-row {
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding-top: 8px;
+}
+
+.progress-container {
+    width: 80%;
+    background-color: #ddd;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.icon {
+    width: 10%;
+    background-image: url("../images/cyborg-pawn.png");
+    object-fit: cover;
+    /* background-color: rgb(126, 174, 240); */
+}
+
+.percent-background {
+    width: 100%;
+    background-color: #ddd;
+    padding: 3px;
+    border-radius: 5px;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    box-shadow:
+        inset 0 2px 9px rgba(255, 255, 255, 0.3),
+        inset 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+.percent {
+    width: 10%;
+    /* background-color: rgb(240, 180, 180); */
+}
+
+#cyborg-bar {
+    width: 30%;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    background-color: #2196F3;
+}
+
+#human-bar {
+    width: 55%;
+    /* background-color: #4CAF50; */
+
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    background-color: rgb(43, 194, 83);
+    /* background-image: linear-gradient(
+            center bottom,
+            rgb(43, 4, 75) 37%,
+            rgb(196, 84, 240) 69%
+            ); */
+    /* box-shadow: 5px 10px 18px 10px #888888; */
+
+    position: relative;
+    overflow: hidden;
+}
+
+#zombie-bar {
+    width: 15%;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    background-color: #f44336;
+
+}
+
+
+/* =============================================== */
+
+.user-stats-panel {
+    background-color: rgba(255, 255, 255, 0.301);
+    /* background-color: aquamarine; */
+    height: 60%;
+    width: 100%;
+}
+
+.user-avatar {
+    background-image: url("../images/hazmat-confused.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    /* background-position: center; */
+
+    height: 25vh;
+    width: 15vh;
+}
+
+.user-avatar-background {
+    background-color: rgba(255, 255, 255, 0.301);
+
+}
+
+/* ============================================ */
 .cryo-lab-wrapper {
     /* background-image: url("../images/ZHC-Lab-3.png"); */
     background-image: url("../images/Cryo-Wars-lab.png");
@@ -203,17 +404,23 @@ body {
     background-image: linear-gradient(to bottom right, rgb(121, 19, 180), rgb(231, 63, 253));
 }
 
+p {
+    font-size: .5em;
+}
+
 .btn {
     background-image: linear-gradient(to top right, rgb(10, 184, 228), rgb(204, 86, 219));
     border: none;
     width: 25%;
     color: white;
-    padding: 15px;
+    padding: 8px;
+    height: 24px;
     text-align: center;
     text-decoration: none;
-    font-size: 16px;
+    /* font-size: 16px; */
+    font-size: .5em;
     margin: 4px 2px;
-    border-radius: 15px 50px 30px 5px;
+    border-radius: 12px 12px 2px 2px;
 }
 
 .jumbotron {
@@ -224,18 +431,24 @@ body {
 
 #test-nums {
     border: none;
-    padding: 15px;
+    width: 25%;
+    /* padding: 15px; */
+    padding: 8px;
+    height: 24px;
     text-align: center;
     text-decoration: none;
-    border-radius: 15px 50px 30px 5px;
+    margin: 4px 2px;
+    border-radius: 2px 2px 12px 12px;
+    /* border-radius: 15px 50px 30px 5px; */
 }
 
 #board-holder {
-    margin: auto;
-    width: 80%;
+    margin: 0;
+    padding-top: 3%;
+    width: 90%;
     border-radius: 5px;
     /* height: aspect-ratio(16/9); */
-    padding-bottom: 80%;
+    /* padding-bottom: 80%; */
     position: relative;
 }
 
@@ -243,7 +456,7 @@ body {
     position: relative;
     width: 50%;
     background-image: linear-gradient(to top right, rgb(121, 76, 243), rgb(64, 219, 240));
-    border: 3px solid #000;
+    border: 1.5px solid #000;
     border-radius: 15px;
 }
 
@@ -274,20 +487,33 @@ body {
 }
 
 .holding {
-    background-color: #ffffe28f;
-    border: 3px solid #f1224481;
-    border-radius: 5px;
+    background-color: #e6e2ff8f;
+    border: 3px solid #a522f181;
+    border-radius: 15px;
+    height: 100%;
+    width: 100%;
+}
+
+.holding::before {
+    box-shadow: inset #a522f181;
 }
 
 .health-score {
-    background-image: linear-gradient(to top right, rgb(40, 193, 253), rgb(221, 107, 221));
+    background-image: linear-gradient(to top right, rgba(40, 193, 253, rgba(221, 107, 221, 0.767)07, 221));
     width: 25%;
     height: 25%;
     position: absolute;
     text-align: center;
     z-index: 99;
     transform: initial;
+    font-size: 50%;
     top: 0;
     right: 0;
-    border-radius: 1px 1px 1px 50%;
+    border-radius: calc(15px);
+}
+
+.health-score>span {
+    display: inline-block;
+    vertical-align: middle;
+    line-height: normal;
 }

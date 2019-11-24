@@ -11,5 +11,10 @@ router.get("/mission-control", (req, res) => {
     res.render("mission-control");
 });
 
+// Game Screen Page (in game):
+router.get("/game-screen", (req, res) => {
+    res.render("game-screen");
+});
+
 
 module.exports = router;
