@@ -20,6 +20,7 @@ module.exports = healthInfo = function (pawnType, pawnId) {
     healthCircle = document.getElementById(contentHealthId);
     healthCircle.classList.add("empty-health");
     healthCircle.classList.add("health-score");
+    // healthCircle.style.setProperty(`--health-font`, `'${healthFontSize}'`);
 
     // get userNum and run function to create dynamic pixel size:
     userNum = localStorage.getItem("boardSize");

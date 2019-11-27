@@ -7,6 +7,10 @@
     --ctrl-panel: calc(100vw - 100vh);
     --accordion-padding: 18px;
     --side-panel-height: calc(100vh - calc(3 * var(--accordion-padding)));
+    --drone-square: calc(100vh / 5);
+    --drone-btn: calc(var(--ctrl-panel) / 10);
+    --health-font: calc(var(--drone-square) / 4);
+    /* --health-font: calc(var(--drone-btn) / 4); */
 }
 
 * {
@@ -55,11 +59,16 @@
 }
 
 .drone-drops {
+    display: flex;
     height: 100%;
     width: 20%;
+    flex: 1;
+    flex-direction: column;
     /* width: calc(100vh - (100vh * .20)); */
     background-color: rgba(0, 0, 0, 0.884);
     box-shadow: 5 2 15 inset rgb(61, 61, 54);
+    align-items: center;
+    /* justify-content: center; */
 }
 
 .game-menu {
@@ -69,6 +78,7 @@
 }
 
 .accordion {
+    /* background-image: linear-gradient(to bottom right, rgb(124, 17, 247), rgb(103, 27, 133)); */
     background-color: rgb(124, 17, 247);
     color: rgb(255, 255, 255);
     cursor: pointer;
@@ -421,6 +431,8 @@ p {
     font-size: .5em;
     margin: 4px 2px;
     border-radius: 12px 12px 2px 2px;
+    cursor: pointer;
+
 }
 
 .jumbotron {
@@ -457,7 +469,8 @@ p {
     width: 50%;
     background-image: linear-gradient(to top right, rgb(121, 76, 243), rgb(64, 219, 240));
     border: 1.5px solid #000;
-    border-radius: 15px;
+    border-radius: 15%;
+    /* border-radius: 15px; */
 }
 
 .dyna-square:after {
@@ -490,6 +503,7 @@ p {
     background-color: #e6e2ff8f;
     border: 3px solid #a522f181;
     border-radius: 15px;
+    /* border-radius: calc(calc(var(--drone-btn) / 15) * 1%); */
     height: 100%;
     width: 100%;
 }
@@ -506,14 +520,81 @@ p {
     text-align: center;
     z-index: 99;
     transform: initial;
-    font-size: 50%;
+    /* font-size: 50%; */
     top: 0;
     right: 0;
-    border-radius: calc(15px);
+    /* border-radius: calc(15px); */
+    border-radius: calc(calc(var(--drone-btn) / 15) * 1%);
 }
 
 .health-score>span {
-    display: inline-block;
+    /* background-color: #f0f; */
+    width: 100%;
+    height: 100%;
+    /* display: inline-block; */
+    display: flex;
     vertical-align: middle;
-    line-height: normal;
+    line-height: 150%;
+    /* line-height: normal; */
+    /* font-size: var(--health-font); */
+    font-size: 200%;
+    /* font-size: calc(var(--health-font) * 1%); */
+}
+
+
+.drone-icon {
+    margin-top: calc(var(--drone-square) / 3);
+    /* height: var(--drone-square);
+    width: var(--drone-square); */
+    height: var(--drone-btn);
+    width: var(--drone-btn);
+    display: flex;
+    text-align: center;
+    background-color: rgba(40, 40, 41, 0.863);
+    /* border-radius: 8px; */
+    border-radius: 15%;
+    cursor: -webkit-grab;
+    cursor: grab;
+}
+
+.drone-icon:hover {
+    background-color: rgba(194, 194, 248, 0.863);
+    box-shadow: 
+    /* #5c0464 */
+    /* middle */
+    0 0 10px 2px #f0f,
+    /* outer */
+    0 0 14px 4px #0ff;
+}
+
+#bio-nanite-drone-btn {
+    height: 100%;
+    width: 100%;
+    background-image: url("../images/nanite-btn.png");
+    text-align: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 15%;
+    /* background-size: 100vw 100vh; */
+}
+
+/* <i class="fas fa-biohazard"></i> */
+#bio-hazard-drone-btn {
+    height: 100%;
+    width: 100%;
+    background-image: url("../images/bio-hazard-btn.png");
+    text-align: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    /* background-size: 100vw 100vh; */
+}
+
+#bio-flare-drone-btn {
+    height: 100%;
+    width: 100%;
+    background-image: url("../images/bio-flare-btn.png");
+    text-align: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    /* background-size: 100vw 100vh; */
 }

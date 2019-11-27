@@ -1,5 +1,4 @@
 healthInfo = require("./health-info");
-
 pawnStats = require("./pawn-stats");
 
 module.exports = createPawn = function (destinationID, pawnCounter, pawnType) {

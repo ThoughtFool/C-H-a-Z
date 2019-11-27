@@ -4,6 +4,7 @@ counter = 0;
 randomPlace = require("./split-logic/random-place");
 dragAndDrop = require("./split-logic/drag-and-drop");
 endRound = require("./split-logic/end-round");
+deployDrone = require("./split-logic/deploy-drone");
 
 var randBtn = document.getElementById("create-pawn");
 var endRoundBtn = document.getElementById("end-round");
@@ -83,6 +84,7 @@ randBtn.addEventListener("click", function () {
     // randomPlace(rootNum, rootNum - 1, "cyborg");
     dragAndDrop();
 
+    deployDrone();
 });
 
 endRoundBtn.addEventListener("click", function () {

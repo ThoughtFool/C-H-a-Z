@@ -13,10 +13,22 @@
         <div class="control-panel">
             <div class="drone-drops">
                 <!-- insert draggable drone drop icons/buttons -->
+                <div class="drone-icon" id="bio-nanite-drone">
+                    <div class="empty" id="bio-nanite-drone-btn" data-status="empty"></div>
+                </div>
+
+                <div class="drone-icon" id="bio-hazard-drone">
+                    <div class="empty" id="bio-hazard-drone-btn" data-status="empty"></div>
+                </div>
+
+                <div class="drone-icon" id="bio-flare-drone">
+                    <div class="empty" id="bio-flare-drone-btn" data-status="empty"></div>
+                </div>
             </div>
             <div class="game-menu">
                 <!-- insert collapsible menu -->
-                <button class="accordion">LIFEFORM STATS</button>
+                <button class="accordion"><i class="fas fa-thermometer-half"></i> LIFEFORM STATS <i
+                        class="fas fa-battery-quarter"></i></button>
                 <div class="panel" id="stats-panel">
                     <!-- percentage of each lifeform (progress bars) -->
                     <div class="percentage-panel">
@@ -71,7 +83,7 @@
                         aliquip ex ea commodo consequat.</p>
                 </div>
 
-                <button class="accordion">JUST-IN-CASE</button>
+                <button class="accordion"><i class="fas fa-toolbox"></i> JUST-IN-CASE</button>
                 <div class="panel" id="option-panel">
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
                         labore
@@ -80,7 +92,8 @@
                         aliquip ex ea commodo consequat.</p>
                 </div>
 
-                <button class="accordion">MESSAGE BOARD</button>
+                <button class="accordion"><i class="far fa-comment-dots"></i> MESSAGE
+                    BOARD</button>
                 <div class="panel" id="message-panel">
                     <div class="btn btn-primary" id="submit-test-num" style="display: block;">START</div>
                     <input type="text" class="test-input" id="test-nums" style="display: block;">
