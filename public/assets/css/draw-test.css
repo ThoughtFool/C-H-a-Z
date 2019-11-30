@@ -77,6 +77,13 @@
     background-color: rgba(64, 58, 97, 0.904);
 }
 
+.human-pawn,
+.cyborg-pawn,
+.zombie-pawn {
+    cursor: -webkit-grab;
+    cursor: grab;
+}
+
 .accordion {
     /* background-image: linear-gradient(to bottom right, rgb(124, 17, 247), rgb(103, 27, 133)); */
     background-color: rgb(124, 17, 247);
@@ -427,7 +434,6 @@ p {
     height: 24px;
     text-align: center;
     text-decoration: none;
-    /* font-size: 16px; */
     font-size: .5em;
     margin: 4px 2px;
     border-radius: 12px 12px 2px 2px;
@@ -508,6 +514,10 @@ p {
     width: 100%;
 }
 
+.available {
+    box-shadow: inset #f0f;
+}
+
 .holding::before {
     box-shadow: inset #a522f181;
 }
@@ -552,9 +562,9 @@ p {
     text-align: center;
     background-color: rgba(40, 40, 41, 0.863);
     /* border-radius: 8px; */
-    border-radius: 15%;
-    cursor: -webkit-grab;
-    cursor: grab;
+    border-radius: 50%;
+    /* border-radius: 15%; */
+    cursor: pointer;
 }
 
 .drone-icon:hover {
@@ -574,7 +584,8 @@ p {
     text-align: center;
     background-repeat: no-repeat;
     background-size: cover;
-    border-radius: 15%;
+    border-radius: 50%;
+    /* border-radius: 15%; */
     /* background-size: 100vw 100vh; */
 }
 
@@ -586,6 +597,7 @@ p {
     text-align: center;
     background-repeat: no-repeat;
     background-size: cover;
+    border-radius: 50%;
     /* background-size: 100vw 100vh; */
 }
 
@@ -596,5 +608,6 @@ p {
     text-align: center;
     background-repeat: no-repeat;
     background-size: cover;
+    border-radius: 50%;
     /* background-size: 100vw 100vh; */
 }

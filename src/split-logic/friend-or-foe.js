@@ -2,7 +2,7 @@ pawnStats = require("./pawn-stats");
 healthInfo = require("./health-info");
 
 // this replaces nearbyPawn function:
-module.exports = friendOrFoe = function (homeSquare_ID, adjacentSquaresArr) {
+module.exports = friendOrFoe = function (homeSquare_ID, adjacentSquaresArr, pawnType) {
     console.log("friendOrFoe function fires");
     // evaluates nearby (adjacent) spaces and check if contains "empty-space" class
     pawnType = "human"; // <<< testing ONLY (need to include other pawn types)
