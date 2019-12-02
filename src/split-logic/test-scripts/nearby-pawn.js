@@ -1,5 +1,5 @@
 // isAdjacent = require("./isAdjacent");
-adjacentSpaces = require("./adjacent-spaces");
+adjacentSpaces = require("../adjacent-spaces");
 // evaluates nearby (adjacent) spaces and check if contains "empty-space" class
 module.exports = nearbyPawn = function (currentPawnLocID, destinationID) {
     spaceToCheck = document.getElementById(destinationID);
@@ -7,7 +7,7 @@ module.exports = nearbyPawn = function (currentPawnLocID, destinationID) {
     if (spaceToCheck.classList.contains("empty-space")) {
         console.log("space is empty");
     } else {
-
+ 
         if (spaceToCheck.hasChildNodes().classList.contains("human-pawn")) {
             console.log("there's strength in numbers!");
 

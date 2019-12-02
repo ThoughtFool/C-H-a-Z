@@ -9,7 +9,7 @@ firstSquare.x = 1;
 firstSquare.y = 1;
 
 const movesMade = [];
-
+ 
 // create the coords for dynamic game board:
 createSpaces = function (totSquares) {
     const squareRoot = Math.sqrt(totSquares);
@@ -166,4 +166,4 @@ console.log(gameBoard[8], gameBoard[0]);
 // movesArray = enemyMoves(gameBoard[624], gameBoard[0]);
 movesArray = enemyMoves(gameBoard[0], gameBoard[624]);
 console.log("movesArray");
-console.log(movesArray);
+console.log(movesArray); 

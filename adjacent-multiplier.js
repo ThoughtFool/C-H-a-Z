@@ -71,6 +71,37 @@ const pawn03 = {
     offense: 10
 };
 
+const pawn04 = {
+    id: "x104-y106",
+    type: "human",
+    health: 60,
+    defense: 3,
+    offense: 10
+};
+
+/////////////////////////////////////////////////////////////////////////////////
+
+const pawn_PowerUp = function (pawnObj, adjacentSpacesArray, defenseOrOffense) {
+    let resultHolder = 0;
+    console.log("pawn_PowerUp function fires!");
+    
+    //for loop here:
+    if (pawnObj.type === adjacentSpacesArray.type && defenseOrOffense === "defense") {
+        // add to pawnObj.defense:
+        console.log(pawnObj);
+        resultHolder = resultHolder + 2;
+
+    } else if (pawnObj.type === adjacentSpacesArray.type && defenseOrOffense === "offense") {
+        // add to pawnObj.offense:
+
+    };
+    return resultHolder;
+};
+
+// pawn_PowerUp(pawn02, pawn04, "defense");
+
+/////////////////////////////////////////////////////////////////////////////////
+
 const adjSpace_Multiplier = function (defenderObj, attackerObj) {
     console.log("adjSpace_Multiplier function fires!");
     console.log(`${attackerObj.type} attacks ${defenderObj.type}!`);
@@ -78,20 +109,25 @@ const adjSpace_Multiplier = function (defenderObj, attackerObj) {
     if (defenderObj.type === attackerObj.type) {
         console.log("defender type is the same at the attacker type");
         // call function to add "Power-ups to pawn object"
-        
+
     } else if (
         defenderObj.type === "human" && attackerObj.type === "cyborg" ||
         defenderObj.type === "zombie" && attackerObj.type === "human" ||
         defenderObj.type === "zombie" && attackerObj.type === "cyborg"
     ) {
         let multiplier_offense = Math.floor(Math.random() * attackerObj.offense);
+        
+        // testing ONLY:
+        adjacentSpacesArray = pawn04;
+        let multiplier_defense = pawn_PowerUp(defenderObj, pawn04, "defense");
 
-        // result = multiplier_offense * 1;
-        // defenderObj.health = defenderObj.health + result;
-        // console.log(`${defenderObj.type}'s health:`);
-        // console.log(defenderObj.health);
+        console.log("multiplier_offense");
+        console.log(multiplier_offense);
 
-        result_defense = defenderObj.defense;
+        result_defense = defenderObj.defense + multiplier_defense;
+        console.log("result_defense");
+        console.log(result_defense);
+
         result_offense = (multiplier_offense - result_defense) * 1;
         result = result_offense;
         defenderObj.health = defenderObj.health + result;
@@ -103,7 +139,17 @@ const adjSpace_Multiplier = function (defenderObj, attackerObj) {
     ) {
         let multiplier_offense = Math.floor(Math.random() * attackerObj.offense);
 
-        result_defense = defenderObj.defense;
+        // testing ONLY:
+        adjacentSpacesArray = pawn04;
+        let multiplier_defense = pawn_PowerUp(defenderObj, pawn04, "defense");
+
+        console.log("multiplier_offense");
+        console.log(multiplier_offense);
+
+        result_defense = defenderObj.defense + multiplier_defense;
+        console.log("result_defense");
+        console.log(result_defense);
+
         result_offense = (multiplier_offense - result_defense) * -1;
         result = result_offense;
         defenderObj.health = defenderObj.health + result;
@@ -119,12 +165,20 @@ const adjSpace_Multiplier = function (defenderObj, attackerObj) {
     console.log(defenderObj.health);
 };
 
-adjSpace_Multiplier(pawn, pawn02);
+// // human attacks zombie:
+// adjSpace_Multiplier(pawn, pawn02);
+// // human attacks cyborg:
+// adjSpace_Multiplier(pawn03, pawn02);
+
+// zombie attacks human:
 adjSpace_Multiplier(pawn02, pawn);
-adjSpace_Multiplier(pawn03, pawn);
+// // zombie attacks cyborg:
+// adjSpace_Multiplier(pawn03, pawn);
+
+// // cyborg attacks zombie:
+// adjSpace_Multiplier(pawn, pawn03);
+// cyborg attacks human:
+adjSpace_Multiplier(pawn04, pawn03);
 
 /////////////////////////////////////////////////////////////////////////////////
 
-const pawn_PowerUp = function (pawnObj, adjacentSpacesArray) {
-    console.log("pawn_PowerUp function fires!");
-};
