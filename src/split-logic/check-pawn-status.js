@@ -27,16 +27,16 @@ module.exports = checkPawnStatus = function (pawnType) {
     for (let i = 0; i < allPawnSpawn.length; i++) {
         console.log(`health: ${allPawnSpawn[i].health}`);
         if (allPawnSpawn[i].health >= 20 && allPawnSpawn[i].health <= 80 && pawnType == "hazmat-human") {
-            pawnSwitch(allPawnSpawn[i].id, "human");
             console.log(`${allPawnSpawn[i].id} is still HUMAN...for now!`);
+            pawnSwitch(allPawnSpawn[i].id, "human");
         
         } else if (allPawnSpawn[i].health >= -40 && allPawnSpawn[i].health < 20 && pawnType == "human") {
-            pawnSwitch(allPawnSpawn[i].id, "zombie");
             console.log(`${allPawnSpawn[i].id} is no longer human! ${allPawnSpawn[i].id} joins ZOMBIE HORDE!`);
+            pawnSwitch(allPawnSpawn[i].id, "zombie");
         
         } else if (allPawnSpawn[i].health > 80 && allPawnSpawn[i].health <= 140 && pawnType == "human") {
-            pawnSwitch(allPawnSpawn[i].id, "cyborg");
             console.log(`${allPawnSpawn[i].id} is no longer human! ${allPawnSpawn[i].id} joins CYBORG REVOLT!`);
+            pawnSwitch(allPawnSpawn[i].id, "cyborg");
             
             // } else if (allPawnSpawn[i].health > 0 && allPawnSpawn[i].health < 20) {
             // pawnSwitch(allPawnSpawn[i].id, "sleepy-zombie", "cyborg");
@@ -49,8 +49,8 @@ module.exports = checkPawnStatus = function (pawnType) {
             //     console.log(`ALERT!!! {allPawnSpawn[i].id} is barely human!`);
         
         } else if (allPawnSpawn[i].health < -40 || allPawnSpawn[i].health > 140) {
-            pawnSwitch("permafrost"); // TODO: they don't move and potentially block movement and shield attacks from enemies;
             console.log(`${allPawnSpawn[i].id} is beyond the reach of the NANITES... ${allPawnSpawn[i].id} has been eliminated!`);
+            pawnSwitch("permafrost"); // TODO: they don't move and potentially block movement and shield attacks from enemies;
         
         } else {
             console.log("a calculation error has occurred");

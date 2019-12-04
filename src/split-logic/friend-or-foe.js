@@ -51,12 +51,15 @@ module.exports = friendOrFoe = function (homeSquare_ID, adjacentSquaresArr, pawn
                         if (homePawnLoc == homeSquare_ID) {
                             console.log("they match!");
                             health = pawnStats.human.pawnSpawn[i].health - 10;
-                            pawnStats.human.pawnSpawn[i].health = health;
-                            console.log("lastchild");
-                            console.log(spaceToCheck.childNodes[0].id);
-                            console.log(document.getElementById(homeSquare_ID).lastChild);
+                            if (health > - 11 && health < 111) {
+
+                                pawnStats.human.pawnSpawn[i].health = health;
+                                console.log(spaceToCheck.childNodes[0].id);
+                                console.log("lastchild");
+                                console.log(document.getElementById(homeSquare_ID).lastChild);
+                                healthInfo(pawnType, pawnId);
+                            };
                             
-                            healthInfo(pawnType, pawnId);
                         };
                     };
                     // TODO: get target piece's ID in pawnStats?
@@ -75,11 +78,13 @@ module.exports = friendOrFoe = function (homeSquare_ID, adjacentSquaresArr, pawn
                         if (homePawnLoc == homeSquare_ID) {
                             console.log("they match!");
                             health = pawnStats.human.pawnSpawn[i].health + 10;
-                            pawnStats.human.pawnSpawn[i].health = health;
-                            console.log(spaceToCheck.childNodes[0].id);
-                            console.log(document.getElementById(homeSquare_ID).lastChild);
+                            if (health > - 11 && health < 111) {
 
-                            healthInfo(pawnType, pawnId);
+                                pawnStats.human.pawnSpawn[i].health = health;
+                                console.log(spaceToCheck.childNodes[0].id);
+                                console.log(document.getElementById(homeSquare_ID).lastChild);
+                                healthInfo(pawnType, pawnId);
+                            };
                         };
                     };
                     console.log("CAUTION: the cyborgs are healing you too quickly!");
