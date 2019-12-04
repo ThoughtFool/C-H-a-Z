@@ -2,7 +2,7 @@ pawnStats = require("./pawn-stats");
 showHealth = require("./show-health");
 dynaFont = require("./dyna-font");
 
-// function healthInfo(pawnType, pawnId) {
+// function healthInfo(pawnType, pawnId) { 
 module.exports = healthInfo = function (pawnType, pawnId) {
     console.log("healthInfo function fires");
 

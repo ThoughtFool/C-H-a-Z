@@ -1,4 +1,6 @@
 pawnStats = require("./pawn-stats");
+updatePawnStatus = require("./update-pawn-status");
+
 const { healthInfo } = require("./health-info");
 
 module.exports = dragAndDrop = function () {
@@ -66,41 +68,21 @@ module.exports = dragAndDrop = function () {
             // document.getElementById("myList").appendChild(newSpan);
 
             /////////////////////////////////////////////////////
+            newParentDiv_ID = event.target.id;
+            console.log("newParentDiv_ID");
+            console.log(newParentDiv_ID);
 
+            updatePawnStatus("location", currentPawnHeld, newParentDiv_ID);
             currentPawnHeld = "";
 
             console.log("parentDiv");
             console.log(parentDiv);
             console.log("parentDiv.id");
             console.log(parentDiv.id);
-
-            
-
-            // squarePlace.classList.remove("empty-space");
             console.log("contentCornerHealth");
             console.log(contentCornerHealth);
 
-            // healthInfo(pawnType, pawnId);
-
             /////////////////////////////////////////////////////
-
-        } else if (event.target.className == "discard-pile" || event.target.className == "discard") {
-
-            // data = event.dataTransfer.getData("Text");
-            // console.log("data");
-            // console.log(data);
-
-            holdingClass = document.getElementById(currentPawnHeld);
-            event.target.appendChild(holdingClass);
-            holdingClass.src = "../assets/images/obverse.png";
-            holdingClass.classList.remove("flipped");
-            holdingClass.classList.remove("card-face");
-            holdingClass.classList.add("discard");
-            holdingClass.classList.remove("holding");
-            parentDiv.classList.remove("parent-holding-pawn");
-            parentDiv.classList.add("empty-space");
-            holdingPawn = false;
-            currentPawnHeld = "";
 
         } else if (event.target.classList.contains("empty-space") == false) {
             console.log("this slot is full");

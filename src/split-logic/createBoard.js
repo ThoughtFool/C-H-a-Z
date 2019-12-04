@@ -5,8 +5,6 @@ createPawn = require("./create-pawn");
 module.exports = createBoard = function (numberOfSpaces) {
     if (isSquare(numberOfSpaces)) {
         boardHolder = document.getElementById("board-holder");
-        // boardWidth = window.innerWidth;
-        // boardHolder.style.height = boardWidth;
         console.log("numberOfSpaces is square");
         gameBoard = [];
         baseNum = 1000;
@@ -18,7 +16,7 @@ module.exports = createBoard = function (numberOfSpaces) {
         for (let i = 1; i <= sqRootNum; i++) {
             // create a row (# based on sqRootNum), then append new divs (# based on sqRootNum):
 
-            // TODO: create rows:
+            // create rows:
             newRow = document.createElement("div");
             rowID = `row-${i}`;
             newRow.setAttribute("id", rowID);
@@ -32,7 +30,7 @@ module.exports = createBoard = function (numberOfSpaces) {
                 let square = new MakeSquare(baseNum + j, baseNum + i, Math.floor(Math.random() * 10) + 1);
                 gameBoard.push(square);
 
-                // TODO: create divs in rows:
+                // create divs in rows:
                 squareDiv = document.createElement("div");
                 squareId = `x${baseNum + j}-y${baseNum + i}`;
                 squareDiv.setAttribute("id", squareId);
@@ -44,16 +42,8 @@ module.exports = createBoard = function (numberOfSpaces) {
                 percentageSize = 1/sqRootNum * 100;
                 console.log(percentageSize);
                 newSquare.style.width = `${percentageSize}%`;
-                // var boardWidth = window.innerWidth;
-                // console.log("boardWidth");
-                // console.log(boardWidth);
-                // squareHeight = boardWidth / sqRootNum;
                 /////////////////////////////////////////////
                 squareHeight = 200;
-                // console.log(newSquare.innerWidth);
-                // newSquare.style.height = `${squareHeight}%`;
-
-                // TODO: create content-holder divs in square divs:
                 contentInSquareDiv = document.createElement("div");
                 contentId = `content-${squareId}`;
                 contentInSquareDiv.setAttribute("id", contentId);
@@ -62,48 +52,15 @@ module.exports = createBoard = function (numberOfSpaces) {
                 newContentSquare.classList.add("dyna-square-content");
                 newContentSquare.classList.add("empty-space");
 
-                // // TODO: // create div to hold health score when pawn is placed there:
-                // contentCornerHealth = document.createElement("div");
-                // contentHealthId = `content-health-${squareId}`;
-                // contentInSquareDiv.setAttribute("id", contentHealthId);
-                // newSquare.appendChild(contentCornerHealth);
-                // healthCircle = document.getElementById(contentHealthId);
-                // healthCircle.classList.add("empty-health");
-                // healthCircle.classList.add("health-score");
             };
-
-            // hide gameboard size button:
-            // let submitTestNumInput = document.getElementById("test-nums");
-
-            // if (submitTestNumInput.style.display === "block") {
-            //     submitTestNumInput.style.display = "none";
-            // } else {
-            //     submitTestNumInput.style.display = "block";
-            // };
-
-            // let submitTestNumBtn = document.getElementById("submit-test-num");
-
-            // if (submitTestNumBtn.style.display === "block") {
-            //     submitTestNumBtn.style.display = "none";
-            // } else {
-            //     submitTestNumBtn.style.display = "block";
-            // };
-
-            // let randBtn = document.getElementById("create-pawn");
-
-            // if (randBtn.style.display === "block") {
-            //     randBtn.style.display = "none";
-            // } else {
-            //     randBtn.style.display = "block";
-            // };
         };
 
         // TODO: squareOne = {
         //     x: 1000, // only change place value for the zeroes
         //     y: 1000 // if greater than 1999, then too many squares?
         // };
+        console.log("gameBoard");
         console.log(gameBoard);
-        console.log(gameBoard[0].x);
 
     } else {
         if (numberOfSpaces < 9) {

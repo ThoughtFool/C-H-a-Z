@@ -1,6 +1,6 @@
 // friendOrFoe = require("./friend-or-foe");
 
-module.exports = adjacentSpaces = function (location) {
+module.exports = adjacentSpaces = function (location, pawnType) {
     console.log("adjacentSpaces function fires");
 
     adjacentSquaresArr = [];
@@ -43,6 +43,6 @@ module.exports = adjacentSpaces = function (location) {
     };
     console.log("adjacentSquaresArr");
     console.log(adjacentSquaresArr);
-    return friendOrFoe(idString, adjacentSquaresArr);
+    return friendOrFoe(idString, adjacentSquaresArr, pawnType);
 };
 

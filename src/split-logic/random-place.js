@@ -42,7 +42,7 @@ module.exports = randomPlace = function (userInputNum, howManyToPlace) {
                 createPawn(randomContentID, pawnStats.pawnCounter, "human");
             
             } else {
-                randEnemy = Math.floor(Math.random() * 2 + 1);
+                randEnemy = Math.floor(Math.random() * 20 + 1);
                 if (randEnemy % 2 === 0) {
                     pawnStats.pawnIdArray.zombie.push(randomContentID);
                     console.log(pawnStats.pawnIdArray.zombie);
@@ -60,7 +60,5 @@ module.exports = randomPlace = function (userInputNum, howManyToPlace) {
         // TODO: create pawnHealth evaluator to track and determine status of pawns in danger of becoming neutral and changes color;
         // TODO: pawn colors need to be changed to primary colors, so that the neutral stauts of pawns' colors can change to secondary colors;
         // TODO: add blinking strobe effect to neutral pawns? add hover over arrow effect when pawn is picked up?
-        // TODO: glitch/bug: need to fix EVEN square roots (startBtn still present);
-
     };
 };
