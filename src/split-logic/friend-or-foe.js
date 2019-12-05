@@ -51,6 +51,7 @@ module.exports = friendOrFoe = function (homeSquare_ID, adjacentSquaresArr, pawn
                         if (homePawnLoc == homeSquare_ID) {
                             console.log("they match!");
                             health = pawnStats.human.pawnSpawn[i].health - 10;
+                            // TODO: need to create a way to increase/decrease health of "allies" by proximity (use adjacentSpaces function):
                             if (health > - 11 && health < 111) {
 
                                 pawnStats.human.pawnSpawn[i].health = health;
