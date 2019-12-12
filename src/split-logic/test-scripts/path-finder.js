@@ -1,7 +1,8 @@
 // module.exports = 
 // adjacentArray function runs and calls enemy moves while a condition is true?
 // starts with enemyMoves function and then calls adjacentArray every time until condition is met?
-
+// const goldilocks = require("./goldilocks-zone");
+const adjSpaceFinder = require("./adj-space-finder");
 const adjacentSquares = [];
 const adjacentSpacesHolder = [];
 const firstSquare = {};
@@ -24,22 +25,23 @@ createSpaces = function (totSquares) {
 
 gameBoard = createSpaces(9);
 
-const enemyMoves = function (homeSpace, destin) {
+const enemyMoves = function (homeSpace, destination) {
     console.log("enemyMoves function fires");
 
-    if (typeof destin == "undefined") {
+    if (typeof destination == "undefined") {
         console.log("Error: The destination exists beyond the dimensions of the board.")
     } else {
         console.log("homeSpace");
         console.log(homeSpace);
-        console.log("destin");
-        console.log(destin);
+        console.log("destination");
+        console.log(destination);
 
-        if (destin[0] === homeSpace[0] && destin[1] === homeSpace[1]) {
+        if (destination[0] === homeSpace[0] && destination[1] === homeSpace[1]) {
             console.log("Congratulations, you've arrived!");
         } else {
 
-            adjArr = adjacentSpaces(homeSpace);
+            adjArr = adjSpaceFinder(homeSpace, 1);
+            // adjArr = adjacentSpaces(homeSpace);
             last_Diff = null;
             last_Arr = null;
 
@@ -49,13 +51,13 @@ const enemyMoves = function (homeSpace, destin) {
                 ];
 
                 main_Diff = [
-                    destin[0] - homeSpace[0],
-                    destin[1] - homeSpace[1]
+                    destination[0] - homeSpace[0],
+                    destination[1] - homeSpace[1]
                 ];
 
                 current_Diff = [
-                    destin[0] - current_Array[0],
-                    destin[1] - current_Array[1]
+                    destination[0] - current_Array[0],
+                    destination[1] - current_Array[1]
                 ];
 
                 if (last_Diff == null) {
@@ -66,7 +68,7 @@ const enemyMoves = function (homeSpace, destin) {
                     last_Arr = homeSpace;
                 };
 
-                if (destin[0] === current_Array[0] && destin[1] === current_Array[1]) {
+                if (destination[0] === current_Array[0] && destination[1] === current_Array[1]) {
                     console.log("Done!");
                     last_Arr = current_Array;
                     break;
@@ -103,7 +105,7 @@ const enemyMoves = function (homeSpace, destin) {
                 };
             };
             movesMade.push(last_Arr);
-            enemyMoves(last_Arr, destin);
+            enemyMoves(last_Arr, destination);
         };
         return movesMade;
     };
@@ -165,8 +167,71 @@ adjacentSpaces = function (location) {
     return adjacentSquares;
 };
 
-console.log(gameBoard[8], gameBoard[0]);
-// movesArray = enemyMoves(gameBoard[624], gameBoard[0]);
-movesArray = enemyMoves(gameBoard[0], gameBoard[7]);
-console.log("movesArray");
-console.log(movesArray);
+const rateSpace = function (move, food, friend, enemy) {
+    console.log("rateSpace method fires");
+
+    let weight = move + food + friend + enemy;
+
+    return weight;
+};
+
+// console.log(gameBoard[8], gameBoard[0]);
+// // movesArray = enemyMoves(gameBoard[624], gameBoard[0]);
+// movesArray = enemyMoves(gameBoard[0], gameBoard[7]);
+// console.log("movesArray");
+// console.log(movesArray);
+
+const Goldilocks = function (type, move, food, friend, enemy, homeSpace, rateSpace) {
+
+        this.move = move;
+        this.food = food;
+        this.friend = friend;
+        this.enemy = enemy;
+        this.type = type;
+        this.homeSpace = homeSpace;
+        this.weight = rateSpace(
+            move,
+            food,
+            friend,
+            enemy
+        );
+};
+
+const goldilocksChecker = function (homeSpace, targetSpace, pawnType) {
+    // calculate distance:
+    let movesArray = enemyMoves(homeSpace, targetSpace);
+    console.log("movesArray:");
+    console.log(movesArray.length);
+    let distance = movesArray.length * -1;
+
+    console.log("distance");
+    console.log(distance);
+
+    let targetAdjArr = adjacentSpaces(targetSpace);
+    for (let adj = 0; adj < targetAdjArr.length; adj++) {
+        if (pawnType === targetAdjArr[adj].id) {
+            console.log(`${pawnType} matches ${targetAdjArr[adj].id}`);
+        } else {
+            console.log(`${pawnType} doesn't match ${targetAdjArr[adj].id}`);
+        };
+    };
+
+    let food = 2;
+    let friend = 5;
+    let enemy = - 10;
+
+
+    let goldSpace = new Goldilocks(
+        pawnType,
+        distance,
+        food,
+        friend,
+        enemy,
+        homeSpace,
+        rateSpace
+    );
+
+    return goldSpace;
+
+};
+console.log(goldilocksChecker(gameBoard[0], gameBoard[7], "zombie"));

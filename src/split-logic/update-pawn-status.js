@@ -15,7 +15,7 @@ module.exports = updatePawnStatus = function (string, pawnID, newParentID) {
         // console.log("return object:");
         console.log("pawnID in updatePawnStatus: 'switch'");
         console.log(pawnID);
-        let pawnTypeSwitch = newParentID;
+        let pawnTypeSwitch = newParentID; // TODO: need to change variable argument to reflect the various possible arguments to be passed in.
         let pawnElem = document.getElementById(pawnID);
         console.log("pawnElem");
         console.log(pawnElem);

@@ -1,10 +1,13 @@
 // nearbyPawn = require("./nearby-pawn");
 pawnStats = require("./pawn-stats");
-adjacentSpaces = require("./adjacent-spaces");
+adjacentSpaces = require("./test-scripts/adj-space-finder");
+// adjacentSpaces = require("./adjacent-spaces");
+
+
 checkPawnStatus = require("./check-pawn-status");
 
 module.exports = endRound = function () {
-    let pawn_Type = "";
+    let pawnType = "";
     let pawnTypeArr = [];
     let pawnTypeTotal = {};
     // testing ONLY:
@@ -15,27 +18,27 @@ module.exports = endRound = function () {
     // console.log("pawnStats[pawnType].pawnSpawn[0]");
     // console.log(pawnStats[pawnType].pawnSpawn[0]);
 
-    for (pawn_Type in pawnStats) {
-        console.log("pawn_Type");
-        console.log(pawn_Type);
-        console.log("pawnStats[pawn_Type]");
-        console.log(pawnStats[pawn_Type]);
+    for (pawnType in pawnStats) {
+        console.log("pawnType");
+        console.log(pawnType);
+        console.log("pawnStats[pawnType]");
+        console.log(pawnStats[pawnType]);
         if (
-            pawn_Type === "cyborg" ||
-            pawn_Type === "human" ||
-            pawn_Type === "zombie"
+            pawnType === "cyborg" ||
+            pawnType === "human" ||
+            pawnType === "zombie"
         ) {
 
-            for (let i = 0; i < pawnStats[pawn_Type].pawnSpawn.length; i++) {
-                let pawnLoc = pawnStats[pawn_Type].pawnSpawn[i].loc[0];
+            for (let i = 0; i < pawnStats[pawnType].pawnSpawn.length; i++) {
+                let pawnLoc = pawnStats[pawnType].pawnSpawn[i].loc[0];
                 console.log("pawnLoc");
                 console.log(pawnLoc);
 
-                adjacentSpaces(pawnLoc, pawn_Type);
+                adjacentSpaces(pawnLoc, 1, null, pawnType);
             };
 
-            pawnTypeArr.push(pawn_Type);
-            pawnTypeTotal[pawn_Type] = pawnStats[pawn_Type].pawnSpawn.length;
+            pawnTypeArr.push(pawnType);
+            pawnTypeTotal[pawnType] = pawnStats[pawnType].pawnSpawn.length;
         };
     };
 
@@ -81,7 +84,7 @@ module.exports = endRound = function () {
     updatePercent();
 
     for (let t = 0; t < pawnTypeArr.length; t++) {
-        console.log("pawn_Type before checkPawnStatus:");
+        console.log("pawnType before checkPawnStatus:");
         console.log(pawnTypeArr[t]);
         checkPawnStatus(pawnTypeArr[t]);
     };

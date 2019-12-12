@@ -15,7 +15,7 @@ const enemyMoves = function (homeSpace, destin) {
             console.log("Congratulations, you've arrived!");
         } else {
 
-            adjArr = adjacentSpaces(homeSpace);
+            adjArr = adjacentSpaces(homeSpace, 1);
             last_Diff = null;
             last_Arr = null;
 

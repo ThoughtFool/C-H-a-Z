@@ -54,6 +54,7 @@ module.exports = checkPawnStatus = function (pawnType) {
         
         } else {
             console.log("a calculation error has occurred");
+            console.log(`i is ${i} and allPawnSpawn[i].health is ${allPawnSpawn[i].health} and  pawnType is ${pawnType}`);
         };
     };
     // health = +10;

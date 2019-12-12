@@ -1,0 +1,90 @@
+// const adjacentSquares = [];
+const adjacentSpacesHolder = [];
+// const firstSquare = {};
+// firstSquare.x = 1;
+// firstSquare.y = 1;
+const friendOrFoe = require("../friend-or-foe");
+const adjContentIDStringArr = require("./adj-contentID-string-array");
+
+const movesMade = [];
+
+// create the coords for dynamic game board:
+// createSpaces = function (totSquares) {
+//     const squareRoot = Math.sqrt(totSquares);
+//     const boardSpaces = [];
+//     for (let x = 1; x <= squareRoot; x++) {
+//         for (let y = 1; y <= squareRoot; y++) {
+//             boardSpaces.push([x, y]);
+//         };
+//     };
+//     return boardSpaces;
+// };
+
+// gameBoard = createSpaces(16);
+
+module.exports = adjacentSpaces = function (homespace, availableMoves, destination, pawnType) {
+    console.log("adjacentSpaces function fires");
+
+    const adjacentSquares = [];
+
+//////////////////////////////////////////////////////////
+// TODO: export this into a function?
+
+    let homespace_idString = homespace;
+    console.log("homespace_idString");
+    console.log(homespace_idString);
+    homespace = homespace.match(/\d+/g);
+    console.log("homespace after match:");
+    console.log(homespace);
+
+
+    let adjacentSpaceObj = {
+        homespace: homespace,
+        homespace_idString: homespace_idString,
+        x: [],
+        y: [],
+        comb: []
+    };
+
+    x_Loc = homespace[0] = parseInt(homespace[0]);
+    console.log("x_Loc");
+    console.log(x_Loc);
+
+    y_Loc = homespace[1] = parseInt(homespace[1]);
+    console.log("y_Loc");
+    console.log(y_Loc);
+
+//////////////////////////////////////////////////////////
+
+    for (let q = 0; q <= availableMoves; q++) {
+
+        if (q > 0) {
+            adjacentSpaceObj.x.push(
+                x_Loc + q,
+                x_Loc - q);
+
+            adjacentSpaceObj.y.push(
+                y_Loc + q,
+                y_Loc - q);
+        } else {
+            adjacentSpaceObj.x.push(x_Loc + q);
+            adjacentSpaceObj.y.push(y_Loc + q);
+        };
+    };
+
+    console.log("adjacentSpaceObj");
+    console.log(adjacentSpaceObj);
+    
+//////////////////////////////////////////////////////////
+
+adjacentSpaceObj = adjContentIDStringArr(homespace, adjacentSpaceObj, availableMoves);
+
+    console.log(adjacentSpaceObj.comb);
+    return friendOrFoe(homespace_idString, adjacentSpaceObj.comb, pawnType);
+    // return friendOrFoe(idString, adjacentSquares, pawnType);
+};
+
+// let homeSpace = [3, 3];
+// let totNumMoves = 2;
+
+// adjacentSpaces(homeSpace, totNumMoves, null, null);

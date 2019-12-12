@@ -38,7 +38,7 @@ const enemyMoves = function (homeSpace, destin) {
     } else {
 
         ////////////////////////////////////need define:
-        adjArr = adjacentSpaces(homeSpace);
+        adjArr = adjacentSpaces(homeSpace, 1);
         // costHolder = 0;
         // console.log("adjArr");
         // console.log(adjArr);

@@ -1,7 +1,22 @@
 friendOrFoe = require("./friend-or-foe");
 
-module.exports = adjacentSpaces = function (location, pawntype) {
+module.exports = adjacentSpaces = function (location, availableMoves, destination, pawntype) {
     console.log("adjacentSpaces function fires");
+
+    // if (typeof location === String) {
+    //     console.log(`location: ${location} is a String`);
+
+    //     console.log("location");
+    //     console.log(location);
+
+    //     idString = location;
+    //     location = location.match(/\d+/g);
+
+    //     adjacentSpaceArray = [];
+
+    //     console.log("location");
+    //     console.log(location);
+    // };
 
     adjacentSquaresArr = [];
     console.log("location");

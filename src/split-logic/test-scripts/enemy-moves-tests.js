@@ -36,7 +36,7 @@ enemyMoves = function (homeSpace, destin) {
     } else {
 
         ////////////////////////////////////need define:
-        adjArr = adjacentSpaces(homeSpace);
+        adjArr = adjacentSpaces(homeSpace, 1);
         // costHolder = 0;
         console.log("adjArr");
         console.log(adjArr);
@@ -98,7 +98,7 @@ enemyMoves = function (homeSpace, destin) {
     // // if (costArr[0] === homeSpace[0] && costArr[1] === homeSpace[1]) {}
 };
 
-adjacentSpaces = function (location) {
+adjacentSpaces = function (location, numOfMoves) {
     const adjacentSquares = [];
 
     // console.log("adjacentSpaces function fires");
