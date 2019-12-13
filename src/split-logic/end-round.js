@@ -33,7 +33,7 @@ module.exports = endRound = function () {
                 console.log("pawnLoc");
                 console.log(pawnLoc);
 
-                adjacentSpaces(pawnLoc, 1, null, pawnType);
+                adjacentSpaces(pawnLoc, 1, null, pawnType, "endRound");
             };
 
             pawnTypeArr.push(pawnType);
@@ -90,5 +90,4 @@ module.exports = endRound = function () {
 
     // testing ONLY:
     console.log(goldilocksChecker([1001, 1001], [1003, 1003], "zombie"));
-
 };

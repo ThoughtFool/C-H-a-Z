@@ -11,7 +11,7 @@ module.exports = friendOrFoe = function (homeSquare_ID, adjacentSquaresArr, pawn
     console.log("adjacentSquaresArr");
     console.log(adjacentSquaresArr);
 
-    console.log("homeSquare_ID");
+    console.log("homeSquare_ID::");
     console.log(homeSquare_ID);
 
     pawnId = document.getElementById(homeSquare_ID).childNodes[0].id;
@@ -44,6 +44,9 @@ module.exports = friendOrFoe = function (homeSquare_ID, adjacentSquaresArr, pawn
                     for (let i = 0; i < pawnStats.human.pawnSpawn.length; i++) {
 
                         homePawnLoc = pawnStats.human.pawnSpawn[i].loc;
+
+                        console.log("homePawnLoc");
+                        console.log(homePawnLoc);
 
                         console.log("homeSquare_ID");
                         console.log(homeSquare_ID);
