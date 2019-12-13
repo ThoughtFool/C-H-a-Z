@@ -32,6 +32,9 @@ for (let i = 0; i < acc.length; i++) {
 startBtn.addEventListener("click", function () {
     console.log("startBtn 'click' function fires");
 
+    // test fullscreen mode:
+    document.documentElement.webkitRequestFullScreen();
+
     console.log(getTestNum.value);
     userNum = getTestNum.value;
     localStorage.setItem("boardSize", userNum);
