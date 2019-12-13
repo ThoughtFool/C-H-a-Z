@@ -8,21 +8,7 @@ const adjContentIDStringArr = require("./adj-contentID-string-array");
 
 const movesMade = [];
 
-// create the coords for dynamic game board:
-// createSpaces = function (totSquares) {
-//     const squareRoot = Math.sqrt(totSquares);
-//     const boardSpaces = [];
-//     for (let x = 1; x <= squareRoot; x++) {
-//         for (let y = 1; y <= squareRoot; y++) {
-//             boardSpaces.push([x, y]);
-//         };
-//     };
-//     return boardSpaces;
-// };
-
-// gameBoard = createSpaces(16);
-
-module.exports = adjacentSpaces = function (homespace, availableMoves, destination, pawnType) {
+module.exports = adjacentSpaces = function (homespace, availableMoves, destination, pawnType, message) {
     console.log("adjacentSpaces function fires");
 
     const adjacentSquares = [];
@@ -79,8 +65,14 @@ module.exports = adjacentSpaces = function (homespace, availableMoves, destinati
 
 adjacentSpaceObj = adjContentIDStringArr(homespace, adjacentSpaceObj, availableMoves);
 
+    console.log("adjacentSpaceObj.comb");
     console.log(adjacentSpaceObj.comb);
-    return friendOrFoe(homespace_idString, adjacentSpaceObj.comb, pawnType);
+
+    if (message === "endRound") {
+        return friendOrFoe(homespace_idString, adjacentSpaceObj.comb, pawnType);
+    } else {
+        return adjacentSpaceObj;
+    }
     // return friendOrFoe(idString, adjacentSquares, pawnType);
 };
 

@@ -1,10 +1,9 @@
 // nearbyPawn = require("./nearby-pawn");
-pawnStats = require("./pawn-stats");
-adjacentSpaces = require("./test-scripts/adj-space-finder");
+const pawnStats = require("./pawn-stats");
+const adjacentSpaces = require("./test-scripts/adj-space-finder");
 // adjacentSpaces = require("./adjacent-spaces");
-
-
-checkPawnStatus = require("./check-pawn-status");
+const checkPawnStatus = require("./check-pawn-status");
+const goldilocksChecker = require("./test-scripts/goldilocks-checker");
 
 module.exports = endRound = function () {
     let pawnType = "";
@@ -75,7 +74,7 @@ module.exports = endRound = function () {
         cyborgBar.style.setProperty("--cyborg-health", (pawnTypeTotal.cyborg / pawnTypeTotalCount) * 100 + "%");
         humanBar.style.setProperty("--human-health", (pawnTypeTotal.human / pawnTypeTotalCount) * 100 + "%");
         zombieBar.style.setProperty("--zombie-health", (pawnTypeTotal.zombie / pawnTypeTotalCount) * 100 + "%");
-        
+
         // set inner text for percentages:
         cybPerText.innerHTML = ((pawnTypeTotal.cyborg / pawnTypeTotalCount) * 100).toFixed();
         humPerText.innerHTML = ((pawnTypeTotal.human / pawnTypeTotalCount) * 100).toFixed();
@@ -88,5 +87,8 @@ module.exports = endRound = function () {
         console.log(pawnTypeArr[t]);
         checkPawnStatus(pawnTypeArr[t]);
     };
+
+    // testing ONLY:
+    console.log(goldilocksChecker([1001, 1001], [1003, 1003], "zombie"));
 
 };

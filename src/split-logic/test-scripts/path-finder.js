@@ -15,18 +15,40 @@ const movesMade = [];
 createSpaces = function (totSquares) {
     const squareRoot = Math.sqrt(totSquares);
     const boardSpaces = [];
-    for (let x = 1; x <= squareRoot; x++) {
-        for (let y = 1; y <= squareRoot; y++) {
-            boardSpaces.push([x, y]);
+    for (let x = 1001; x <= (squareRoot + 1000); x++) {
+        for (let y = 1001; y <= (squareRoot + 1000); y++) {
+            contentID = `content-x${x}-y${y}`;
+            console.log(contentID);
+
+            boardSpaces.push(contentID);
+            // boardSpaces.push([x, y]);
         };
     };
     return boardSpaces;
 };
 
-gameBoard = createSpaces(9);
+// for (let i = 0; i < 3; i++) {
+//     coord_x = adjacentSpaceArray.x[i]; // ???
+
+//     for (let j = 0; j < 3; j++) {
+//         coord_y = adjacentSpaceArray.y[j]; // ???
+//         contentID = `content-x${coord_x}-y${coord_y}`;
+//         console.log("contentID");
+//         console.log(contentID);
+//         adjacentSquaresArr.push(contentID); // ???
+//     };
+// };
+// console.log("adjacentSquaresArr");
+// console.log(adjacentSquaresArr);
+
+gameBoard = createSpaces(25);
 
 const enemyMoves = function (homeSpace, destination) {
     console.log("enemyMoves function fires");
+    console.log("homeSpace:");
+    console.log(homeSpace);
+    console.log("destination:");
+    console.log(destination);
 
     if (typeof destination == "undefined") {
         console.log("Error: The destination exists beyond the dimensions of the board.")
@@ -39,8 +61,9 @@ const enemyMoves = function (homeSpace, destination) {
         if (destination[0] === homeSpace[0] && destination[1] === homeSpace[1]) {
             console.log("Congratulations, you've arrived!");
         } else {
-
-            adjArr = adjSpaceFinder(homeSpace, 1);
+            
+            //TODO: need to add a proper return to adjSpaceFinder (without automatically checking friendOrFoe function):
+            adjArr = adjSpaceFinder(homeSpace, 1); 
             // adjArr = adjacentSpaces(homeSpace);
             last_Diff = null;
             last_Arr = null;
@@ -183,22 +206,27 @@ const rateSpace = function (move, food, friend, enemy) {
 
 const Goldilocks = function (type, move, food, friend, enemy, homeSpace, rateSpace) {
 
-        this.move = move;
-        this.food = food;
-        this.friend = friend;
-        this.enemy = enemy;
-        this.type = type;
-        this.homeSpace = homeSpace;
-        this.weight = rateSpace(
-            move,
-            food,
-            friend,
-            enemy
-        );
+    this.move = move;
+    this.food = food;
+    this.friend = friend;
+    this.enemy = enemy;
+    this.type = type;
+    this.homeSpace = homeSpace;
+    this.weight = rateSpace(
+        move,
+        food,
+        friend,
+        enemy
+    );
 };
 
 const goldilocksChecker = function (homeSpace, targetSpace, pawnType) {
     // calculate distance:
+    console.log("homeSpace::");
+    console.log(homeSpace);
+    console.log("targetSpace::");
+    console.log(targetSpace);
+
     let movesArray = enemyMoves(homeSpace, targetSpace);
     console.log("movesArray:");
     console.log(movesArray.length);
@@ -207,18 +235,38 @@ const goldilocksChecker = function (homeSpace, targetSpace, pawnType) {
     console.log("distance");
     console.log(distance);
 
-    let targetAdjArr = adjacentSpaces(targetSpace);
+    let targetAdjArr = adjSpaceFinder(targetSpace, 1);
     for (let adj = 0; adj < targetAdjArr.length; adj++) {
-        if (pawnType === targetAdjArr[adj].id) {
-            console.log(`${pawnType} matches ${targetAdjArr[adj].id}`);
+        console.log("targetAdjArr[adj]");
+        console.log(targetAdjArr[adj]);
+        let evalTargetDiv = document.getElementById(targetAdjArr[adj]);
+        
+        if (evalTargetDiv.classList.contains("empty-space")) {
+
+            console.log(`${evalTargetDiv} is an empty space.`);
         } else {
-            console.log(`${pawnType} doesn't match ${targetAdjArr[adj].id}`);
+            if (evalTargetDiv.childNodes[0].classList.contains("cyborg-pawn")) {
+                console.log(`cyborg-pawn`); // add enemy/friend weights
+            } else if (evalTargetDiv.childNodes[0].classList.contains("human-pawn")) {
+                console.log(`human-pawn`);
+            } else if (evalTargetDiv.childNodes[0].classList.contains("zombie-pawn")) {
+                console.log(`zombie-pawn`);
+            } else {
+                console.log(`else`);
+            };
         };
     };
+    // for (let adj = 0; adj < targetAdjArr.length; adj++) {
+    //     if (pawnType === targetAdjArr[adj].id) {
+    //         console.log(`${pawnType} matches ${targetAdjArr[adj].id}`);
+    //     } else {
+    //         console.log(`${pawnType} doesn't match ${targetAdjArr[adj].id}`);
+    //     };
+    // };
 
     let food = 2;
     let friend = 5;
-    let enemy = - 10;
+    let enemy = -10;
 
 
     let goldSpace = new Goldilocks(

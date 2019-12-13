@@ -1,32 +1,50 @@
-const adjacentSpaces = require("./adjacent-spaces");
+const adjacentSpaces = require("./test-scripts/adj-space-finder");
+// const adjacentSpaces = require("./adjacent-spaces");
 
-const enemyMoves = function (homeSpace, destin) {
+module.exports = enemyMoves = function (homespace, destin, movesMade) {
     console.log("enemyMoves function fires");
 
+    if (typeof movesMade == "undefined") {
+        console.log("movesMade was undefined");
+        movesMade = [];
+    };
+
     if (typeof destin == "undefined") {
-        console.log("Error: The destination exists beyond the dimensions of the board.")
+        console.log("Error: The destination exists beyond the dimensions of the board.");
     } else {
-        console.log("homeSpace");
-        console.log(homeSpace);
+        console.log("homespace");
+        console.log(homespace);
         console.log("destin");
         console.log(destin);
 
-        if (destin[0] === homeSpace[0] && destin[1] === homeSpace[1]) {
+        if (destin[0] === homespace[0] && destin[1] === homespace[1]) {
             console.log("Congratulations, you've arrived!");
         } else {
-
-            adjArr = adjacentSpaces(homeSpace, 1);
+            // TODO: change all homespaces to be same camelCase or mention content string in name of variable:
+            homespace_ContentString = `content-x${homespace[0]}-y${homespace[1]}`;
+            adjArr = adjacentSpaces(homespace_ContentString, 1);
             last_Diff = null;
             last_Arr = null;
 
-            for (let i = 0; i < adjArr.length; i++) {
+            for (let i = 0; i < adjArr.comb.length; i++) {
+
+                adjArr.comb[i] = adjArr.comb[i].match(/\d+/g);
+                console.log("adjArr.comb[i] after regex match:");
+                console.log(adjArr.comb[i]);
+
+                // x_Loc = homespace[0] = parseInt(homespace[0]);
+                // y_Loc = homespace[1] = parseInt(homespace[1]);
+
                 current_Array = [
-                    adjArr[i][0], adjArr[i][1]
+                    parseInt(adjArr.comb[i][0]), parseInt(adjArr.comb[i][1])
                 ];
 
+                console.log("current_Array");
+                console.log(current_Array);
+
                 main_Diff = [
-                    destin[0] - homeSpace[0],
-                    destin[1] - homeSpace[1]
+                    destin[0] - homespace[0],
+                    destin[1] - homespace[1]
                 ];
 
                 current_Diff = [
@@ -39,7 +57,9 @@ const enemyMoves = function (homeSpace, destin) {
                 };
 
                 if (last_Arr == null) {
-                    last_Arr = homeSpace;
+                    console.log("last_Arr = homespace");
+                    console.log(homespace);
+                    last_Arr = homespace;
                 };
 
                 if (destin[0] === current_Array[0] && destin[1] === current_Array[1]) {
@@ -79,7 +99,10 @@ const enemyMoves = function (homeSpace, destin) {
                 };
             };
             movesMade.push(last_Arr);
-            enemyMoves(last_Arr, destin);
+            console.log("homespace after movesMade push");
+            console.log(homespace);
+
+            enemyMoves(last_Arr, destin, movesMade);
         };
         return movesMade;
     };
