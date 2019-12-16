@@ -4,6 +4,7 @@ const adjacentSpaces = require("./test-scripts/adj-space-finder");
 // adjacentSpaces = require("./adjacent-spaces");
 const checkPawnStatus = require("./check-pawn-status");
 const goldilocksChecker = require("./test-scripts/goldilocks-checker");
+const nextTurn = require("./test-scripts/next-turn");
 
 module.exports = endRound = function () {
     let pawnType = "";
@@ -29,7 +30,13 @@ module.exports = endRound = function () {
         ) {
 
             for (let i = 0; i < pawnStats[pawnType].pawnSpawn.length; i++) {
+                console.log("pawnStats[pawnType]::");
+                console.log(pawnStats[pawnType]);
+                console.log(pawnStats[pawnType].pawnSpawn);
+                console.log(pawnStats[pawnType].pawnSpawn[i]);
                 let pawnLoc = pawnStats[pawnType].pawnSpawn[i].loc[0];
+                console.log("pawnStats[pawnType].pawnSpawn[i].loc");
+                console.log(pawnStats[pawnType].pawnSpawn[i].loc);
                 console.log("pawnLoc");
                 console.log(pawnLoc);
 
@@ -86,8 +93,11 @@ module.exports = endRound = function () {
         console.log("pawnType before checkPawnStatus:");
         console.log(pawnTypeArr[t]);
         checkPawnStatus(pawnTypeArr[t]);
+        // nextTurn(true, pawnTypeArr[t]);
     };
 
-    // testing ONLY:
-    console.log(goldilocksChecker([1001, 1001], [1003, 1003], "zombie"));
+    // touchEvents();
+    // testing ONLY: bool needs to come from last player's turnEnd();
+    // whoseTurn(homespace, 2, pawnType);
+    // console.log(goldilocksChecker([1001, 1001], [1003, 1003], "zombie"));
 };

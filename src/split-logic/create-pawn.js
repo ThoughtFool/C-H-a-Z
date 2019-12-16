@@ -18,6 +18,7 @@ module.exports = createPawn = function (destinationID, pawnCounter, pawnType) {
         newPawn = document.getElementById(pawnId);
         newPawn.classList.add("circle-shape");
         newPawn.classList.add(`${pawnType}-pawn`);
+        newPawn.classList.add(`pawn`);
         newPawn.setAttribute("src", `/assets/images/${pawnType}-pawn.png`);
 
         // append health-score circle:

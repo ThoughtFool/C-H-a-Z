@@ -70,6 +70,8 @@ adjacentSpaceObj = adjContentIDStringArr(homespace, adjacentSpaceObj, availableM
 
     if (message === "endRound") {
         return friendOrFoe(homespace_idString, adjacentSpaceObj.comb, pawnType);
+    } else if (message === "compTurn") {
+        console.log("compTurn msg in adjSpacesFinder");
     } else {
         return adjacentSpaceObj;
     }

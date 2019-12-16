@@ -18,6 +18,12 @@ module.exports = goldilocksChecker = function (homeSpace, targetSpace, pawnType)
     console.log("distance");
     console.log(distance);
 
+    let weightHolder = {
+        cyborg: [],
+        human: [],
+        zombie: []
+    };
+
     let targetSpace_ContentString = `content-x${targetSpace[0]}-y${targetSpace[1]}`;
     let targetAdjArr = adjSpaceFinder(targetSpace_ContentString, 1);
     console.log("targetAdjArr");
@@ -33,11 +39,14 @@ module.exports = goldilocksChecker = function (homeSpace, targetSpace, pawnType)
             console.log(`${evalTargetDiv} is an empty space.`);
         } else {
             if (evalTargetDiv.childNodes[0].classList.contains("cyborg-pawn")) {
-                console.log(`cyborg-pawn`); // add enemy/friend weights
+                console.log(`cyborg-pawn`);
+                weightHolder.cyborg.push("cyborg"); // add enemy/friend weights
             } else if (evalTargetDiv.childNodes[0].classList.contains("human-pawn")) {
                 console.log(`human-pawn`);
+                weightHolder.human.push("human");
             } else if (evalTargetDiv.childNodes[0].classList.contains("zombie-pawn")) {
                 console.log(`zombie-pawn`);
+                weightHolder.zombie.push("zombie");
             } else {
                 console.log(`else`);
             };
@@ -66,6 +75,9 @@ module.exports = goldilocksChecker = function (homeSpace, targetSpace, pawnType)
         rateSpace
     );
 
-    return goldSpace;
+    goldSpace.weightHolder = weightHolder;
+    console.log("goldSpace:");
+    console.log(goldSpace);
 
+    return goldSpace;
 };

@@ -1,10 +1,11 @@
 // isAdjacent = require("./split-logic/isAdjacent");
 createBoard = require("./split-logic/createBoard");
 counter = 0;
-randomPlace = require("./split-logic/random-place");
-dragAndDrop = require("./split-logic/drag-and-drop");
-endRound = require("./split-logic/end-round");
-deployDrone = require("./split-logic/deploy-drone");
+const randomPlace = require("./split-logic/random-place");
+const dragAndDrop = require("./split-logic/drag-and-drop");
+const touchEvents = require("./split-logic/test-scripts/touch-events");
+const endRound = require("./split-logic/end-round");
+const deployDrone = require("./split-logic/deploy-drone");
 
 var randBtn = document.getElementById("create-pawn");
 var endRoundBtn = document.getElementById("end-round");
@@ -15,7 +16,7 @@ var startBtn = document.getElementById("submit-test-num");
 var acc = document.getElementsByClassName("accordion");
 
 // disable all console messages:
-console.log = function () {};
+// console.log = function () {};
 
 for (let i = 0; i < acc.length; i++) {
     acc[i].addEventListener("click", function () {
@@ -89,6 +90,7 @@ randBtn.addEventListener("click", function () {
     // randomPlace(rootNum, rootNum - 1, "zombie");
     // randomPlace(rootNum, rootNum - 1, "cyborg");
     dragAndDrop();
+    // touchEvents();
 
     deployDrone();
 });

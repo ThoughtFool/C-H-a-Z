@@ -1,4 +1,6 @@
 pawnStats = require("./pawn-stats");
+// const touchEvents = require("./test-scripts/touch-events");
+
 // TODO: move this object into the playerStats object:
 // testing ONLY:
 // pawnIdArray = {
@@ -61,4 +63,5 @@ module.exports = randomPlace = function (userInputNum, howManyToPlace) {
         // TODO: pawn colors need to be changed to primary colors, so that the neutral stauts of pawns' colors can change to secondary colors;
         // TODO: add blinking strobe effect to neutral pawns? add hover over arrow effect when pawn is picked up?
     };
+    // touchEvents();
 };

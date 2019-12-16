@@ -78,7 +78,7 @@ module.exports = updatePawnStatus = function (string, pawnID, newParentID) {
                     console.log(`cyborg- ${pawnID} -found!`); // TODO: use this to find and change class/race
                     console.log(`cyborg location was: ${cyborgSpawn[z].loc}.`);
 
-                    cyborgSpawn[z].loc = newParentID;
+                    cyborgSpawn[z].loc[0] = newParentID;
                     console.log(`cyborg location now is: ${cyborgSpawn[z].loc}.`);
                 };
             };
@@ -95,7 +95,7 @@ module.exports = updatePawnStatus = function (string, pawnID, newParentID) {
                     console.log(`human- ${pawnID} -found!`); // TODO: use this to find and change class/race
                     console.log(`human location was: ${humanSpawn[z].loc}.`);
 
-                    humanSpawn[z].loc = newParentID;
+                    humanSpawn[z].loc[0] = newParentID;
                     console.log(`human location now is: ${humanSpawn[z].loc}.`);
                 };
             };
@@ -112,7 +112,7 @@ module.exports = updatePawnStatus = function (string, pawnID, newParentID) {
                     console.log(`zombie- ${pawnID} -found!`); // TODO: use this to find and change class/race
                     console.log(`zombie location was: ${zombieSpawn[z].loc}.`);
 
-                    zombieSpawn[z].loc = newParentID;
+                    zombieSpawn[z].loc[0] = newParentID;
                     console.log(`zombie location now is: ${zombieSpawn[z].loc}.`);
                 };
             };
