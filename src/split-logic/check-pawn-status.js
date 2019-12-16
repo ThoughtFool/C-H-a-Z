@@ -1,15 +1,13 @@
-pawnStats = require("./pawn-stats");
-pawnSwitch = require("./pawn-switch");
-module.exports = checkPawnStatus = function (pawnType) {
+const pawnStats = require("./pawn-stats");
+const pawnSwitch = require("./pawn-switch");
+const updatePercent = require("./test-scripts/update-percent");
+
+module.exports = checkPawnStatus = function (pawnType, pawnTypeTotal) {
     console.log("checkPawnStatus function fires");
-    // check pawns' health stats to verify allegiance
 
     // pawnTypeArr = ["human", "zombie", "cyborg"];
     // TODO: Add 2 more pawn types after adding to create-pawn.js file:
     // pawnTypeArr = ["human", "zombie", "cyborg", "sleeping-zombie", "sleepy-cyborg"];
-    // for (let x = 0; x < pawnTypeArr.length; x++) {
-    //     let pawnType = pawnTypeArr[x];        
-    // };
 
     console.log("pawnType before for loop:"); 
     console.log(pawnType);
@@ -57,6 +55,5 @@ module.exports = checkPawnStatus = function (pawnType) {
             console.log(`i is ${i} and allPawnSpawn[i].health is ${allPawnSpawn[i].health} and  pawnType is ${pawnType}`);
         };
     };
-    // health = +10;
-    // pawnStats.human.pawnSpawn[i].health = health;
+    updatePercent(pawnTypeTotal);
 };

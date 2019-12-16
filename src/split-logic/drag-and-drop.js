@@ -32,12 +32,9 @@ module.exports = dragAndDrop = function () {
     };
     document.addEventListener("dragstart", dragStart);
 
-
     var holdingPawn = false;
     var holdingClass = null;
     var parentDiv = null;
-
-
     var counterValue = 0;
 
     // Events fired on the drop target:
@@ -65,7 +62,6 @@ module.exports = dragAndDrop = function () {
         if (currentPawnHeld != null) {
             if (document.getElementById(currentPawnHeld).classList.contains("human-pawn")) {
                 console.log("currentPawnHeld = human-pawn");
-
 
                 if (event.target.classList.contains("empty-space")) {
                     // var data = event.dataTransfer.setData("Text");

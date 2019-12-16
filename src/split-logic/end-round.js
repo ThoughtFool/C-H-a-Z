@@ -10,13 +10,6 @@ module.exports = endRound = function () {
     let pawnType = "";
     let pawnTypeArr = [];
     let pawnTypeTotal = {};
-    // testing ONLY:
-    // let pawnType = "human";
-
-    // console.log("pawnStats");
-    // console.log(pawnStats);
-    // console.log("pawnStats[pawnType].pawnSpawn[0]");
-    // console.log(pawnStats[pawnType].pawnSpawn[0]);
 
     for (pawnType in pawnStats) {
         console.log("pawnType");
@@ -61,38 +54,38 @@ module.exports = endRound = function () {
     // call function to check status of pawns & evaluate if need to change allegiance:
     // testing ONLY:
 
-    updatePercent = function () {
-        // for (let t = 0; t < pawnTypeArr.length; t++) {
-        console.log("updatePercent function fires:");
-        console.log(pawnTypeTotal);
-        let pawnTypeTotalCount = pawnTypeTotal.cyborg + pawnTypeTotal.human + pawnTypeTotal.zombie;
-        // };
-        // let root = document.documentElement;
+    // updatePercent = function () {
+    //     // for (let t = 0; t < pawnTypeArr.length; t++) {
+    //     console.log("updatePercent function fires:");
+    //     console.log(pawnTypeTotal);
+    //     let pawnTypeTotalCount = pawnTypeTotal.cyborg + pawnTypeTotal.human + pawnTypeTotal.zombie;
+    //     // };
+    //     // let root = document.documentElement;
 
-        let cyborgBar = document.getElementById("cyborg-bar");
-        let humanBar = document.getElementById("human-bar");
-        let zombieBar = document.getElementById("zombie-bar");
+    //     let cyborgBar = document.getElementById("cyborg-bar");
+    //     let humanBar = document.getElementById("human-bar");
+    //     let zombieBar = document.getElementById("zombie-bar");
 
-        let cybPerText = document.getElementById("cyborg-percentage");
-        let humPerText = document.getElementById("human-percentage");
-        let zomPerText = document.getElementById("zombie-percentage");
+    //     let cybPerText = document.getElementById("cyborg-percentage");
+    //     let humPerText = document.getElementById("human-percentage");
+    //     let zomPerText = document.getElementById("zombie-percentage");
 
-        // set CSS property for percentages:
-        cyborgBar.style.setProperty("--cyborg-health", (pawnTypeTotal.cyborg / pawnTypeTotalCount) * 100 + "%");
-        humanBar.style.setProperty("--human-health", (pawnTypeTotal.human / pawnTypeTotalCount) * 100 + "%");
-        zombieBar.style.setProperty("--zombie-health", (pawnTypeTotal.zombie / pawnTypeTotalCount) * 100 + "%");
+    //     // set CSS property for percentages:
+    //     cyborgBar.style.setProperty("--cyborg-health", (pawnTypeTotal.cyborg / pawnTypeTotalCount) * 100 + "%");
+    //     humanBar.style.setProperty("--human-health", (pawnTypeTotal.human / pawnTypeTotalCount) * 100 + "%");
+    //     zombieBar.style.setProperty("--zombie-health", (pawnTypeTotal.zombie / pawnTypeTotalCount) * 100 + "%");
 
-        // set inner text for percentages:
-        cybPerText.innerHTML = ((pawnTypeTotal.cyborg / pawnTypeTotalCount) * 100).toFixed();
-        humPerText.innerHTML = ((pawnTypeTotal.human / pawnTypeTotalCount) * 100).toFixed();
-        zomPerText.innerHTML = ((pawnTypeTotal.zombie / pawnTypeTotalCount) * 100).toFixed();
-    };
-    updatePercent();
+    //     // set inner text for percentages:
+    //     cybPerText.innerHTML = ((pawnTypeTotal.cyborg / pawnTypeTotalCount) * 100).toFixed();
+    //     humPerText.innerHTML = ((pawnTypeTotal.human / pawnTypeTotalCount) * 100).toFixed();
+    //     zomPerText.innerHTML = ((pawnTypeTotal.zombie / pawnTypeTotalCount) * 100).toFixed();
+    // };
+    // updatePercent();
 
     for (let t = 0; t < pawnTypeArr.length; t++) {
         console.log("pawnType before checkPawnStatus:");
         console.log(pawnTypeArr[t]);
-        checkPawnStatus(pawnTypeArr[t]);
+        checkPawnStatus(pawnTypeArr[t], pawnTypeTotal);
         // nextTurn(true, pawnTypeArr[t]);
     };
 

@@ -16,7 +16,7 @@ var startBtn = document.getElementById("submit-test-num");
 var acc = document.getElementsByClassName("accordion");
 
 // disable all console messages:
-// console.log = function () {};
+console.log = function () {};
 
 for (let i = 0; i < acc.length; i++) {
     acc[i].addEventListener("click", function () {
@@ -90,7 +90,7 @@ randBtn.addEventListener("click", function () {
     // randomPlace(rootNum, rootNum - 1, "zombie");
     // randomPlace(rootNum, rootNum - 1, "cyborg");
     dragAndDrop();
-    // touchEvents();
+    touchEvents();
 
     deployDrone();
 });
