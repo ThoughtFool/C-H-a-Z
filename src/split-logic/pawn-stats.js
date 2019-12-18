@@ -22,5 +22,6 @@ module.exports = pawnStats = {
         human: [],
         zombie: [],
         cyborg: []
-    }
+    },
+    gameBoard: []
 };

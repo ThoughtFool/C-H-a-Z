@@ -1,6 +1,6 @@
 const pawnStats = require("../pawn-stats");
 const adjSpaceFinder = require("./adj-space-finder");
-const goldilocksChecker = require("./goldilocks-checker");
+// const goldilocksChecker = require("./goldilocks-checker");
 
 module.exports = nextTurn = function (computerBool, pawnType) {
     console.log("nextTurn function fires");
@@ -17,6 +17,8 @@ module.exports = nextTurn = function (computerBool, pawnType) {
 
     if (computerBool === true) {
     // if (computerBool === true && pawnType === "cyborg") {
+        console.log("pawnStats[pawnType].pawnSpawn.length");
+        console.log(pawnStats[pawnType].pawnSpawn.length);
 
         for (let loop = 0; loop < pawnStats[pawnType].pawnSpawn.length; loop++){
             let currentPawnLoc = pawnStats[pawnType].pawnSpawn[loop].loc;
@@ -27,16 +29,18 @@ module.exports = nextTurn = function (computerBool, pawnType) {
             console.log("currentPawnID");
             console.log(currentPawnID);
 
-            let currentAdjSpaceArr = adjSpaceFinder(currentPawnLoc, 1, null, pawnType, "compTurn");
+            let currentAdjSpaceArr = adjSpaceFinder(currentPawnLoc[0], 1, null, pawnType, "compTurn");
 
-            currentGoldiPawns.pawnID = currentPawnID;
-            currentGoldiPawns.pawnLoc = currentPawnLoc;
-            currentGoldiPawns.adjSpaceArray = currentAdjSpaceArr;
+            // currentGoldiPawns.pawnID = currentPawnID;
+            // currentGoldiPawns.pawnLoc = currentPawnLoc;
+            // currentGoldiPawns.adjSpaceArray = currentAdjSpaceArr.comb;
+            console.log("currentAdjSpaceArr::");
+            console.log(currentAdjSpaceArr);
 
             currentGoldiPawns.push({
                 pawnID: currentPawnID,
                 pawnLoc: currentPawnLoc,
-                adjSpaceArray: currentAdjSpaceArr
+                adjSpaceArray: currentAdjSpaceArr.comb
             });
             // need TODO: create a function to change to contentID string and reverse:
 
@@ -49,7 +53,9 @@ module.exports = nextTurn = function (computerBool, pawnType) {
             console.log(currentGoldiPawns);
 
             // console.log(goldilocksChecker([1001, 1001], [1003, 1003], pawnType));
-        }};
+        }} else {
+            console.log(`computerBool is ${computerBool}`);
+        };
         return currentGoldiPawns;
 
 

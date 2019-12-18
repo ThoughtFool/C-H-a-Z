@@ -1,12 +1,14 @@
-isSquare = require("./isSquare");
-MakeSquare = require("./constructor");
-createPawn = require("./create-pawn");
+const isSquare = require("./isSquare");
+const MakeSquare = require("./constructor");
+const createPawn = require("./create-pawn");
+const pawnStats = require("./pawn-stats");
 
 module.exports = createBoard = function (numberOfSpaces) {
+
     if (isSquare(numberOfSpaces)) {
         boardHolder = document.getElementById("board-holder");
         console.log("numberOfSpaces is square");
-        gameBoard = [];
+        let gameBoard = [];
         baseNum = 1000;
         console.log("square root of " + numberOfSpaces);
         sqRootNum = Math.sqrt(numberOfSpaces);
@@ -38,6 +40,8 @@ module.exports = createBoard = function (numberOfSpaces) {
                 newSquare = document.getElementById(squareId);
                 newSquare.classList.add("dyna-square");
 
+                // pawnStats.gameBoard.push(squareId);`
+
                 // divide the size of squares evenly:
                 percentageSize = 1/sqRootNum * 100;
                 console.log(percentageSize);
@@ -51,6 +55,8 @@ module.exports = createBoard = function (numberOfSpaces) {
                 newContentSquare = document.getElementById(contentId);
                 newContentSquare.classList.add("dyna-square-content");
                 newContentSquare.classList.add("empty-space");
+                pawnStats.gameBoard.push(contentId);
+
 
             };
         };

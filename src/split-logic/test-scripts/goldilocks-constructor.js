@@ -1,6 +1,6 @@
 const rateSpace = require("./rate-space");
 
-module.exports = Goldilocks = function (type, move, food, friend, enemy, homeSpace, rateSpace) {
+module.exports = Goldilocks = function (type, move, food, friend, enemy, homeSpace, targetSpace, rateSpace) {
 
     this.move = move;
     this.food = food;
@@ -8,6 +8,7 @@ module.exports = Goldilocks = function (type, move, food, friend, enemy, homeSpa
     this.enemy = enemy;
     this.type = type;
     this.homeSpace = homeSpace;
+    this.targetSpace = targetSpace;
     this.weight = rateSpace(
         move,
         food,

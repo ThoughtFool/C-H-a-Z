@@ -1,7 +1,7 @@
-const adjacentSpaces = require("./test-scripts/adj-space-finder");
-// const adjacentSpaces = require("./adjacent-spaces");
+// const adjacentSpaceFinder = require("./test-scripts/adj-space-finder");
+// const adjacentSpaceFinder = require("./adjacent-spaces");
 
-module.exports = enemyMoves = function (homespace, destin, movesMade) {
+module.exports = enemyMoves = function (homespace, destin, movesMade, adjacentSpaceFinder) {
     console.log("enemyMoves function fires");
 
     if (typeof movesMade == "undefined") {
@@ -16,13 +16,14 @@ module.exports = enemyMoves = function (homespace, destin, movesMade) {
         console.log(homespace);
         console.log("destin");
         console.log(destin);
+        // adjacentSpaceFinder([101, 105], 1);
 
         if (destin[0] === homespace[0] && destin[1] === homespace[1]) {
             console.log("Congratulations, you've arrived!");
         } else {
             // TODO: change all homespaces to be same camelCase or mention content string in name of variable:
             homespace_ContentString = `content-x${homespace[0]}-y${homespace[1]}`;
-            adjArr = adjacentSpaces(homespace_ContentString, 1);
+            adjArr = adjacentSpaceFinder(homespace_ContentString, 1, null, null, null);
             last_Diff = null;
             last_Arr = null;
 

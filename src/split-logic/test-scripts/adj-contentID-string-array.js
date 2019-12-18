@@ -1,9 +1,27 @@
+
 module.exports = adjContentIDStringArr = function (homespace, adjacentSpaceObj, availableMoves) {
     const firstSquare = {};
     const adjacentSquares = [];
 
     firstSquare.x = 1001;
     firstSquare.y = 1001;
+
+    // if (pawnStats.gameBoard[0].includes())
+    // lastSquare.x = 1001;
+    // lastSquare.y = 1001;
+
+    //     // baseNum = 1000;
+    //     let numberOfSpaces = localStorage.getItem("boardSize");
+    //     console.log("square root of " + numberOfSpaces);
+
+    //     let sqRootNum = Math.sqrt(numberOfSpaces);
+    //     console.log(sqRootNum);
+
+    //     for (let i = 1; i <= sqRootNum; i++) {
+    //         for (let j = 1; j <= sqRootNum; j++) {
+    //         }
+    //     };
+
 
     let loopSize = availableMoves * 2 + 1;
 

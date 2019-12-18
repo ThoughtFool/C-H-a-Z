@@ -4,7 +4,8 @@ const adjacentSpaces = require("./test-scripts/adj-space-finder");
 // adjacentSpaces = require("./adjacent-spaces");
 const checkPawnStatus = require("./check-pawn-status");
 const goldilocksChecker = require("./test-scripts/goldilocks-checker");
-const nextTurn = require("./test-scripts/next-turn");
+const nextTurn = require("./test-scripts/comp-turn");
+// const nextTurn = require("./test-scripts/next-turn");
 
 module.exports = endRound = function () {
     let pawnType = "";
@@ -93,4 +94,7 @@ module.exports = endRound = function () {
     // testing ONLY: bool needs to come from last player's turnEnd();
     // whoseTurn(homespace, 2, pawnType);
     // console.log(goldilocksChecker([1001, 1001], [1003, 1003], "zombie"));
+    
+    // let turnOrder = TODO: get info from browser? local storage?
+    nextTurn(true, "zombie");
 };

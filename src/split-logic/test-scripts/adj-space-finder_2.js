@@ -10,13 +10,13 @@ const goldilocksChecker = require("./goldilocks-checker");
 
 const movesMade = [];
 
-module.exports = function adjacentSpaces (homespace, availableMoves, destination, pawnType, message) {
-    console.log("adjacentSpaces function fires");
+module.exports = adjacentSpaces = function (homespace, availableMoves, destination, pawnType, message) {
+    console.log("adjacentSpaces_2 function fires");
 
     const adjacentSquares = [];
 
-//////////////////////////////////////////////////////////
-// TODO: export this into a function?
+    //////////////////////////////////////////////////////////
+    // TODO: export this into a function?
 
     let homespace_idString = homespace;
     console.log("homespace_idString");
@@ -42,7 +42,7 @@ module.exports = function adjacentSpaces (homespace, availableMoves, destination
     console.log("y_Loc");
     console.log(y_Loc);
 
-//////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////
 
     for (let q = 0; q <= availableMoves; q++) {
 
@@ -62,10 +62,10 @@ module.exports = function adjacentSpaces (homespace, availableMoves, destination
 
     console.log("adjacentSpaceObj");
     console.log(adjacentSpaceObj);
-    
-//////////////////////////////////////////////////////////
 
-adjacentSpaceObj = adjContentIDStringArr(homespace, adjacentSpaceObj, availableMoves);
+    //////////////////////////////////////////////////////////
+
+    adjacentSpaceObj = adjContentIDStringArr(homespace, adjacentSpaceObj, availableMoves);
 
     console.log("adjacentSpaceObj.comb");
     console.log(adjacentSpaceObj.comb);
