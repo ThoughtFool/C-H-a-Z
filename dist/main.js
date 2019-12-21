@@ -860,7 +860,7 @@ module.exports = endRound = function () {
     // console.log(goldilocksChecker([1001, 1001], [1003, 1003], "zombie"));
     
     // let turnOrder = TODO: get info from browser? local storage?
-    nextTurn(true, "zombie");
+    return nextTurn(true, "zombie");
 };
 
 /***/ }),
@@ -1582,6 +1582,41 @@ adjacentSpaceObj = adjContentIDStringArr(homespace, adjacentSpaceObj, availableM
 
 /***/ }),
 
+/***/ "./src/split-logic/test-scripts/best-move.js":
+/*!***************************************************!*\
+  !*** ./src/split-logic/test-scripts/best-move.js ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = bestMove = function (goldSpaceArr) {
+    console.log("bestMove function fires");
+    console.log(goldSpaceArr);
+
+    let newGoldSpaceArr = {};
+
+    for (let g = 1; g < goldSpaceArr.length; g++) {
+
+        if (goldSpaceArr[g - 1].weight != null) {
+            if (goldSpaceArr[g].weight > goldSpaceArr[g - 1].weight) {
+                goldSpaceArr.splice((g - 1), 1);
+                console.log("g is bigger");
+                console.log(goldSpaceArr);
+
+            } else if (goldSpaceArr[g].weight <= goldSpaceArr[g - 1].weight) {
+                goldSpaceArr.splice(g, 1);
+                console.log("g - 1 is bigger");
+                console.log(goldSpaceArr);
+
+            };
+        };
+        newGoldSpaceArr = goldSpaceArr;
+    };
+    return newGoldSpaceArr;
+};
+
+/***/ }),
+
 /***/ "./src/split-logic/test-scripts/comp-turn.js":
 /*!***************************************************!*\
   !*** ./src/split-logic/test-scripts/comp-turn.js ***!
@@ -1590,7 +1625,9 @@ adjacentSpaceObj = adjContentIDStringArr(homespace, adjacentSpaceObj, availableM
 /***/ (function(module, exports, __webpack_require__) {
 
 const pawnStats = __webpack_require__(/*! ../pawn-stats */ "./src/split-logic/pawn-stats.js");
+const bestMove = __webpack_require__(/*! ./best-move */ "./src/split-logic/test-scripts/best-move.js");
 const adjacentSpaces = __webpack_require__(/*! ./adj-space-finder */ "./src/split-logic/test-scripts/adj-space-finder.js");
+const moveEnemyPawnFunc = __webpack_require__(/*! ./move-enemy-pawn-func */ "./src/split-logic/test-scripts/move-enemy-pawn-func.js");
 
 module.exports = compTurn = function (computerBool, pawnType) {
 
@@ -1616,7 +1653,7 @@ module.exports = compTurn = function (computerBool, pawnType) {
     let currentGoldiPawns = [];
     let goldilocksObjectHolder = {};
     let goldSpaceArr = [];
-
+    let moveEnemyPawn = {};
 
     if (computerBool === true) {
         // if (computerBool === true && pawnType === "cyborg") {
@@ -1654,6 +1691,7 @@ module.exports = compTurn = function (computerBool, pawnType) {
 
                 let targetSpace_idString = currentAdjSpaceArr.comb[adj];
                 let targetSpace = targetSpace_idString;
+
                 console.log("targetSpace_idString");
                 console.log(targetSpace_idString);
                 targetSpace = targetSpace.match(/\d+/g);
@@ -1664,20 +1702,38 @@ module.exports = compTurn = function (computerBool, pawnType) {
                 //////////////////////////////////////////////////////////////////////////
 
                 let currentPawnHomespace_idString = currentPawnLoc[0];
+                let currentTargetElem = document.getElementById(targetSpace_idString);
                 let currentPawnHomespace = currentPawnHomespace_idString;
-                console.log("currentPawnHomespace_idString");
-                console.log(currentPawnHomespace_idString);
-                currentPawnHomespace = currentPawnHomespace.match(/\d+/g);
-                console.log("currentPawnHomespace after match:");
-                console.log(currentPawnHomespace);
-                currentPawnHomespace = [parseInt(currentPawnHomespace[0]), parseInt(currentPawnHomespace[1])];
 
-                // console.log(goldilocksChecker(currentPawnHomespace, targetSpace, pawnType, adjacentSpaces, currentPawnHomespace_idString)); // homeSpace, targetSpace, pawnType
-                // create a function to compare returned values:
-                goldilocksObjectHolder = goldilocksChecker(currentPawnHomespace, targetSpace, pawnType, adjacentSpaces, currentPawnHomespace_idString);
-                goldSpaceArr.push(goldilocksObjectHolder);
+                if (currentTargetElem != null) {
+                    if (!currentTargetElem.classList.contains("empty-space")) {
+                        console.log("currentTargetElem is NOT an empty space:");
+                        console.log(currentTargetElem);
+                    } else {
+                        console.log("currentTargetElem is an empty space:");
+                        console.log(currentTargetElem);
 
-                // create a function to move pawn - document.getElementById(adjacentSpaceObj.pawnID):
+                        console.log("currentPawnHomespace_idString");
+                        console.log(currentPawnHomespace_idString);
+                        currentPawnHomespace = currentPawnHomespace.match(/\d+/g);
+                        console.log("currentPawnHomespace after match:");
+                        console.log(currentPawnHomespace);
+                        currentPawnHomespace = [parseInt(currentPawnHomespace[0]), parseInt(currentPawnHomespace[1])];
+
+                        // console.log(goldilocksChecker(currentPawnHomespace, targetSpace, pawnType, adjacentSpaces, currentPawnHomespace_idString)); // homeSpace, targetSpace, pawnType
+                        // create a function to compare returned values:
+                        goldilocksObjectHolder = goldilocksChecker(currentPawnHomespace, targetSpace, pawnType, adjacentSpaces, currentPawnHomespace_idString);
+                        goldSpaceArr.push(goldilocksObjectHolder);
+
+                        if (goldSpaceArr.length > 1) {
+                            console.log("bestMove(goldSpaceArr):");
+                            moveEnemyPawn = bestMove(goldSpaceArr);
+                        };
+
+                        // create a function to move pawn - document.getElementById(adjacentSpaceObj.pawnID):
+                    };
+                };
+
             };
 
             console.log("currentAdjSpaceArr::");
@@ -1694,26 +1750,11 @@ module.exports = compTurn = function (computerBool, pawnType) {
             //     };
             // };
 
-            const bestMove = function (goldSpaceArr) {
-                for (let g = 1; g < goldSpaceArr.length; g++) {
-                    if (goldSpaceArr[g - 1].weight != null) {
-                        if (goldSpaceArr[g].weight > goldSpaceArr[g-1].weight) {
-                            goldSpaceArr.splice((g - 1), 1);
-                            console.log("g is bigger");
-                        } else {
-                            goldSpaceArr.splice(g, 1);
-                            console.log("g - 1 is bigger");
-                        };
-                    };
-                };
-                return goldSpaceArr;
-            };
-
-            console.log("goldSpaceArr");
+            console.log("goldSpaceArr:");
             console.log(goldSpaceArr);
 
-            console.log("bestMove(goldSpaceArr)");
-            console.log(bestMove(goldSpaceArr));
+            // console.log("bestMove(goldSpaceArr):");
+            // console.log(bestMove(goldSpaceArr));
 
 
             // currentGoldiPawns.push({
@@ -1732,7 +1773,18 @@ module.exports = compTurn = function (computerBool, pawnType) {
             // console.log(currentGoldiPawns);
 
             // console.log(goldilocksChecker([1001, 1001], [1003, 1003], pawnType));
-        }
+        }; // TODO: check after each "zombie" bestMove... NOT all
+        // console.log("bestMove(goldSpaceArr):");
+        // console.log(bestMove(goldSpaceArr));
+
+        console.log("moveEnemyPawn[0].homespace_idString");
+        console.log(moveEnemyPawn[0].homespace_idString);
+        console.log("moveEnemyPawn[0].targetSpace_idString");
+        console.log(moveEnemyPawn[0].targetSpace_idString);
+        
+        return moveEnemyPawnFunc(moveEnemyPawn[0].homespace_idString, moveEnemyPawn[0].targetSpace_idString);
+        // return moveEnemyPawnFunc(moveEnemyPawn); TODO: break apart in next function, not here ^^^
+        // return moveEnemyPawn[0].homespace_idString;
     } else {
         console.log(`computerBool is ${computerBool}`);
     };
@@ -1849,7 +1901,9 @@ module.exports = goldilocksChecker = function (homeSpace, targetSpace, pawnType,
         friend,
         enemy,
         homeSpace,
+        homespace_idString,
         targetSpace,
+        targetSpace_ContentString,
         rateSpace
     );
 
@@ -1876,7 +1930,7 @@ module.exports = goldilocksChecker = function (homeSpace, targetSpace, pawnType,
 
 const rateSpace = __webpack_require__(/*! ./rate-space */ "./src/split-logic/test-scripts/rate-space.js");
 
-module.exports = Goldilocks = function (type, move, food, friend, enemy, homeSpace, targetSpace, rateSpace) {
+module.exports = Goldilocks = function (type, move, food, friend, enemy, homeSpace, homespace_idString, targetSpace, targetSpace_idString, rateSpace) {
 
     this.move = move;
     this.food = food;
@@ -1884,13 +1938,39 @@ module.exports = Goldilocks = function (type, move, food, friend, enemy, homeSpa
     this.enemy = enemy;
     this.type = type;
     this.homeSpace = homeSpace;
+    this.homespace_idString = homespace_idString;
     this.targetSpace = targetSpace;
+    this.targetSpace_idString = targetSpace_idString;
     this.weight = rateSpace(
         move,
         food,
         friend,
         enemy
     );
+};
+
+/***/ }),
+
+/***/ "./src/split-logic/test-scripts/move-enemy-pawn-func.js":
+/*!**************************************************************!*\
+  !*** ./src/split-logic/test-scripts/move-enemy-pawn-func.js ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = moveEnemyPawnFunc = function (oldSpaceID, newSpaceID) {
+    console.log("moveEnemyPawnFunc function fires");
+
+    let oldEnemySpace = document.getElementById(oldSpaceID);
+    console.log(oldEnemySpace);
+
+    let beforeMovePawn = oldEnemySpace.childNodes[0];
+    console.log(beforeMovePawn);
+
+    let newEnemySpace = document.getElementById(newSpaceID);
+    console.log(newEnemySpace);
+
+    return newEnemySpace.appendChild(beforeMovePawn);    
 };
 
 /***/ }),

@@ -1,5 +1,7 @@
 const pawnStats = require("../pawn-stats");
+const bestMove = require("./best-move");
 const adjacentSpaces = require("./adj-space-finder");
+const moveEnemyPawnFunc = require("./move-enemy-pawn-func");
 
 module.exports = compTurn = function (computerBool, pawnType) {
 
@@ -25,7 +27,7 @@ module.exports = compTurn = function (computerBool, pawnType) {
     let currentGoldiPawns = [];
     let goldilocksObjectHolder = {};
     let goldSpaceArr = [];
-
+    let moveEnemyPawn = {};
 
     if (computerBool === true) {
         // if (computerBool === true && pawnType === "cyborg") {
@@ -63,6 +65,7 @@ module.exports = compTurn = function (computerBool, pawnType) {
 
                 let targetSpace_idString = currentAdjSpaceArr.comb[adj];
                 let targetSpace = targetSpace_idString;
+
                 console.log("targetSpace_idString");
                 console.log(targetSpace_idString);
                 targetSpace = targetSpace.match(/\d+/g);
@@ -73,20 +76,38 @@ module.exports = compTurn = function (computerBool, pawnType) {
                 //////////////////////////////////////////////////////////////////////////
 
                 let currentPawnHomespace_idString = currentPawnLoc[0];
+                let currentTargetElem = document.getElementById(targetSpace_idString);
                 let currentPawnHomespace = currentPawnHomespace_idString;
-                console.log("currentPawnHomespace_idString");
-                console.log(currentPawnHomespace_idString);
-                currentPawnHomespace = currentPawnHomespace.match(/\d+/g);
-                console.log("currentPawnHomespace after match:");
-                console.log(currentPawnHomespace);
-                currentPawnHomespace = [parseInt(currentPawnHomespace[0]), parseInt(currentPawnHomespace[1])];
 
-                // console.log(goldilocksChecker(currentPawnHomespace, targetSpace, pawnType, adjacentSpaces, currentPawnHomespace_idString)); // homeSpace, targetSpace, pawnType
-                // create a function to compare returned values:
-                goldilocksObjectHolder = goldilocksChecker(currentPawnHomespace, targetSpace, pawnType, adjacentSpaces, currentPawnHomespace_idString);
-                goldSpaceArr.push(goldilocksObjectHolder);
+                if (currentTargetElem != null) {
+                    if (!currentTargetElem.classList.contains("empty-space")) {
+                        console.log("currentTargetElem is NOT an empty space:");
+                        console.log(currentTargetElem);
+                    } else {
+                        console.log("currentTargetElem is an empty space:");
+                        console.log(currentTargetElem);
 
-                // create a function to move pawn - document.getElementById(adjacentSpaceObj.pawnID):
+                        console.log("currentPawnHomespace_idString");
+                        console.log(currentPawnHomespace_idString);
+                        currentPawnHomespace = currentPawnHomespace.match(/\d+/g);
+                        console.log("currentPawnHomespace after match:");
+                        console.log(currentPawnHomespace);
+                        currentPawnHomespace = [parseInt(currentPawnHomespace[0]), parseInt(currentPawnHomespace[1])];
+
+                        // console.log(goldilocksChecker(currentPawnHomespace, targetSpace, pawnType, adjacentSpaces, currentPawnHomespace_idString)); // homeSpace, targetSpace, pawnType
+                        // create a function to compare returned values:
+                        goldilocksObjectHolder = goldilocksChecker(currentPawnHomespace, targetSpace, pawnType, adjacentSpaces, currentPawnHomespace_idString);
+                        goldSpaceArr.push(goldilocksObjectHolder);
+
+                        if (goldSpaceArr.length > 1) {
+                            console.log("bestMove(goldSpaceArr):");
+                            moveEnemyPawn = bestMove(goldSpaceArr);
+                        };
+
+                        // create a function to move pawn - document.getElementById(adjacentSpaceObj.pawnID):
+                    };
+                };
+
             };
 
             console.log("currentAdjSpaceArr::");
@@ -103,26 +124,11 @@ module.exports = compTurn = function (computerBool, pawnType) {
             //     };
             // };
 
-            const bestMove = function (goldSpaceArr) {
-                for (let g = 1; g < goldSpaceArr.length; g++) {
-                    if (goldSpaceArr[g - 1].weight != null) {
-                        if (goldSpaceArr[g].weight > goldSpaceArr[g-1].weight) {
-                            goldSpaceArr.splice((g - 1), 1);
-                            console.log("g is bigger");
-                        } else {
-                            goldSpaceArr.splice(g, 1);
-                            console.log("g - 1 is bigger");
-                        };
-                    };
-                };
-                return goldSpaceArr;
-            };
-
-            console.log("goldSpaceArr");
+            console.log("goldSpaceArr:");
             console.log(goldSpaceArr);
 
-            console.log("bestMove(goldSpaceArr)");
-            console.log(bestMove(goldSpaceArr));
+            // console.log("bestMove(goldSpaceArr):");
+            // console.log(bestMove(goldSpaceArr));
 
 
             // currentGoldiPawns.push({
@@ -141,7 +147,18 @@ module.exports = compTurn = function (computerBool, pawnType) {
             // console.log(currentGoldiPawns);
 
             // console.log(goldilocksChecker([1001, 1001], [1003, 1003], pawnType));
-        }
+        }; // TODO: check after each "zombie" bestMove... NOT all
+        // console.log("bestMove(goldSpaceArr):");
+        // console.log(bestMove(goldSpaceArr));
+
+        console.log("moveEnemyPawn[0].homespace_idString");
+        console.log(moveEnemyPawn[0].homespace_idString);
+        console.log("moveEnemyPawn[0].targetSpace_idString");
+        console.log(moveEnemyPawn[0].targetSpace_idString);
+        
+        return moveEnemyPawnFunc(moveEnemyPawn[0].homespace_idString, moveEnemyPawn[0].targetSpace_idString);
+        // return moveEnemyPawnFunc(moveEnemyPawn); TODO: break apart in next function, not here ^^^
+        // return moveEnemyPawn[0].homespace_idString;
     } else {
         console.log(`computerBool is ${computerBool}`);
     };

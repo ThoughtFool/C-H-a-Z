@@ -97,7 +97,9 @@ module.exports = goldilocksChecker = function (homeSpace, targetSpace, pawnType,
         friend,
         enemy,
         homeSpace,
+        homespace_idString,
         targetSpace,
+        targetSpace_ContentString,
         rateSpace
     );
 

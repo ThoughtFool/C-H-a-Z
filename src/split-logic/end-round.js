@@ -96,5 +96,5 @@ module.exports = endRound = function () {
     // console.log(goldilocksChecker([1001, 1001], [1003, 1003], "zombie"));
     
     // let turnOrder = TODO: get info from browser? local storage?
-    nextTurn(true, "zombie");
+    return nextTurn(true, "zombie");
 };
