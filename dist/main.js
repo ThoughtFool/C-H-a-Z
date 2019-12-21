@@ -762,14 +762,11 @@ module.exports = dynaFont = function (inputVal) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-// nearbyPawn = require("./nearby-pawn");
 const pawnStats = __webpack_require__(/*! ./pawn-stats */ "./src/split-logic/pawn-stats.js");
 const adjacentSpaces = __webpack_require__(/*! ./test-scripts/adj-space-finder */ "./src/split-logic/test-scripts/adj-space-finder.js");
-// adjacentSpaces = require("./adjacent-spaces");
 const checkPawnStatus = __webpack_require__(/*! ./check-pawn-status */ "./src/split-logic/check-pawn-status.js");
 const goldilocksChecker = __webpack_require__(/*! ./test-scripts/goldilocks-checker */ "./src/split-logic/test-scripts/goldilocks-checker.js");
 const nextTurn = __webpack_require__(/*! ./test-scripts/comp-turn */ "./src/split-logic/test-scripts/comp-turn.js");
-// const nextTurn = require("./test-scripts/next-turn");
 
 module.exports = endRound = function () {
     let pawnType = "";
@@ -806,59 +803,12 @@ module.exports = endRound = function () {
         };
     };
 
-    // // for (let i = 0; i < pawnStats.human.pawnSpawn.length; i++) {
-    // for (let i = 0; i < pawnStats.pawnIdArray.human.length; i++) {
-    //     pawnLoc = pawnStats.pawnIdArray.human[i];
-    //     console.log("pawnLoc");
-    //     console.log(pawnLoc);
-
-    //     // TODO: need to make below access all pawns on board, not just human pawns:
-    //     adjacentSpaces(pawnLoc);
-    // };
-
-    // call function to check status of pawns & evaluate if need to change allegiance:
-    // testing ONLY:
-
-    // updatePercent = function () {
-    //     // for (let t = 0; t < pawnTypeArr.length; t++) {
-    //     console.log("updatePercent function fires:");
-    //     console.log(pawnTypeTotal);
-    //     let pawnTypeTotalCount = pawnTypeTotal.cyborg + pawnTypeTotal.human + pawnTypeTotal.zombie;
-    //     // };
-    //     // let root = document.documentElement;
-
-    //     let cyborgBar = document.getElementById("cyborg-bar");
-    //     let humanBar = document.getElementById("human-bar");
-    //     let zombieBar = document.getElementById("zombie-bar");
-
-    //     let cybPerText = document.getElementById("cyborg-percentage");
-    //     let humPerText = document.getElementById("human-percentage");
-    //     let zomPerText = document.getElementById("zombie-percentage");
-
-    //     // set CSS property for percentages:
-    //     cyborgBar.style.setProperty("--cyborg-health", (pawnTypeTotal.cyborg / pawnTypeTotalCount) * 100 + "%");
-    //     humanBar.style.setProperty("--human-health", (pawnTypeTotal.human / pawnTypeTotalCount) * 100 + "%");
-    //     zombieBar.style.setProperty("--zombie-health", (pawnTypeTotal.zombie / pawnTypeTotalCount) * 100 + "%");
-
-    //     // set inner text for percentages:
-    //     cybPerText.innerHTML = ((pawnTypeTotal.cyborg / pawnTypeTotalCount) * 100).toFixed();
-    //     humPerText.innerHTML = ((pawnTypeTotal.human / pawnTypeTotalCount) * 100).toFixed();
-    //     zomPerText.innerHTML = ((pawnTypeTotal.zombie / pawnTypeTotalCount) * 100).toFixed();
-    // };
-    // updatePercent();
-
     for (let t = 0; t < pawnTypeArr.length; t++) {
         console.log("pawnType before checkPawnStatus:");
         console.log(pawnTypeArr[t]);
         checkPawnStatus(pawnTypeArr[t], pawnTypeTotal);
-        // nextTurn(true, pawnTypeArr[t]);
     };
 
-    // touchEvents();
-    // testing ONLY: bool needs to come from last player's turnEnd();
-    // whoseTurn(homespace, 2, pawnType);
-    // console.log(goldilocksChecker([1001, 1001], [1003, 1003], "zombie"));
-    
     // let turnOrder = TODO: get info from browser? local storage?
     return nextTurn(true, "zombie");
 };
@@ -1630,20 +1580,12 @@ const adjacentSpaces = __webpack_require__(/*! ./adj-space-finder */ "./src/spli
 const moveEnemyPawnFunc = __webpack_require__(/*! ./move-enemy-pawn-func */ "./src/split-logic/test-scripts/move-enemy-pawn-func.js");
 
 module.exports = compTurn = function (computerBool, pawnType) {
-
-
-
     ///////////////////////  call function to addWeight (adjSpaces) ///////////////////////
 
     ///////////////////////  add weight value to each space in adjSpaces connected to pawnID ///////////////////////
 
     ///////////////////////  replace lower weight value / keep higher weight with spaceID ///////////////////////
 
-    // const pawnStats = require("../pawn-stats");
-    // const adjacentSpaces = require("./adj-space-finder");
-    // // const goldilocksChecker = require("./goldilocks-checker");
-
-    // module.exports = nextTurn = function (computerBool, pawnType) {
     console.log("nextTurn function fires");
     console.log("computerBool");
     console.log(computerBool);
@@ -1656,7 +1598,6 @@ module.exports = compTurn = function (computerBool, pawnType) {
     let moveEnemyPawn = {};
 
     if (computerBool === true) {
-        // if (computerBool === true && pawnType === "cyborg") {
         console.log("pawnStats[pawnType].pawnSpawn.length");
         console.log(pawnStats[pawnType].pawnSpawn.length);
 
@@ -1685,6 +1626,7 @@ module.exports = compTurn = function (computerBool, pawnType) {
             // currentGoldiPawns.pawnID = currentPawnID;
             // currentGoldiPawns.pawnLoc = currentPawnLoc;
             // currentGoldiPawns.adjSpaceArray = currentAdjSpaceArr.comb;
+
             for (let adj = 0; adj < currentAdjSpaceArr.comb.length; adj++) {
                 console.log("before goldilocksChecker is called");
                 console.log(`currentAdjSpaceArr.comb.length = ${currentAdjSpaceArr.comb.length}`);
@@ -1725,72 +1667,47 @@ module.exports = compTurn = function (computerBool, pawnType) {
                         goldilocksObjectHolder = goldilocksChecker(currentPawnHomespace, targetSpace, pawnType, adjacentSpaces, currentPawnHomespace_idString);
                         goldSpaceArr.push(goldilocksObjectHolder);
 
+                        console.log("goldSpaceArr (before):");
+                        console.log(goldSpaceArr);
+
                         if (goldSpaceArr.length > 1) {
                             console.log("bestMove(goldSpaceArr):");
                             moveEnemyPawn = bestMove(goldSpaceArr);
                         };
 
-                        // create a function to move pawn - document.getElementById(adjacentSpaceObj.pawnID):
+                        console.log("goldSpaceArr (after):");
+                        console.log(goldSpaceArr);
                     };
                 };
-
             };
+            //////////////////////////////////////////////////////////////////////////
 
-            console.log("currentAdjSpaceArr::");
-            console.log(currentAdjSpaceArr);
+            console.log("moveEnemyPawn[0].homespace_idString");
+            console.log(moveEnemyPawn[0].homespace_idString);
+            console.log("moveEnemyPawn[0].targetSpace_idString");
+            console.log(moveEnemyPawn[0].targetSpace_idString);
 
-            console.log(goldSpaceArr);
-            // for (let g = 0; g < goldSpaceArr.length; g++) {
-            //     if (goldSpaceArr[g + 1] != null) {
-            //         if (goldSpaceArr[g] > goldSpaceArr[g + 1]) {
-            //             goldSpaceArr.splice(g + 1, 1);
-            //         } else {
-            //             goldSpaceArr.splice(g, 1);
-            //         };
-            //     };
-            // };
+            // TODO: check after each "zombie" bestMove
+            moveEnemyPawnFunc(moveEnemyPawn[0].homespace_idString, moveEnemyPawn[0].targetSpace_idString);
+            
+            // return moveEnemyPawnFunc(moveEnemyPawn); TODO: break apart in next function, not here ^^^
+        };
 
-            console.log("goldSpaceArr:");
-            console.log(goldSpaceArr);
-
-            // console.log("bestMove(goldSpaceArr):");
-            // console.log(bestMove(goldSpaceArr));
-
-
-            // currentGoldiPawns.push({
-            //     pawnID: currentPawnID,
-            //     pawnLoc: currentPawnLoc,
-            //     adjSpaceArray: currentAdjSpaceArr.comb
-            // });
-            // need TODO: create a function to change to contentID string and reverse:
-
-            // let homespace_idString = homespace;
-            // console.log("homespace_idString");
-            // console.log(homespace_idString);
-            // homespace = homespace.match(/\d+/g);
-            // console.log("homespace after match:");
-            // console.log("currentGoldiPawns");
-            // console.log(currentGoldiPawns);
-
-            // console.log(goldilocksChecker([1001, 1001], [1003, 1003], pawnType));
-        }; // TODO: check after each "zombie" bestMove... NOT all
-        // console.log("bestMove(goldSpaceArr):");
-        // console.log(bestMove(goldSpaceArr));
-
-        console.log("moveEnemyPawn[0].homespace_idString");
-        console.log(moveEnemyPawn[0].homespace_idString);
-        console.log("moveEnemyPawn[0].targetSpace_idString");
-        console.log(moveEnemyPawn[0].targetSpace_idString);
-        
-        return moveEnemyPawnFunc(moveEnemyPawn[0].homespace_idString, moveEnemyPawn[0].targetSpace_idString);
-        // return moveEnemyPawnFunc(moveEnemyPawn); TODO: break apart in next function, not here ^^^
-        // return moveEnemyPawn[0].homespace_idString;
     } else {
         console.log(`computerBool is ${computerBool}`);
     };
-    // return currentGoldiPawns;
-
 };
+
+//////////////////////////////////////////////////////////////////////////
+// need TODO: create a function to change to contentID string and reverse:
+
+// let homespace_idString = homespace;
+// console.log("homespace_idString");
+// console.log(homespace_idString);
+// homespace = homespace.match(/\d+/g);
+// console.log("homespace after match:");
+// console.log("currentGoldiPawns");
+// console.log(currentGoldiPawns);
 // };
 
 /***/ }),
@@ -1960,17 +1877,37 @@ module.exports = Goldilocks = function (type, move, food, friend, enemy, homeSpa
 
 module.exports = moveEnemyPawnFunc = function (oldSpaceID, newSpaceID) {
     console.log("moveEnemyPawnFunc function fires");
-
-    let oldEnemySpace = document.getElementById(oldSpaceID);
-    console.log(oldEnemySpace);
-
-    let beforeMovePawn = oldEnemySpace.childNodes[0];
-    console.log(beforeMovePawn);
+    
+    let parentDiv = document.getElementById(oldSpaceID);
+    parentDiv.classList.add("parent-holding-pawn");
+    let currentPawnHeld = parentDiv.childNodes[0].id;
+    let holdingClass = document.getElementById(currentPawnHeld);
+    holdingClass.classList.add("holding");
+    
+    /////////////////////////////////////////////////////////////////////
 
     let newEnemySpace = document.getElementById(newSpaceID);
-    console.log(newEnemySpace);
+    newEnemySpace.appendChild(holdingClass);
+    holdingClass.classList.remove("holding");
+    newEnemySpace.classList.remove("empty-space");
+    parentDiv.classList.remove("parent-holding-pawn");
+    parentDiv.classList.add("empty-space");
+    holdingPawn = false;
 
-    return newEnemySpace.appendChild(beforeMovePawn);    
+    /////////////////////////////////////////////////////////////////////
+
+    let contentCircle = document.getElementById(`content-health-${currentPawnHeld}`);
+    newEnemySpace.appendChild(contentCircle);
+
+    /////////////////////////////////////////////////////////////////////
+
+    let newParentDiv_ID = newSpaceID;
+
+    console.log("newParentDiv_ID");
+    console.log(newParentDiv_ID);
+
+    updatePawnStatus("location", currentPawnHeld, newParentDiv_ID);
+    currentPawnHeld = null;
 };
 
 /***/ }),
@@ -2002,333 +1939,103 @@ module.exports = rateSpace = function (move, food, friend, enemy) {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-// pawnStats = require("../pawn-stats");
-// updatePawnStatus = require("../update-pawn-status");
-// const {
-//     healthInfo
-// } = require("../health-info");
-
-// // document.getElementById("myP").addEventListener("touchstart", myFunction);
 module.exports = touchEvents = function () {
     console.log("touchEvents function fires");
 
-    // if (event.target.classList.contains("human-pawn")) {
-    //     var currentPawnHeld = null;
+    var currentPawnHeld = null;
 
-        var currentPawnHeld = null;
+    /* Event fired on the touch target */
+    touchStart = function (event) {
+        if (event.target.classList.contains("human-pawn")) {
+            // event.dataTransfer.getData("Text", event.target.id);
+            holdingPawn = true;
+            currentPawnHeld = event.target.id;
 
-        /* Event fired on the touch target */
-        // document.addEventListener("dragstart", dragStart);
-        touchStart = function (event) {
-            if (event.target.classList.contains("human-pawn")) {
-                // event.dataTransfer.getData("Text", event.target.id);
-                holdingPawn = true;
-                currentPawnHeld = event.target.id;
-
-                let holdingClass = document.getElementById(currentPawnHeld);
-                holdingClass.classList.add("holding");
-                parentDiv = document.getElementById(currentPawnHeld).parentNode;
-                parentDiv.classList.add("parent-holding-pawn");
-            } else {
-                event.target.removeEventListener("dragstart", dragStart);
-                // document.getElementById("myDIV").
-                // document.getElementById("myDIV").removeEventListener("mousemove", myFunction);
-            };
-
-            // });
+            let holdingClass = document.getElementById(currentPawnHeld);
+            holdingClass.classList.add("holding");
+            parentDiv = document.getElementById(currentPawnHeld).parentNode;
+            parentDiv.classList.add("parent-holding-pawn");
+        } else {
+            event.target.removeEventListener("dragstart", dragStart);
+            // document.getElementById("myDIV").
+            // document.getElementById("myDIV").removeEventListener("mousemove", myFunction);
         };
-        document.addEventListener("touchstart", touchStart);
 
-        var holdingPawn = false;
-        var holdingClass = null;
-        var parentDiv = null;
-        var counterValue = 0;
+        // });
+    };
+    document.addEventListener("touchstart", touchStart);
+
+    var holdingPawn = false;
+    var holdingClass = null;
+    var parentDiv = null;
+    var counterValue = 0;
 
 
-        /* Event fired on the touchmove target */
-        document.addEventListener("touchmove", function (event) {
-            // event.preventDefault();
-            console.log("touchmove");
-            console.log("holdingPawn: " + holdingPawn);
-            console.log(counterValue);
-            counterValue++;
+    /* Event fired on the touchmove target */
+    document.addEventListener("touchmove", function (event) {
+        // event.preventDefault();
+        console.log("touchmove");
+        console.log("holdingPawn: " + holdingPawn);
+        console.log(counterValue);
+        counterValue++;
+    });
 
-            // // while (holdingPawn == true) {
-            // while (holdingPawn == "placeHolder") {
-            //     // setInterval(() => {
-            //     console.log("while loop");
-            //     mouseEnterFunc();
-            // };
-        });
+    // Events fired on the drop target:
+    document.addEventListener("touchend", function (event) {
+        // event.preventDefault();
 
-        // Events fired on the drop target:
-        document.addEventListener("touchend", function (event) {
-            // event.preventDefault();
+        console.log("currentPawnHeld");
+        console.log(currentPawnHeld);
 
-            console.log("currentPawnHeld");
-            console.log(currentPawnHeld);
+        if (currentPawnHeld != null) {
+            if (document.getElementById(currentPawnHeld).classList.contains("human-pawn")) {
+                console.log("currentPawnHeld = human-pawn");
 
-            if (currentPawnHeld != null) {
-                if (document.getElementById(currentPawnHeld).classList.contains("human-pawn")) {
-                    console.log("currentPawnHeld = human-pawn");
+                if (event.target.classList.contains("empty-space")) {
+                    // var data = event.dataTransfer.setData("Text");
+                    holdingClass = document.getElementById(currentPawnHeld);
+                    event.target.appendChild(holdingClass);
+                    holdingClass.classList.remove("holding");
+                    event.target.classList.remove("empty-space");
+                    parentDiv.classList.remove("parent-holding-pawn");
+                    parentDiv.classList.add("empty-space");
+                    holdingPawn = false;
 
-                    if (event.target.classList.contains("empty-space")) {
-                        // var data = event.dataTransfer.setData("Text");
-                        holdingClass = document.getElementById(currentPawnHeld);
-                        event.target.appendChild(holdingClass);
-                        holdingClass.classList.remove("holding");
-                        event.target.classList.remove("empty-space");
-                        parentDiv.classList.remove("parent-holding-pawn");
-                        parentDiv.classList.add("empty-space");
-                        holdingPawn = false;
+                    /////////////////////////////////////////////////////
+                    contentCircle = document.getElementById(`content-health-${currentPawnHeld}`);
+                    event.target.appendChild(contentCircle);
+                    /////////////////////////////////////////////////////
 
-                        /////////////////////////////////////////////////////
-                        contentCircle = document.getElementById(`content-health-${currentPawnHeld}`);
-                        event.target.appendChild(contentCircle);
-                        /////////////////////////////////////////////////////
+                    newParentDiv_ID = event.target.id;
+                    console.log("newParentDiv_ID");
+                    console.log(newParentDiv_ID);
 
-                        // [pawnType].pawnSpawn
+                    updatePawnStatus("location", currentPawnHeld, newParentDiv_ID);
+                    currentPawnHeld = null;
 
-                        // var newSpan = document.createElement("span"); // Create span node
-                        // var textnode = document.createTextNode(pawnStats.); // Create a text node
-                        // newSpan.appendChild(textnode); // Append the text to <li>
-                        // document.getElementById("myList").appendChild(newSpan);
+                    console.log("parentDiv");
+                    console.log(parentDiv);
+                    console.log("parentDiv.id");
+                    console.log(parentDiv.id);
+                    console.log("contentCornerHealth");
+                    console.log(contentCornerHealth);
 
-                        /////////////////////////////////////////////////////
-                        newParentDiv_ID = event.target.id;
-                        console.log("newParentDiv_ID");
-                        console.log(newParentDiv_ID);
+                    /////////////////////////////////////////////////////
 
-                        updatePawnStatus("location", currentPawnHeld, newParentDiv_ID);
-                        currentPawnHeld = null;
-
-                        console.log("parentDiv");
-                        console.log(parentDiv);
-                        console.log("parentDiv.id");
-                        console.log(parentDiv.id);
-                        console.log("contentCornerHealth");
-                        console.log(contentCornerHealth);
-
-                        /////////////////////////////////////////////////////
-
-                    } else if (event.target.classList.contains("empty-space") == false) {
-                        console.log("this slot is full");
-                    } else {
-                        holdingClass.classList.remove("holding");
-                        parentDiv.classList.remove("parent-holding-pawn");
-                        parentDiv.classList.remove("empty-space");
-                        holdingPawn = false;
-                        currentPawnHeld = null;
-                    };
+                } else if (event.target.classList.contains("empty-space") == false) {
+                    console.log("this slot is full");
                 } else {
-                    console.log("currentPawnHeld not human-pawn");
+                    holdingClass.classList.remove("holding");
+                    parentDiv.classList.remove("parent-holding-pawn");
+                    parentDiv.classList.remove("empty-space");
+                    holdingPawn = false;
+                    currentPawnHeld = null;
                 };
+            } else {
+                console.log("currentPawnHeld not human-pawn");
             };
-        });
-
-        // document.addEventListener("touchstart", function (event) {
-
-        //     console.log("human pawn touched");
-        //     console.log("event.target");
-        //     console.log(event.target);
-        //     console.log("event.target.id");
-        //     console.log(event.target.id);
-        //     // event.dataTransfer.getData("Text", event.target.id);
-        //     holdingPawn = true;
-        //     currentPawnHeld = event.target.id;
-        //     let holdingClass = document.getElementById(currentPawnHeld);
-        //     holdingClass.classList.add("holding");
-        //     parentDiv = document.getElementById(currentPawnHeld).parentNode;
-        //     parentDiv.classList.add("parent-holding-pawn");
-
-
-        // });
-        // var counterValue = 0;
-
-
-        // Events fired on the drop target:
-        // document.addEventListener("touchmove", function (event) {
-        //     // event.preventDefault();
-        //     console.log("touchmove");
-        //     console.log("holdingPawn: " + holdingPawn);
-        //     console.log(counterValue);
-        //     counterValue++;
-
-
-
-        //     // // while (holdingPawn == true) {
-        //     // while (holdingPawn == "placeHolder") {
-        //     //     // setInterval(() => {
-        //     //     console.log("while loop");
-        //     //     mouseEnterFunc();
-        //     // };
-        // });
-
-        // document.addEventListener("touchends", function (event) {
-        //     // event.preventDefault();
-
-        //     if (event.target.classList.contains("empty-space")) {
-        //         // var data = event.dataTransfer.setData("Text");
-        //         holdingClass = document.getElementById(currentPawnHeld);
-        //         event.target.appendChild(holdingClass);
-        //         holdingClass.classList.remove("holding");
-        //         event.target.classList.remove("empty-space");
-        //         parentDiv.classList.remove("parent-holding-pawn");
-        //         parentDiv.classList.add("empty-space");
-        //         holdingPawn = false;
-
-        //         /////////////////////////////////////////////////////
-        //         contentCircle = document.getElementById(`content-health-${currentPawnHeld}`);
-        //         event.target.appendChild(contentCircle);
-        //         /////////////////////////////////////////////////////
-
-        //         // [pawnType].pawnSpawn
-
-        //         // var newSpan = document.createElement("span"); // Create span node
-        //         // var textnode = document.createTextNode(pawnStats.); // Create a text node
-        //         // newSpan.appendChild(textnode); // Append the text to <li>
-        //         // document.getElementById("myList").appendChild(newSpan);
-
-        //         /////////////////////////////////////////////////////
-        //         newParentDiv_ID = event.target.id;
-        //         console.log("newParentDiv_ID");
-        //         console.log(newParentDiv_ID);
-
-        //         updatePawnStatus("location", currentPawnHeld, newParentDiv_ID);
-        //         currentPawnHeld = "";
-
-        //         console.log("parentDiv");
-        //         console.log(parentDiv);
-        //         console.log("parentDiv.id");
-        //         console.log(parentDiv.id);
-        //         console.log("contentCornerHealth");
-        //         console.log(contentCornerHealth);
-
-        //         /////////////////////////////////////////////////////
-
-        //     } else if (event.target.classList.contains("empty-space") == false) {
-        //         console.log("this slot is full");
-        //     } else {
-        //         holdingClass.classList.remove("holding");
-        //         parentDiv.classList.remove("parent-holding-pawn");
-        //         parentDiv.classList.remove("empty-space");
-        //         holdingPawn = false;
-        //         currentPawnHeld = "";
-        //     };
-        // });
-
-
-
-
-        //     currentPawnHeld = null;
-
-        //     var holdingPawn = false;
-        //     var holdingClass = null;
-        //     var parentDiv = null;
-
-        //     /* Event fired on the touch target */
-        //     const touchStart = function (event) {
-        //         // document.addEventListener("touchstart", function (event) {
-        //         // event.dataTransfer.setData("Text", event.target[0].id);
-        //         holdingPawn = true;
-        //         currentPawnHeld = event.target[0].id;
-
-        //         let holdingClass = document.getElementById(currentPawnHeld);
-        //         holdingClass.classList.add("holding");
-        //         parentDiv = document.getElementById(currentPawnHeld).parentNode;
-        //         parentDiv.classList.add("parent-holding-pawn");
-
-        //     };
-
-        //     C_pawnList = document.querySelectorAll(".cyborg-pawn");
-        //     console.log("C_pawnList");
-        //     console.log(C_pawnList[0]);
-
-        //     for (let c = 0; c < C_pawnList.length; c++) {
-        //         C_pawnList[c].addEventListener("touchstart", touchStart);
-        //     };
-
-        //     H_pawnList = document.querySelectorAll(".human-pawn");
-        //     for (let h = 0; h < H_pawnList.length; h++) {
-        //         H_pawnList[h].addEventListener("touchstart", touchStart);
-        //     };
-        //     Z_pawnList = document.querySelectorAll(".zombie-pawn");
-        //     for (let z = 0; z < Z_pawnList.length; z++) {
-        //         Z_pawnList[z].addEventListener("touchstart", touchStart);
-        //     };
-        //     var counterValue = 0;
-
-        //     // Events fired on the drop target:
-        //     document.addEventListener("touchmove", function (event) {
-        //         event.preventDefault();
-        //         console.log("touchmove");
-        //         console.log("holdingPawn: " + holdingPawn);
-        //         console.log(counterValue);
-        //         counterValue++;
-
-        //         // // while (holdingPawn == true) {
-        //         // while (holdingPawn == "placeHolder") {
-        //         //     // setInterval(() => {
-        //         //     console.log("while loop");
-        //         //     mouseEnterFunc();
-        //         // };
-        //     });
-
-        //     document.addEventListener("touchend", function (event) {
-        //         event.preventDefault();
-
-        //         if (event.target[0].classList.contains("empty-space")) {
-        //             // var data = event.dataTransfer.getData("Text");
-        //             holdingClass = document.getElementById(currentPawnHeld);
-        //             event.target[0].appendChild(holdingClass);
-        //             holdingClass.classList.remove("holding");
-        //             event.target[0].classList.remove("empty-space");
-        //             parentDiv.classList.remove("parent-holding-pawn");
-        //             parentDiv.classList.add("empty-space");
-        //             holdingPawn = false;
-
-        //             /////////////////////////////////////////////////////
-        //             contentCircle = document.getElementById(`content-health-${currentPawnHeld}`);
-        //             event.target[0].appendChild(contentCircle);
-        //             /////////////////////////////////////////////////////
-
-        //             // [pawnType].pawnSpawn
-
-        //             // var newSpan = document.createElement("span"); // Create span node
-        //             // var textnode = document.createTextNode(pawnStats.); // Create a text node
-        //             // newSpan.appendChild(textnode); // Append the text to <li>
-        //             // document.getElementById("myList").appendChild(newSpan);
-
-        //             /////////////////////////////////////////////////////
-        //             newParentDiv_ID = event.target[0].id;
-        //             console.log("newParentDiv_ID");
-        //             console.log(newParentDiv_ID);
-
-        //             updatePawnStatus("location", currentPawnHeld, newParentDiv_ID);
-        //             currentPawnHeld = "";
-
-        //             console.log("parentDiv");
-        //             console.log(parentDiv);
-        //             console.log("parentDiv.id");
-        //             console.log(parentDiv.id);
-        //             console.log("contentCornerHealth");
-        //             console.log(contentCornerHealth);
-
-        //             /////////////////////////////////////////////////////
-
-        //         } else if (event.target[0].classList.contains("empty-space") == false) {
-        //             console.log("this slot is full");
-        //         } else {
-        //             holdingClass.classList.remove("holding");
-        //             parentDiv.classList.remove("parent-holding-pawn");
-        //             parentDiv.classList.remove("empty-space");
-        //             holdingPawn = false;
-        //             currentPawnHeld = "";
-        //         };
-    // } else {
-    //     console.log("not a human pawn");
-    // };
-    //     });
+        };
+    });
 };
 
 /***/ }),

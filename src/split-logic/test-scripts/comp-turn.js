@@ -4,20 +4,12 @@ const adjacentSpaces = require("./adj-space-finder");
 const moveEnemyPawnFunc = require("./move-enemy-pawn-func");
 
 module.exports = compTurn = function (computerBool, pawnType) {
-
-
-
     ///////////////////////  call function to addWeight (adjSpaces) ///////////////////////
 
     ///////////////////////  add weight value to each space in adjSpaces connected to pawnID ///////////////////////
 
     ///////////////////////  replace lower weight value / keep higher weight with spaceID ///////////////////////
 
-    // const pawnStats = require("../pawn-stats");
-    // const adjacentSpaces = require("./adj-space-finder");
-    // // const goldilocksChecker = require("./goldilocks-checker");
-
-    // module.exports = nextTurn = function (computerBool, pawnType) {
     console.log("nextTurn function fires");
     console.log("computerBool");
     console.log(computerBool);
@@ -30,7 +22,6 @@ module.exports = compTurn = function (computerBool, pawnType) {
     let moveEnemyPawn = {};
 
     if (computerBool === true) {
-        // if (computerBool === true && pawnType === "cyborg") {
         console.log("pawnStats[pawnType].pawnSpawn.length");
         console.log(pawnStats[pawnType].pawnSpawn.length);
 
@@ -59,6 +50,7 @@ module.exports = compTurn = function (computerBool, pawnType) {
             // currentGoldiPawns.pawnID = currentPawnID;
             // currentGoldiPawns.pawnLoc = currentPawnLoc;
             // currentGoldiPawns.adjSpaceArray = currentAdjSpaceArr.comb;
+
             for (let adj = 0; adj < currentAdjSpaceArr.comb.length; adj++) {
                 console.log("before goldilocksChecker is called");
                 console.log(`currentAdjSpaceArr.comb.length = ${currentAdjSpaceArr.comb.length}`);
@@ -99,70 +91,45 @@ module.exports = compTurn = function (computerBool, pawnType) {
                         goldilocksObjectHolder = goldilocksChecker(currentPawnHomespace, targetSpace, pawnType, adjacentSpaces, currentPawnHomespace_idString);
                         goldSpaceArr.push(goldilocksObjectHolder);
 
+                        console.log("goldSpaceArr (before):");
+                        console.log(goldSpaceArr);
+
                         if (goldSpaceArr.length > 1) {
                             console.log("bestMove(goldSpaceArr):");
                             moveEnemyPawn = bestMove(goldSpaceArr);
                         };
 
-                        // create a function to move pawn - document.getElementById(adjacentSpaceObj.pawnID):
+                        console.log("goldSpaceArr (after):");
+                        console.log(goldSpaceArr);
                     };
                 };
-
             };
+            //////////////////////////////////////////////////////////////////////////
 
-            console.log("currentAdjSpaceArr::");
-            console.log(currentAdjSpaceArr);
+            console.log("moveEnemyPawn[0].homespace_idString");
+            console.log(moveEnemyPawn[0].homespace_idString);
+            console.log("moveEnemyPawn[0].targetSpace_idString");
+            console.log(moveEnemyPawn[0].targetSpace_idString);
 
-            console.log(goldSpaceArr);
-            // for (let g = 0; g < goldSpaceArr.length; g++) {
-            //     if (goldSpaceArr[g + 1] != null) {
-            //         if (goldSpaceArr[g] > goldSpaceArr[g + 1]) {
-            //             goldSpaceArr.splice(g + 1, 1);
-            //         } else {
-            //             goldSpaceArr.splice(g, 1);
-            //         };
-            //     };
-            // };
+            // TODO: check after each "zombie" bestMove
+            moveEnemyPawnFunc(moveEnemyPawn[0].homespace_idString, moveEnemyPawn[0].targetSpace_idString);
+            
+            // return moveEnemyPawnFunc(moveEnemyPawn); TODO: break apart in next function, not here ^^^
+        };
 
-            console.log("goldSpaceArr:");
-            console.log(goldSpaceArr);
-
-            // console.log("bestMove(goldSpaceArr):");
-            // console.log(bestMove(goldSpaceArr));
-
-
-            // currentGoldiPawns.push({
-            //     pawnID: currentPawnID,
-            //     pawnLoc: currentPawnLoc,
-            //     adjSpaceArray: currentAdjSpaceArr.comb
-            // });
-            // need TODO: create a function to change to contentID string and reverse:
-
-            // let homespace_idString = homespace;
-            // console.log("homespace_idString");
-            // console.log(homespace_idString);
-            // homespace = homespace.match(/\d+/g);
-            // console.log("homespace after match:");
-            // console.log("currentGoldiPawns");
-            // console.log(currentGoldiPawns);
-
-            // console.log(goldilocksChecker([1001, 1001], [1003, 1003], pawnType));
-        }; // TODO: check after each "zombie" bestMove... NOT all
-        // console.log("bestMove(goldSpaceArr):");
-        // console.log(bestMove(goldSpaceArr));
-
-        console.log("moveEnemyPawn[0].homespace_idString");
-        console.log(moveEnemyPawn[0].homespace_idString);
-        console.log("moveEnemyPawn[0].targetSpace_idString");
-        console.log(moveEnemyPawn[0].targetSpace_idString);
-        
-        return moveEnemyPawnFunc(moveEnemyPawn[0].homespace_idString, moveEnemyPawn[0].targetSpace_idString);
-        // return moveEnemyPawnFunc(moveEnemyPawn); TODO: break apart in next function, not here ^^^
-        // return moveEnemyPawn[0].homespace_idString;
     } else {
         console.log(`computerBool is ${computerBool}`);
     };
-    // return currentGoldiPawns;
-
 };
+
+//////////////////////////////////////////////////////////////////////////
+// need TODO: create a function to change to contentID string and reverse:
+
+// let homespace_idString = homespace;
+// console.log("homespace_idString");
+// console.log(homespace_idString);
+// homespace = homespace.match(/\d+/g);
+// console.log("homespace after match:");
+// console.log("currentGoldiPawns");
+// console.log(currentGoldiPawns);
 // };
