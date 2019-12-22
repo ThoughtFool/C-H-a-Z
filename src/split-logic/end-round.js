@@ -46,5 +46,5 @@ module.exports = endRound = function () {
     };
 
     // let turnOrder = TODO: get info from browser? local storage?
-    return nextTurn(true, "zombie");
+    return nextTurn(true, "zombie", adjacentSpaces);
 };

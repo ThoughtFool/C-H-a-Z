@@ -1,8 +1,10 @@
-module.exports = moveEnemyPawnFunc = function (oldSpaceID, newSpaceID) {
-    console.log("moveEnemyPawnFunc function fires");
+module.exports = moveEnemyPawnFunc = function (oldSpaceID, newSpaceID, updatePawnStatus) {
+    console.log("moveEnemyPawnFunc function fires"); 
     
-    let parentDiv = document.getElementById(oldSpaceID);
+    let parentDiv = document.getElementById(oldSpaceID); 
+    console.log(parentDiv);
     parentDiv.classList.add("parent-holding-pawn");
+    console.log(parentDiv.childNodes);
     let currentPawnHeld = parentDiv.childNodes[0].id;
     let holdingClass = document.getElementById(currentPawnHeld);
     holdingClass.classList.add("holding");

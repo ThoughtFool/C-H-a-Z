@@ -810,7 +810,7 @@ module.exports = endRound = function () {
     };
 
     // let turnOrder = TODO: get info from browser? local storage?
-    return nextTurn(true, "zombie");
+    return nextTurn(true, "zombie", adjacentSpaces);
 };
 
 /***/ }),
@@ -1547,18 +1547,29 @@ module.exports = bestMove = function (goldSpaceArr) {
 
     for (let g = 1; g < goldSpaceArr.length; g++) {
 
-        if (goldSpaceArr[g - 1].weight != null) {
-            if (goldSpaceArr[g].weight > goldSpaceArr[g - 1].weight) {
-                goldSpaceArr.splice((g - 1), 1);
-                console.log("g is bigger");
-                console.log(goldSpaceArr);
+        if (goldSpaceArr[0] != null) {
+            if (goldSpaceArr[g - 1].weight != null) {
+                if (goldSpaceArr[g].weight > goldSpaceArr[g - 1].weight) {
+                    goldSpaceArr.splice((g - 1), 1);
+                    console.log("g is bigger");
+                    console.log(goldSpaceArr);
 
-            } else if (goldSpaceArr[g].weight <= goldSpaceArr[g - 1].weight) {
-                goldSpaceArr.splice(g, 1);
-                console.log("g - 1 is bigger");
-                console.log(goldSpaceArr);
+                } else if (goldSpaceArr[g].weight <= goldSpaceArr[g - 1].weight) {
+                    goldSpaceArr.splice(g, 1);
+                    console.log("g - 1 is bigger");
+                    console.log(goldSpaceArr);
 
+                    // } else if (goldSpaceArr[0] == null) {
+                    //     goldSpaceArr.splice(0, 1);
+                    //     console.log("g - 1 is bigger than [0] == null");
+                    //     console.log(goldSpaceArr);
+
+                };
             };
+        } else {
+            goldSpaceArr.splice(0, 1);
+            console.log("g - 1 is bigger than [0] == null");
+            console.log(goldSpaceArr);
         };
         newGoldSpaceArr = goldSpaceArr;
     };
@@ -1576,10 +1587,11 @@ module.exports = bestMove = function (goldSpaceArr) {
 
 const pawnStats = __webpack_require__(/*! ../pawn-stats */ "./src/split-logic/pawn-stats.js");
 const bestMove = __webpack_require__(/*! ./best-move */ "./src/split-logic/test-scripts/best-move.js");
-const adjacentSpaces = __webpack_require__(/*! ./adj-space-finder */ "./src/split-logic/test-scripts/adj-space-finder.js");
+// const adjacentSpaces = require("./adj-space-finder");
 const moveEnemyPawnFunc = __webpack_require__(/*! ./move-enemy-pawn-func */ "./src/split-logic/test-scripts/move-enemy-pawn-func.js");
+const updatePawnStatus = __webpack_require__(/*! ../update-pawn-status */ "./src/split-logic/update-pawn-status.js");
 
-module.exports = compTurn = function (computerBool, pawnType) {
+module.exports = compTurn = function (computerBool, pawnType, adjacentSpaces) {
     ///////////////////////  call function to addWeight (adjSpaces) ///////////////////////
 
     ///////////////////////  add weight value to each space in adjSpaces connected to pawnID ///////////////////////
@@ -1593,9 +1605,9 @@ module.exports = compTurn = function (computerBool, pawnType) {
     console.log(pawnType);
 
     let currentGoldiPawns = [];
-    let goldilocksObjectHolder = {};
-    let goldSpaceArr = [];
-    let moveEnemyPawn = {};
+    // let goldilocksObjectHolder = {};
+    // let goldSpaceArr = [];
+    // let moveEnemyPawn = [null];
 
     if (computerBool === true) {
         console.log("pawnStats[pawnType].pawnSpawn.length");
@@ -1604,9 +1616,12 @@ module.exports = compTurn = function (computerBool, pawnType) {
         // TODO: create an if conditional that errors out if the pawnType doesn't exist or equals zero:
 
         ///////////////////////  loop through pawnIDs ///////////////////////
+        console.log(pawnStats[pawnType].pawnSpawn.length);
         for (let loop = 0; loop < pawnStats[pawnType].pawnSpawn.length; loop++) {
             let currentPawnLoc = pawnStats[pawnType].pawnSpawn[loop].loc;
             let currentPawnID = pawnStats[pawnType].pawnSpawn[loop].id;
+            let goldilocksObjectHolder = {};
+            let goldSpaceArr = [];
 
             /////////////////////// 1) get pawnIDs ///////////////////////
             console.log("currentPawnID");
@@ -1626,9 +1641,12 @@ module.exports = compTurn = function (computerBool, pawnType) {
             // currentGoldiPawns.pawnID = currentPawnID;
             // currentGoldiPawns.pawnLoc = currentPawnLoc;
             // currentGoldiPawns.adjSpaceArray = currentAdjSpaceArr.comb;
+            let moveEnemyPawn = [null];
 
             for (let adj = 0; adj < currentAdjSpaceArr.comb.length; adj++) {
                 console.log("before goldilocksChecker is called");
+                // moveEnemyPawn[0] = null;
+
                 console.log(`currentAdjSpaceArr.comb.length = ${currentAdjSpaceArr.comb.length}`);
 
                 let targetSpace_idString = currentAdjSpaceArr.comb[adj];
@@ -1670,27 +1688,55 @@ module.exports = compTurn = function (computerBool, pawnType) {
                         console.log("goldSpaceArr (before):");
                         console.log(goldSpaceArr);
 
-                        if (goldSpaceArr.length > 1) {
-                            console.log("bestMove(goldSpaceArr):");
-                            moveEnemyPawn = bestMove(goldSpaceArr);
-                        };
+                        if (goldSpaceArr.length > 1) { // TODO: check for errors if equal to "1"
+                        // if (goldSpaceArr.length >= 1 && moveEnemyPawn[0] != null) { // TODO: check for errors if equal to "1"
+                            
+                            if (typeof moveEnemyPawn[0] == null || moveEnemyPawn[0] == null && goldSpaceArr.length == 1) {
+                            } else if (goldSpaceArr.length > 1) {
+                                console.log("bestMove(goldSpaceArr):");
+                                moveEnemyPawn = bestMove(goldSpaceArr);
 
+                            // } else if (goldSpaceArr.length === 1) {
+                            } else {
+                                console.log("error?");
+                                // return moveEnemyPawnFunc(moveEnemyPawn); TODO: break apart in next function, not here ^^^
+                            };
+                        } else {
+                            if (typeof moveEnemyPawn[0] == null || moveEnemyPawn[0] == null) {
+                                console.log("moveEnemyPawn[0] == null");
+
+                            } else {
+                                console.log("moveEnemyPawn[0].homespace_idString");
+                                console.log(moveEnemyPawn[0].homespace_idString);
+                                console.log("moveEnemyPawn[0].targetSpace_idString");
+                                console.log(moveEnemyPawn[0].targetSpace_idString);
+
+                                // TODO: check after each "zombie" bestMove
+                            };
+                        };
+                        
                         console.log("goldSpaceArr (after):");
                         console.log(goldSpaceArr);
                     };
                 };
             };
+            if (moveEnemyPawn[0] != null) {
+                moveEnemyPawnFunc(moveEnemyPawn[0].homespace_idString, moveEnemyPawn[0].targetSpace_idString, updatePawnStatus);
+            };
             //////////////////////////////////////////////////////////////////////////
+            // if (typeof moveEnemyPawn[0] == null) {
 
-            console.log("moveEnemyPawn[0].homespace_idString");
-            console.log(moveEnemyPawn[0].homespace_idString);
-            console.log("moveEnemyPawn[0].targetSpace_idString");
-            console.log(moveEnemyPawn[0].targetSpace_idString);
-
-            // TODO: check after each "zombie" bestMove
-            moveEnemyPawnFunc(moveEnemyPawn[0].homespace_idString, moveEnemyPawn[0].targetSpace_idString);
-            
-            // return moveEnemyPawnFunc(moveEnemyPawn); TODO: break apart in next function, not here ^^^
+            // } else {
+            //     console.log("moveEnemyPawn[0].homespace_idString");
+            //     console.log(moveEnemyPawn[0].homespace_idString);
+            //     console.log("moveEnemyPawn[0].targetSpace_idString");
+            //     console.log(moveEnemyPawn[0].targetSpace_idString);
+    
+            //     // TODO: check after each "zombie" bestMove
+            //     moveEnemyPawnFunc(moveEnemyPawn[0].homespace_idString, moveEnemyPawn[0].targetSpace_idString, updatePawnStatus);
+    
+            //     // return moveEnemyPawnFunc(moveEnemyPawn); TODO: break apart in next function, not here ^^^
+            // };
         };
 
     } else {
@@ -1875,11 +1921,13 @@ module.exports = Goldilocks = function (type, move, food, friend, enemy, homeSpa
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = moveEnemyPawnFunc = function (oldSpaceID, newSpaceID) {
-    console.log("moveEnemyPawnFunc function fires");
+module.exports = moveEnemyPawnFunc = function (oldSpaceID, newSpaceID, updatePawnStatus) {
+    console.log("moveEnemyPawnFunc function fires"); 
     
-    let parentDiv = document.getElementById(oldSpaceID);
+    let parentDiv = document.getElementById(oldSpaceID); 
+    console.log(parentDiv);
     parentDiv.classList.add("parent-holding-pawn");
+    console.log(parentDiv.childNodes);
     let currentPawnHeld = parentDiv.childNodes[0].id;
     let holdingClass = document.getElementById(currentPawnHeld);
     holdingClass.classList.add("holding");
