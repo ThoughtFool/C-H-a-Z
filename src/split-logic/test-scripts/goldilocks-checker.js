@@ -85,9 +85,9 @@ module.exports = goldilocksChecker = function (homeSpace, targetSpace, pawnType,
     //     };
     // };
 
-    let food = 2 * weightHolder.human.length;
+    let food = 3 * weightHolder.human.length;
     let friend = 5 * weightHolder.zombie.length; // testing ONLY
-    let enemy = -10 * weightHolder.cyborg.length; // testing ONLY
+    let enemy = -5 * weightHolder.cyborg.length; // testing ONLY
 
 
     let goldSpace = new Goldilocks(

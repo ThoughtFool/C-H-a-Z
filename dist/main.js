@@ -111,7 +111,7 @@ var startBtn = document.getElementById("submit-test-num");
 var acc = document.getElementsByClassName("accordion");
 
 // disable all console messages:
-// console.log = function () {};
+console.log = function () {};
 
 for (let i = 0; i < acc.length; i++) {
     acc[i].addEventListener("click", function () {
@@ -1852,9 +1852,9 @@ module.exports = goldilocksChecker = function (homeSpace, targetSpace, pawnType,
     //     };
     // };
 
-    let food = 2 * weightHolder.human.length;
+    let food = 3 * weightHolder.human.length;
     let friend = 5 * weightHolder.zombie.length; // testing ONLY
-    let enemy = -10 * weightHolder.cyborg.length; // testing ONLY
+    let enemy = -5 * weightHolder.cyborg.length; // testing ONLY
 
 
     let goldSpace = new Goldilocks(
