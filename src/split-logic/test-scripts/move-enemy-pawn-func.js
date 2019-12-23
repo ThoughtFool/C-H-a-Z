@@ -2,16 +2,19 @@ module.exports = moveEnemyPawnFunc = function (oldSpaceID, newSpaceID, updatePaw
     console.log("moveEnemyPawnFunc function fires"); 
     
     let parentDiv = document.getElementById(oldSpaceID); 
+    parentDiv.style.transition = "all 2s";
     console.log(parentDiv);
     parentDiv.classList.add("parent-holding-pawn");
     console.log(parentDiv.childNodes);
     let currentPawnHeld = parentDiv.childNodes[0].id;
     let holdingClass = document.getElementById(currentPawnHeld);
+    holdingClass.style.transition = "all 2s";
     holdingClass.classList.add("holding");
     
     /////////////////////////////////////////////////////////////////////
 
     let newEnemySpace = document.getElementById(newSpaceID);
+    newEnemySpace.style.transition = "all 2s";
     newEnemySpace.appendChild(holdingClass);
     holdingClass.classList.remove("holding");
     newEnemySpace.classList.remove("empty-space");

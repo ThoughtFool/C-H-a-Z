@@ -22,57 +22,22 @@ for (let i = 0; i < accordMenu.length; i++) {
     accordMenu[i].addEventListener("click", function (e) {
         e.preventDefault();
         const active = document.querySelector('.active');
+        let activePanel = e.target.nextElementSibling;
 
-        if (active) {
-            active.classList.remove('active');
-            let panel = active.nextElementSibling;
-            panel.style.maxHeight = null;
-        } else {
-            let activePanel = e.target.nextElementSibling;
-    
-            if (e.target.classList.contains("active")) {
-                e.target.classList.remove('active');
-                // if (activePanel.style.maxHeight) {
-                activePanel.style.maxHeight = null;
-                // } else {
-                // };
-            } else {
-                e.target.classList.add('active');
-                activePanel.style.maxHeight = 75 + "%";
+        if (!e.target.classList.contains("active")) {
+            if (active) {
+                active.classList.remove('active');
+                let panel = active.nextElementSibling;
+                panel.style.maxHeight = null;
             };
+            e.target.classList.add('active');
+            activePanel.style.maxHeight = 75 + "%";
+        } else {
+            e.target.classList.remove('active');
+            activePanel.style.maxHeight = null;
         };
-
-
-        // e.target.classList.add('active');
-        // let activePanel = e.target.nextElementSibling;
-        // if (activePanel.style.maxHeight) {
-        //     activePanel.style.maxHeight = null;
-        // } else {
-        //     activePanel.style.maxHeight = 75 + "%";
-        // };
-
-        // e.classList.toggle("active");
-        // this.classList.toggle("active");
-        // var panel = this.nextElementSibling;
-        // if (panel.style.maxHeight) {
-        //     panel.style.maxHeight = null;
-        // } else {
-        //     panel.style.maxHeight = 75 + "%";
-        // };
-
-        // var prePanel = this.previousSibling();
-        // prePanel.classList.remove("active");
     });
 };
-
-const handleClick = (e) => {
-    e.preventDefault();
-    const active = document.querySelector('.active');
-    if (active) {
-        active.classList.remove('active');
-    }
-    e.currentTarget.classList.add('active');
-}
 
 startBtn.addEventListener("click", function () {
     console.log("startBtn 'click' function fires");

@@ -523,6 +523,7 @@ p {
     background-image: linear-gradient(to top right, rgb(121, 76, 243), rgb(64, 219, 240));
     border: 1.5px solid #000;
     border-radius: 15%;
+    /* transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1); */
     /* border-radius: 15px; */
 }
 
@@ -559,6 +560,8 @@ p {
     /* border-radius: calc(calc(var(--drone-btn) / 15) * 1%); */
     height: 100%;
     width: 100%;
+    /* transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1); */
+    transition: 350ms ease-in-out;
 }
 
 .available {
