@@ -2,14 +2,29 @@ module.exports = moveEnemyPawnFunc = function (oldSpaceID, newSpaceID, updatePaw
     console.log("moveEnemyPawnFunc function fires"); 
     
     let parentDiv = document.getElementById(oldSpaceID); 
-    parentDiv.style.transition = "all 2s";
+    parentDiv.style.transition = "all 10ms";
     console.log(parentDiv);
     parentDiv.classList.add("parent-holding-pawn");
     console.log(parentDiv.childNodes);
     let currentPawnHeld = parentDiv.childNodes[0].id;
     let holdingClass = document.getElementById(currentPawnHeld);
-    holdingClass.style.transition = "all 2s";
+    holdingClass.style.transition = "all 10ms";
     holdingClass.classList.add("holding");
+    // holdingClass.getBoundingClientRect();
+    window.getComputedStyle(parentDiv);
+
+    // setTimeout(function () {
+    //     requestAnimationFrame(function () {
+    //         // trigger the animation
+    //     });
+    // }, 20);
+
+    // var div = document.createElement("div");
+    // document.body.appendChild(div);
+
+    // requestAnimationFrame(function () {
+    //     div.className = "fade";
+    // });
     
     /////////////////////////////////////////////////////////////////////
 
@@ -21,6 +36,7 @@ module.exports = moveEnemyPawnFunc = function (oldSpaceID, newSpaceID, updatePaw
     parentDiv.classList.remove("parent-holding-pawn");
     parentDiv.classList.add("empty-space");
     holdingPawn = false;
+
 
     /////////////////////////////////////////////////////////////////////
 

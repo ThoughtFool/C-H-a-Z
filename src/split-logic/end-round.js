@@ -45,6 +45,13 @@ module.exports = endRound = function () {
         checkPawnStatus(pawnTypeArr[t], pawnTypeTotal);
     };
 
+    setTimeout(function () {
+        requestAnimationFrame(function () {
+            // trigger the animation
+            nextTurn(true, "cyborg", adjacentSpaces);
+        });
+    }, 1000);
+
     // let turnOrder = TODO: get info from browser? local storage?
     return nextTurn(true, "zombie", adjacentSpaces);
 };
