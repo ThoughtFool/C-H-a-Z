@@ -13,22 +13,66 @@ var endRoundBtn = document.getElementById("end-round");
 // set the local storage to client gameboard size:
 var getTestNum = document.getElementById("test-nums");
 var startBtn = document.getElementById("submit-test-num");
-var acc = document.getElementsByClassName("accordion");
+var accordMenu = document.getElementsByClassName("accordion");
 
 // disable all console messages:
 console.log = function () {};
 
-for (let i = 0; i < acc.length; i++) {
-    acc[i].addEventListener("click", function () {
-        this.classList.toggle("active");
-        var panel = this.nextElementSibling;
-        if (panel.style.maxHeight) {
+for (let i = 0; i < accordMenu.length; i++) {
+    accordMenu[i].addEventListener("click", function (e) {
+        e.preventDefault();
+        const active = document.querySelector('.active');
+
+        if (active) {
+            active.classList.remove('active');
+            let panel = active.nextElementSibling;
             panel.style.maxHeight = null;
         } else {
-            panel.style.maxHeight = panel.scrollHeight + "px";
+            let activePanel = e.target.nextElementSibling;
+    
+            if (e.target.classList.contains("active")) {
+                e.target.classList.remove('active');
+                // if (activePanel.style.maxHeight) {
+                activePanel.style.maxHeight = null;
+                // } else {
+                // };
+            } else {
+                e.target.classList.add('active');
+                activePanel.style.maxHeight = 75 + "%";
+            };
         };
+
+
+        // e.target.classList.add('active');
+        // let activePanel = e.target.nextElementSibling;
+        // if (activePanel.style.maxHeight) {
+        //     activePanel.style.maxHeight = null;
+        // } else {
+        //     activePanel.style.maxHeight = 75 + "%";
+        // };
+
+        // e.classList.toggle("active");
+        // this.classList.toggle("active");
+        // var panel = this.nextElementSibling;
+        // if (panel.style.maxHeight) {
+        //     panel.style.maxHeight = null;
+        // } else {
+        //     panel.style.maxHeight = 75 + "%";
+        // };
+
+        // var prePanel = this.previousSibling();
+        // prePanel.classList.remove("active");
     });
 };
+
+const handleClick = (e) => {
+    e.preventDefault();
+    const active = document.querySelector('.active');
+    if (active) {
+        active.classList.remove('active');
+    }
+    e.currentTarget.classList.add('active');
+}
 
 startBtn.addEventListener("click", function () {
     console.log("startBtn 'click' function fires");
@@ -51,7 +95,7 @@ startBtn.addEventListener("click", function () {
     } else {
         getTestNum.style.display = "block";
     };
-    
+
     if (randBtn.style.display === "block") {
         randBtn.style.display = "none";
     } else {
@@ -82,8 +126,8 @@ randBtn.addEventListener("click", function () {
     } else {
         endRoundBtn.style.display = "block";
     };
-////////////////////////////////////////////////////////////////
-    
+    ////////////////////////////////////////////////////////////////
+
 
     // TODO: create a variable to be passed in as an argument (below is for testing ONLY):
     randomPlace(rootNum, rootNum - 1);

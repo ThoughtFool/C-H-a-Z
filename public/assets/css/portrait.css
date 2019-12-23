@@ -1,0 +1,668 @@
+/* body {
+    background-color: lightblue;
+} */
+
+
+:root {
+    --ctrl-panel: calc(100vh - 100vw);
+    --accordion-padding: 18px;
+    --side-panel-height: calc(100vw - calc(3 * var(--accordion-padding)));
+    /* height: 100vw */
+    --drone-square: calc(100vw / 5);
+    --drone-btn: calc(var(--ctrl-panel) / 10);
+    --health-font: calc(var(--drone-square) / 4);
+    --cyborg-health: ---;
+    --human-health: ---;
+    --zombie-health: ---;
+
+    /* --health-font: calc(var(--drone-btn) / 4); */
+}
+
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+.main-wrapper {
+    display: flex;
+    /* align-items: center; */
+    height: 100vh;
+    width: 100vw;
+    flex-wrap: wrap;
+}
+
+.game-panel {
+    display: flex;
+    align-items: center;
+    height: 100vw;
+    width: 100vw;
+    box-shadow: inset 0 0 10px #000000;
+}
+
+.gameboard {
+    /* padding-top: 50px; */
+    padding-left: 2em;
+
+
+    height: 100%;
+    width: 100%;
+    background-color: rgba(108, 58, 245, 0.904);
+    box-shadow: inset 0 0 10px #5c0464;
+
+    /* background-image: cross-fade(rgba(117, 52, 238, 0.904), rgba(185, 57, 245, 0.884)); */
+}
+
+.gameboard::after {
+    box-shadow: 0 2 10 #444;
+}
+
+.control-panel {
+    display: flex;
+    align-items: center;
+    /* height: 100%; */
+    height: var(--ctrl-panel);
+    /* width: var(--ctrl-panel); */
+    width: 100vw;
+}
+
+.drone-drops {
+    display: flex;
+    height: 100%;
+    /* height: var(--ctrl-panel); */    
+    width: 20%;
+    flex: 1;
+    flex-direction: column;
+    /* width: calc(100vh - (100vh * .20)); */
+    background-color: rgba(0, 0, 0, 0.884);
+    box-shadow: 5 2 15 inset rgb(61, 61, 54);
+    align-items: center;
+    /* justify-content: center; */
+}
+
+.game-menu {
+    height: 100%;
+    width: 80%;
+    background-color: rgba(64, 58, 97, 0.904);
+}
+
+.human-pawn,
+.cyborg-pawn,
+.zombie-pawn {
+    cursor: -webkit-grab;
+    cursor: grab;
+}
+
+.accordion {
+    /* background-image: linear-gradient(to bottom right, rgb(124, 17, 247), rgb(103, 27, 133)); */
+    background-color: rgb(124, 17, 247);
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    /* font-size: 15px; */
+    font-size: .5em;
+    box-shadow: 5 5 5 #ddd;
+    transition: 0.4s;
+}
+
+.active,
+.accordion:hover {
+    background-color: rgb(211, 15, 250);
+}
+
+.panel {
+    padding: 0 18px;
+    background-color: rgba(64, 58, 97, 0.904);
+    /* background-color: rgba(255, 255, 255, 0.301); */
+    max-height: 0;
+    width: 100%;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+    color: whitesmoke;
+}
+
+.percentage-panel {
+    height: 1.5em;
+    width: 80%;
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding-top: .5em;
+    margin: .5em;
+}
+
+.progress-bar-row {
+    font-size: 1em;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding-top: 8px;
+    font-size: 1em;
+}
+
+.progress-container {
+    /* height: 100%; */
+    height: .5em;
+    width: 80%;
+    /* background-color: #ddd; */
+    /* background-color: rgba(255, 255, 255, 0.301); */
+
+    display: flex;
+    align-items: center;
+    position: relative;
+    border-radius: 1.5em;
+}
+
+.icon {
+    width: 10%;
+    background-image: url("../images/cyborg-pawn.png");
+    object-fit: cover;
+    /* background-color: rgb(126, 174, 240); */
+}
+
+.percent-background {
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.301);
+    /* background-color: #ddd; */
+    padding: 3px;
+    border-radius: 5px;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    box-shadow:
+        inset 0 2px 9px rgba(255, 255, 255, 0.3),
+        inset 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+.percent {
+    width: 10%;
+    /* background-color: rgb(240, 180, 180); */
+}
+
+#cyborg-bar {
+    /* width: 30%; */
+    width: var(--cyborg-health);
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    background-color: #2196F3;
+}
+
+#human-bar {
+    /* width: 55%; */
+    width: var(--human-health);
+    /* background-color: #4CAF50; */
+
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    background-color: rgb(43, 194, 83);
+    /* background-image: linear-gradient(
+            center bottom,
+            rgb(43, 4, 75) 37%,
+            rgb(196, 84, 240) 69%
+            ); */
+    /* box-shadow: 5px 10px 18px 10px #888888; */
+
+    position: relative;
+    overflow: hidden;
+}
+
+#zombie-bar {
+    /* width: 15%; */
+    width: var(--zombie-health);
+
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    background-color: #f44336;
+
+}
+
+
+/* =============================================== */
+
+.user-stats-panel {
+    background-color: rgba(255, 255, 255, 0.301);
+    margin: 1rem;
+
+    /* background-color: aquamarine; */
+    /* height: 60%; */
+    /* height: 20vh; */
+    height: calc(var(--ctrl-panel) - 10%);
+
+
+    width: 80%;
+    border-radius: 1em 3em 3em 1em;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.user-avatar-background {
+    left: 0;
+    top: 0;
+    background-color: rgba(64, 58, 97, 0.904);
+    width: 80%;
+    height: 100%;
+    border-radius: 1em 3em 3em 1em;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.user-avatar {
+    background-image: url("../images/hazmat-confused.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 1em;
+    /* width: 100%; */
+    position: relative;
+
+    /* background-position: center; */
+
+    height: 100%;
+    /* width: 15vh; */
+}
+
+/* ============================================ */
+.cryo-lab-wrapper {
+    /* background-image: url("../images/ZHC-Lab-3.png"); */
+    background-image: url("../images/Cryo-Wars-lab.png");
+    width: 100vw;
+    height: 100vh;
+    text-align: center;
+    background-repeat: no-repeat;
+    background-size: 100vw 100vh;
+}
+
+.mission-control-panel {
+    display: inline-block;
+    border-radius: 25px;
+    background-color: rgba(64, 219, 240, 0.774);
+    padding: 10px;
+    width: 75vw;
+    height: 75vh;
+    filter: blur(15px);
+}
+
+.mission-control-panel {
+    /* .mission-control-panel:hover { */
+    opacity: .85;
+    box-shadow: 0 0 30px purple;
+    z-index: -1;
+    filter: blur(0px);
+}
+
+.mission-control-panel:after {
+    border: 10px solid purple;
+    box-shadow: 0 0 20px purple;
+    z-index: -1;
+    filter: blur(15px);
+}
+
+.light-array {
+    padding: 10% 0 0 10%;
+    height: 10vh;
+    width: 100vw;
+}
+
+.main-screen {
+    border-radius: 10px;
+    background-color: silver;
+    padding: 0px 15px 15px 5px;
+    width: 95%;
+    height: 95%;
+    margin: 15px;
+    float: left;
+}
+
+/* .speaker-panel {
+  border-radius: 50%;
+  background-color: purple;
+  width: 75px;
+  height: 75px;
+  display: inline-block;
+  position: relative;
+}
+
+.speaker {
+  border-radius: 50%;
+  background-color: black;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+} */
+
+.game-screen {
+    background-color: rgba(255, 255, 255, 0.418);
+    width: 60vw;
+    height: 95%;
+    margin: 10px;
+    float: left;
+    text-align: center;
+    border-radius: 15px;
+}
+
+.small-screen-holder {
+    border-radius: 15px;
+    background-color: white;
+    width: 30%;
+    height: 95%;
+    margin: 10px 5px 10px 0px;
+    float: right;
+}
+
+.small-screen-1 {
+    border-radius: 15px;
+    background-color: #000;
+    width: 90%;
+    height: 90%;
+    margin: 5% 5% 5% 5%;
+    float: left;
+}
+
+.small-screen-2 {
+    border-radius: 15px;
+    width: 90%;
+    height: 0%;
+    margin: 5% 5% 0% 5%;
+    float: left;
+}
+
+.pawn-lites {
+    border-radius: 15px;
+    background-color: white;
+    width: 5%;
+    height: 95%;
+    margin: 10px 5px;
+    float: left;
+}
+
+.big-screen-1 {
+    border-radius: 15px;
+    background-color: #000;
+    width: 60%;
+    margin: auto;
+    margin-top: 0px;
+    float: left;
+    height: 95%;
+    padding: 3%;
+    padding-bottom: 60%;
+    position: relative;
+    text-align: center;
+    display: inline-block;
+
+}
+
+.pawn-lites {
+    text-align: center;
+}
+
+.lite {
+    display: inline-block;
+    margin-top: 50%;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+}
+
+#red-lite {
+    background-color: red;
+}
+
+#yellow-lite {
+    background-color: yellow;
+}
+
+#blue-lite {
+    background-color: blue;
+}
+
+#purple-lite {
+    background-color: purple;
+}
+
+.bulb {
+    border-radius: 45%;
+    height: 75%;
+    width: 100%;
+    float: left;
+}
+
+#red-bulb {
+    background-color: red;
+}
+
+#yellow-bulb {
+    background-color: yellow;
+}
+
+#blue-bulb {
+    background-color: blue;
+}
+
+#purple-bulb {
+    background-color: purple;
+}
+
+.bulb-outlet-holder {
+    background-color: gray;
+    height: 30%;
+    width: 100%;
+    border-radius: 5px 5px 5px 5px;
+    float: left;
+}
+
+.bulb-pack {
+    margin: 0 0 0 10%;
+    height: 100%;
+    width: 5%;
+    float: left;
+}
+
+body {
+    max-height: 100vh;
+    color: white;
+    background-image: linear-gradient(to bottom right, rgb(121, 19, 180), rgb(231, 63, 253));
+}
+
+p {
+    font-size: .5em;
+}
+
+.btn {
+    background-image: linear-gradient(to top right, rgb(10, 184, 228), rgb(204, 86, 219));
+    border: none;
+    width: 25%;
+    color: white;
+    padding: 8px;
+    height: 24px;
+    text-align: center;
+    text-decoration: none;
+    font-size: .5em;
+    margin: 4px 2px;
+    border-radius: 12px 12px 2px 2px;
+    cursor: pointer;
+
+}
+
+.jumbotron {
+    background-image: linear-gradient(to top right, rgb(22, 5, 70), rgb(64, 219, 240));
+    border-radius: 0% 0% 75% 1%;
+    color: white;
+}
+
+#test-nums {
+    border: none;
+    width: 25%;
+    /* padding: 15px; */
+    padding: 8px;
+    height: 24px;
+    text-align: center;
+    text-decoration: none;
+    margin: 4px 2px;
+    border-radius: 2px 2px 12px 12px;
+    /* border-radius: 15px 50px 30px 5px; */
+}
+
+#board-holder {
+    margin: 0;
+    padding-top: 3%;
+    width: 90%;
+    border-radius: 5px;
+    /* height: aspect-ratio(16/9); */
+    /* padding-bottom: 80%; */
+    position: relative;
+}
+
+.dyna-square {
+    position: relative;
+    width: 50%;
+    background-image: linear-gradient(to top right, rgb(121, 76, 243), rgb(64, 219, 240));
+    border: 1.5px solid #000;
+    border-radius: 15%;
+    /* border-radius: 15px; */
+}
+
+.dyna-square:after {
+    content: "";
+    display: block;
+    padding-bottom: 100%;
+    border-radius: 15%;
+}
+
+.dyna-square:hover {
+    background-image: linear-gradient(to top right, rgb(64, 219, 240), rgb(22, 5, 70));
+}
+
+.dyna-square-content {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+
+.circle-shape {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 95%;
+    position: relative;
+}
+
+.holding {
+    background-color: #e6e2ff8f;
+    border: 3px solid #a522f181;
+    border-radius: 15px;
+    /* border-radius: calc(calc(var(--drone-btn) / 15) * 1%); */
+    height: 100%;
+    width: 100%;
+}
+
+.available {
+    box-shadow: inset #f0f;
+}
+
+.holding::before {
+    box-shadow: inset #a522f181;
+}
+
+.health-score {
+    background-image: linear-gradient(to top right, rgba(40, 193, 253, rgba(221, 107, 221, 0.767)07, 221));
+    width: 25%;
+    height: 25%;
+    position: absolute;
+    text-align: right;
+    z-index: 99;
+    transform: initial;
+    /* font-size: 50%; */
+    top: 0;
+    right: .1;
+    /* border-radius: calc(15px); */
+    border-radius: calc(calc(var(--drone-btn) / 15) * 1%);
+}
+
+.health-score>span {
+    /* background-color: #f0f; */
+    width: 100%;
+    height: 100%;
+    /* display: inline-block; */
+    display: flex;
+    vertical-align: middle;
+    line-height: 150%;
+    padding-left: 15%;
+    /* line-height: normal; */
+    /* font-size: var(--health-font); */
+    font-size: 200%;
+    /* font-size: calc(var(--health-font) * 1%); */
+}
+
+
+.drone-icon {
+    margin-top: calc(var(--drone-square) / 3);
+    /* height: var(--drone-square);
+    width: var(--drone-square); */
+    height: var(--drone-btn);
+    width: var(--drone-btn);
+    display: flex;
+    text-align: center;
+    background-color: rgba(40, 40, 41, 0.863);
+    /* border-radius: 8px; */
+    border-radius: 50%;
+    /* border-radius: 15%; */
+    cursor: pointer;
+}
+
+.drone-icon:hover {
+    background-color: rgba(194, 194, 248, 0.863);
+    box-shadow:
+        /* #5c0464 */
+        /* middle */
+        0 0 10px 2px #f0f,
+        /* outer */
+        0 0 14px 4px #0ff;
+}
+
+#bio-nanite-drone-btn {
+    height: 100%;
+    width: 100%;
+    background-image: url("../images/nanite-btn.png");
+    text-align: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 50%;
+    /* border-radius: 15%; */
+    /* background-size: 100vw 100vh; */
+}
+
+/* <i class="fas fa-biohazard"></i> */
+#bio-hazard-drone-btn {
+    height: 100%;
+    width: 100%;
+    background-image: url("../images/bio-hazard-btn.png");
+    text-align: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 50%;
+    /* background-size: 100vw 100vh; */
+}
+
+#bio-flare-drone-btn {
+    height: 100%;
+    width: 100%;
+    background-image: url("../images/bio-flare-btn.png");
+    text-align: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 50%;
+    /* background-size: 100vw 100vh; */
+}
