@@ -3,7 +3,9 @@ const adjacentSpacesHolder = [];
 // const firstSquare = {};
 // firstSquare.x = 1;
 // firstSquare.y = 1;
-const friendOrFoe = require("../friend-or-foe");
+// const friendOrFoe = require("../friend-or-foe");
+const friendOrFoe = require("./friend-or-foe-test");
+
 const adjContentIDStringArr = require("./adj-contentID-string-array");
 const goldilocksChecker = require("./goldilocks-checker");
 

@@ -1,4 +1,4 @@
-const updatePawnStatus = require("./update-pawn-status");
+const updatePawnStatus = require("./update-pawn-status"); 
 
 module.exports = pawnSwitch = function (pawnToSwitch, pawnType) {
     console.log("pawnSwitch function fires");
@@ -30,7 +30,7 @@ module.exports = pawnSwitch = function (pawnToSwitch, pawnType) {
         //     console.log("pawnIdArray");
         //     console.log(pawnIdArray);
         //     }
-        // };
+        // }; 
         updatePawnStatus("switch", pawnToSwitch, pawnTypeSwitch);
 
     } else if (newPawn.classList.contains("zombie-pawn")) {

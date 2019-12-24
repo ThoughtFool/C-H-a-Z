@@ -222,7 +222,6 @@ const updatePercent = __webpack_require__(/*! ./test-scripts/update-percent */ "
 module.exports = checkPawnStatus = function (pawnType, pawnTypeTotal) {
     console.log("checkPawnStatus function fires");
 
-    // pawnTypeArr = ["human", "zombie", "cyborg"];
     // TODO: Add 2 more pawn types after adding to create-pawn.js file:
     // pawnTypeArr = ["human", "zombie", "cyborg", "sleeping-zombie", "sleepy-cyborg"];
 
@@ -233,11 +232,6 @@ module.exports = checkPawnStatus = function (pawnType, pawnTypeTotal) {
     let allPawnSpawn = pawnStat_Type.pawnSpawn;
     console.log("allPawnSpawn[0]");
     console.log(allPawnSpawn[0]);
-
-    // allPawnSpawn = pawnStats.human.pawnSpawn; // <<<<< TESTING ONLY
-
-    // TODO: create an if("human") do the following...
-    // then create for the other races/classes:
 
     for (let i = 0; i < allPawnSpawn.length; i++) {
         console.log(`health: ${allPawnSpawn[i].health}`);
@@ -252,17 +246,15 @@ module.exports = checkPawnStatus = function (pawnType, pawnTypeTotal) {
         } else if (allPawnSpawn[i].health > 80 && allPawnSpawn[i].health <= 140 && pawnType == "human") {
             console.log(`${allPawnSpawn[i].id} is no longer human! ${allPawnSpawn[i].id} joins CYBORG REVOLT!`);
             pawnSwitch(allPawnSpawn[i].id, "cyborg");
-            
-            // } else if (allPawnSpawn[i].health > 0 && allPawnSpawn[i].health < 20) {
-            // pawnSwitch(allPawnSpawn[i].id, "sleepy-zombie", "cyborg");
-            // TODO: add sleepy-zombie here!
-            //     console.log(`ALERT!!! {allPawnSpawn[i].id} is barely human!`);
-            
-            // } else if (allPawnSpawn[i].health > 80 && allPawnSpawn[i].health < 100) {
-            // pawnSwitch(allPawnSpawn[i].id, "sleepy-cyborg");
-            // TODO: add sleepy-cyborg here!
-            //     console.log(`ALERT!!! {allPawnSpawn[i].id} is barely human!`);
         
+        } else if (allPawnSpawn[i].health >= 25 && pawnType == "zombie") {
+            console.log(`${allPawnSpawn[i].id} is no longer a zombie! ${allPawnSpawn[i].id} rejoins the human race!`);
+            pawnSwitch(allPawnSpawn[i].id, "human");
+
+        } else if (allPawnSpawn[i].health <= 75 && pawnType == "cyborg") {
+            console.log(`${allPawnSpawn[i].id} is no longer a cyborg! ${allPawnSpawn[i].id} rejoins the human race!`);
+            pawnSwitch(allPawnSpawn[i].id, "human");
+
         } else if (allPawnSpawn[i].health < -40 || allPawnSpawn[i].health > 140) {
             console.log(`${allPawnSpawn[i].id} is beyond the reach of the NANITES... ${allPawnSpawn[i].id} has been eliminated!`);
             pawnSwitch("permafrost"); // TODO: they don't move and potentially block movement and shield attacks from enemies;
@@ -274,6 +266,16 @@ module.exports = checkPawnStatus = function (pawnType, pawnTypeTotal) {
     };
     updatePercent(pawnTypeTotal);
 };
+
+// } else if (allPawnSpawn[i].health > 0 && allPawnSpawn[i].health < 20) {
+// pawnSwitch(allPawnSpawn[i].id, "sleepy-zombie", "cyborg");
+// TODO: add sleepy-zombie here!
+//     console.log(`ALERT!!! {allPawnSpawn[i].id} is barely human!`);
+
+// } else if (allPawnSpawn[i].health > 80 && allPawnSpawn[i].health < 100) {
+// pawnSwitch(allPawnSpawn[i].id, "sleepy-cyborg");
+// TODO: add sleepy-cyborg here!
+//     console.log(`ALERT!!! {allPawnSpawn[i].id} is barely human!`);
 
 /***/ }),
 
@@ -823,7 +825,7 @@ module.exports = endRound = function () {
             // trigger the animation
             nextTurn(true, "cyborg", adjacentSpaces);
         });
-    }, 1000);
+    }, 800);
 
     // let turnOrder = TODO: get info from browser? local storage?
     return nextTurn(true, "zombie", adjacentSpaces);
@@ -946,120 +948,6 @@ module.exports = enemyMoves = function (homespace, destin, movesMade, adjacentSp
             enemyMoves(last_Arr, destin, movesMade);
         };
         return movesMade;
-    };
-};
-
-/***/ }),
-
-/***/ "./src/split-logic/friend-or-foe.js":
-/*!******************************************!*\
-  !*** ./src/split-logic/friend-or-foe.js ***!
-  \******************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-pawnStats = __webpack_require__(/*! ./pawn-stats */ "./src/split-logic/pawn-stats.js");
-healthInfo = __webpack_require__(/*! ./health-info */ "./src/split-logic/health-info.js");
-
-// this replaces nearbyPawn function:
-module.exports = friendOrFoe = function (homeSquare_ID, adjacentSquaresArr, pawnType) {
-    console.log("friendOrFoe function fires");
-    // evaluates nearby (adjacent) spaces and check if contains "empty-space" class
-    // pawnType = "human"; // <<< testing ONLY (need to include other pawn types)
-
-    console.log("friendOrFoe function fires");
-    console.log("adjacentSquaresArr");
-    console.log(adjacentSquaresArr);
-
-    console.log("homeSquare_ID::");
-    console.log(homeSquare_ID);
-
-    pawnId = document.getElementById(homeSquare_ID).childNodes[0].id;
-    var health = "";
-
-    for (let i = 0; i < adjacentSquaresArr.length; i++) {
-        destinationID = adjacentSquaresArr[i];
-
-        console.log("destinationID");
-        console.log(destinationID);
-
-        spaceToCheck = document.getElementById(destinationID);
-        if (spaceToCheck != null) {
-
-            console.log("spaceToCheck");
-            console.log(spaceToCheck);
-
-            if (spaceToCheck.classList.contains("empty-space")) {
-                console.log("space is empty");
-            } else {
-
-                console.log("spaceToCheck.childNodes[0]");
-                console.log(spaceToCheck.childNodes[0]);
-
-                if (spaceToCheck.childNodes[0].classList.contains("human-pawn")) {
-                    console.log("there's strength in numbers!");
-
-                } else if (spaceToCheck.childNodes[0].classList.contains("zombie-pawn")) {
-
-                    for (let i = 0; i < pawnStats.human.pawnSpawn.length; i++) {
-
-                        homePawnLoc = pawnStats.human.pawnSpawn[i].loc;
-
-                        console.log("homePawnLoc");
-                        console.log(homePawnLoc);
-
-                        console.log("homeSquare_ID");
-                        console.log(homeSquare_ID);
-
-                        if (homePawnLoc == homeSquare_ID) {
-                            console.log("they match!");
-                            health = pawnStats.human.pawnSpawn[i].health - 10;
-                            // TODO: need to create a way to increase/decrease health of "allies" by proximity (use adjacentSpaces function):
-                            if (health > - 11 && health < 111) {
-
-                                pawnStats.human.pawnSpawn[i].health = health;
-                                console.log(spaceToCheck.childNodes[0].id);
-                                console.log("lastchild");
-                                console.log(document.getElementById(homeSquare_ID).lastChild);
-                                healthInfo(pawnType, pawnId);
-                            };
-                            
-                        };
-                    };
-                    // TODO: get target piece's ID in pawnStats?
-                    // pass into updateStats function;
-                    // function initiated in conditional
-                    // multiplier if adjacent pawns are 'allies'... and adjacent to them.. and so on...
-                    console.log("CAUTION: the zombies are draining you too quickly!");
-                } else if (spaceToCheck.childNodes[0].classList.contains("cyborg-pawn")) {
-                    for (let i = 0; i < pawnStats.human.pawnSpawn.length; i++) {
-
-                        homePawnLoc = pawnStats.human.pawnSpawn[i].loc;
-
-                        console.log("homeSquare_ID");
-                        console.log(homeSquare_ID);
-
-                        if (homePawnLoc == homeSquare_ID) {
-                            console.log("they match!");
-                            health = pawnStats.human.pawnSpawn[i].health + 10;
-                            if (health > - 11 && health < 111) {
-
-                                pawnStats.human.pawnSpawn[i].health = health;
-                                console.log(spaceToCheck.childNodes[0].id);
-                                console.log(document.getElementById(homeSquare_ID).lastChild);
-                                healthInfo(pawnType, pawnId);
-                            };
-                        };
-                    };
-                    console.log("CAUTION: the cyborgs are healing you too quickly!");
-                };
-            };
-        } else {
-            console.log(`destination space: ${destinationID} is out of the playable area`);
-        };
-
-        // weightedMove = require("./weightedMove");
-        // weightedMove(enemyId, adjacentSquaresArr);
     };
 };
 
@@ -1188,7 +1076,7 @@ module.exports = pawnStats = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-const updatePawnStatus = __webpack_require__(/*! ./update-pawn-status */ "./src/split-logic/update-pawn-status.js");
+const updatePawnStatus = __webpack_require__(/*! ./update-pawn-status */ "./src/split-logic/update-pawn-status.js"); 
 
 module.exports = pawnSwitch = function (pawnToSwitch, pawnType) {
     console.log("pawnSwitch function fires");
@@ -1220,7 +1108,7 @@ module.exports = pawnSwitch = function (pawnToSwitch, pawnType) {
         //     console.log("pawnIdArray");
         //     console.log(pawnIdArray);
         //     }
-        // };
+        // }; 
         updatePawnStatus("switch", pawnToSwitch, pawnTypeSwitch);
 
     } else if (newPawn.classList.contains("zombie-pawn")) {
@@ -1463,7 +1351,9 @@ const adjacentSpacesHolder = [];
 // const firstSquare = {};
 // firstSquare.x = 1;
 // firstSquare.y = 1;
-const friendOrFoe = __webpack_require__(/*! ../friend-or-foe */ "./src/split-logic/friend-or-foe.js");
+// const friendOrFoe = require("../friend-or-foe");
+const friendOrFoe = __webpack_require__(/*! ./friend-or-foe-test */ "./src/split-logic/test-scripts/friend-or-foe-test.js");
+
 const adjContentIDStringArr = __webpack_require__(/*! ./adj-contentID-string-array */ "./src/split-logic/test-scripts/adj-contentID-string-array.js");
 const goldilocksChecker = __webpack_require__(/*! ./goldilocks-checker */ "./src/split-logic/test-scripts/goldilocks-checker.js");
 
@@ -1774,6 +1664,158 @@ module.exports = compTurn = function (computerBool, pawnType, adjacentSpaces) {
 
 /***/ }),
 
+/***/ "./src/split-logic/test-scripts/friend-or-foe-test.js":
+/*!************************************************************!*\
+  !*** ./src/split-logic/test-scripts/friend-or-foe-test.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+pawnStats = __webpack_require__(/*! ../pawn-stats */ "./src/split-logic/pawn-stats.js");
+healthInfo = __webpack_require__(/*! ../health-info */ "./src/split-logic/health-info.js");
+
+// this replaces nearbyPawn function:
+module.exports = friendOrFoe = function (homeSquare_ID, adjacentSquaresArr, pawnType) {
+    console.log("friendOrFoe function fires");
+    // evaluates nearby (adjacent) spaces and check if contains "empty-space" class
+
+    console.log("friendOrFoe function fires");
+    console.log("adjacentSquaresArr");
+    console.log(adjacentSquaresArr);
+
+    console.log("homeSquare_ID::");
+    console.log(homeSquare_ID);
+
+    pawnId = document.getElementById(homeSquare_ID).childNodes[0].id;
+    var health = "";
+
+    for (let i = 0; i < adjacentSquaresArr.length; i++) {
+        destinationID = adjacentSquaresArr[i];
+
+        console.log("destinationID");
+        console.log(destinationID);
+
+        spaceToCheck = document.getElementById(destinationID);
+        if (spaceToCheck != null) {
+
+            console.log("spaceToCheck");
+            console.log(spaceToCheck);
+
+            if (spaceToCheck.classList.contains("empty-space")) {
+                console.log("space is empty");
+            } else {
+
+                console.log("spaceToCheck.childNodes[0]");
+                console.log(spaceToCheck.childNodes[0]);
+
+                if (spaceToCheck.childNodes[0].classList.contains(`${pawnType}-pawn`)) {
+                // if (spaceToCheck.childNodes[0].classList.contains("human-pawn")) {
+                    console.log(`Hey ${pawnType}, there's strength in numbers!`);
+
+                } else if (spaceToCheck.childNodes[0].classList.contains("zombie-pawn")) {
+
+                    for (let i = 0; i < pawnStats[pawnType].pawnSpawn.length; i++) {
+
+                        homePawnLoc = pawnStats[pawnType].pawnSpawn[i].loc;
+
+                        console.log("homePawnLoc");
+                        console.log(homePawnLoc);
+
+                        console.log("homeSquare_ID");
+                        console.log(homeSquare_ID);
+
+                        if (homePawnLoc == homeSquare_ID) {
+                            console.log("they match!");
+                            let rand = Math.floor(Math.random() * 10);
+                            health = pawnStats[pawnType].pawnSpawn[i].health - rand;
+                            // health = pawnStats[pawnType].pawnSpawn[i].health - 10;
+                            // TODO: need to create a way to increase/decrease health of "allies" by proximity (use adjacentSpaces function):
+                            if (health > -11 && health < 111) {
+
+                                pawnStats[pawnType].pawnSpawn[i].health = health;
+                                console.log(spaceToCheck.childNodes[0].id);
+                                console.log("lastchild");
+                                console.log(document.getElementById(homeSquare_ID).lastChild);
+                                healthInfo(pawnType, pawnId);
+                            };
+
+                        };
+                    };
+                    // TODO: get target piece's ID in pawnStats?
+                    // pass into updateStats function;
+                    // function initiated in conditional
+                    // multiplier if adjacent pawns are 'allies'... and adjacent to them.. and so on...
+                    console.log("CAUTION: the zombies are draining you too quickly!");
+                } else if (spaceToCheck.childNodes[0].classList.contains("cyborg-pawn")) {
+                    for (let i = 0; i < pawnStats[pawnType].pawnSpawn.length; i++) {
+
+                        homePawnLoc = pawnStats[pawnType].pawnSpawn[i].loc;
+
+                        console.log("homeSquare_ID");
+                        console.log(homeSquare_ID);
+
+                        if (homePawnLoc == homeSquare_ID) {
+                            console.log("they match!");
+                            let rand = Math.floor(Math.random() * 10);
+                            health = pawnStats[pawnType].pawnSpawn[i].health + rand;
+                            // health = pawnStats[pawnType].pawnSpawn[i].health + 10;
+                            if (health > -11 && health < 111) {
+
+                                pawnStats[pawnType].pawnSpawn[i].health = health;
+                                console.log(spaceToCheck.childNodes[0].id);
+                                console.log(document.getElementById(homeSquare_ID).lastChild);
+                                healthInfo(pawnType, pawnId);
+                            };
+                        };
+                    };
+                    console.log("CAUTION: the cyborgs are healing you too quickly!");
+                } else if (spaceToCheck.childNodes[0].classList.contains("human-pawn")) {
+                    for (let i = 0; i < pawnStats[pawnType].pawnSpawn.length; i++) {
+
+                        homePawnLoc = pawnStats[pawnType].pawnSpawn[i].loc;
+
+                        console.log("homeSquare_ID");
+                        console.log(homeSquare_ID);
+
+                        if (homePawnLoc == homeSquare_ID) {
+                            console.log("they match!");
+                            let rand = Math.floor(Math.random() * 10);
+                            if (pawnType == "zombie") {
+                                health = pawnStats[pawnType].pawnSpawn[i].health + rand;
+                                // health = pawnStats[pawnType].pawnSpawn[i].health + 5;
+                                
+                            } else if (pawnType == "cyborg") {
+                                health = pawnStats[pawnType].pawnSpawn[i].health - rand;
+                                // health = pawnStats[pawnType].pawnSpawn[i].health - 5;
+
+                            } else {
+                                alert("My apologies, an error has occurred!");
+                            };
+
+                            if (health > -11 && health < 111) {
+                                console.log("TEST FUNC BELOW:");
+
+                                pawnStats[pawnType].pawnSpawn[i].health = health;
+                                console.log(spaceToCheck.childNodes[0].id);
+                                console.log(document.getElementById(homeSquare_ID).lastChild);
+                                healthInfo(pawnType, pawnId);
+                            };
+                        };
+                    };
+                    console.log("CAUTION: the cyborgs are healing you too quickly!");
+                };
+            };
+        } else {
+            console.log(`destination space: ${destinationID} is out of the playable area`);
+        };
+
+        // weightedMove = require("./weightedMove");
+        // weightedMove(enemyId, adjacentSquaresArr);
+    };
+};
+
+/***/ }),
+
 /***/ "./src/split-logic/test-scripts/goldilocks-checker.js":
 /*!************************************************************!*\
   !*** ./src/split-logic/test-scripts/goldilocks-checker.js ***!
@@ -1941,16 +1983,14 @@ module.exports = moveEnemyPawnFunc = function (oldSpaceID, newSpaceID, updatePaw
     console.log("moveEnemyPawnFunc function fires"); 
     
     let parentDiv = document.getElementById(oldSpaceID); 
-    parentDiv.style.transition = "all 10ms";
     console.log(parentDiv);
     parentDiv.classList.add("parent-holding-pawn");
     console.log(parentDiv.childNodes);
     let currentPawnHeld = parentDiv.childNodes[0].id;
     let holdingClass = document.getElementById(currentPawnHeld);
-    holdingClass.style.transition = "all 10ms";
     holdingClass.classList.add("holding");
     // holdingClass.getBoundingClientRect();
-    window.getComputedStyle(parentDiv);
+    // window.getComputedStyle(holdingClass);
 
     // setTimeout(function () {
     //     requestAnimationFrame(function () {
@@ -1970,6 +2010,7 @@ module.exports = moveEnemyPawnFunc = function (oldSpaceID, newSpaceID, updatePaw
     let newEnemySpace = document.getElementById(newSpaceID);
     newEnemySpace.style.transition = "all 2s";
     newEnemySpace.appendChild(holdingClass);
+    // holdingClass.style.animationDelay = "200ms";
     holdingClass.classList.remove("holding");
     newEnemySpace.classList.remove("empty-space");
     parentDiv.classList.remove("parent-holding-pawn");
