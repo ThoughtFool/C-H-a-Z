@@ -237,34 +237,34 @@ module.exports = checkPawnStatus = function (pawnType, pawnTypeTotal) {
         console.log(`health: ${allPawnSpawn[i].health}`);
         if (allPawnSpawn[i].health >= 20 && allPawnSpawn[i].health <= 80 && pawnType == "hazmat-human") {
             console.log(`${allPawnSpawn[i].id} is still HUMAN...for now!`);
-            pawnSwitch(allPawnSpawn[i].id, "human");
+            pawnSwitch(allPawnSpawn[i].id, "human", pawnTypeTotal);
         
         } else if (allPawnSpawn[i].health >= -40 && allPawnSpawn[i].health < 20 && pawnType == "human") {
             console.log(`${allPawnSpawn[i].id} is no longer human! ${allPawnSpawn[i].id} joins ZOMBIE HORDE!`);
-            pawnSwitch(allPawnSpawn[i].id, "zombie");
+            pawnSwitch(allPawnSpawn[i].id, "zombie", pawnTypeTotal);
         
         } else if (allPawnSpawn[i].health > 80 && allPawnSpawn[i].health <= 140 && pawnType == "human") {
             console.log(`${allPawnSpawn[i].id} is no longer human! ${allPawnSpawn[i].id} joins CYBORG REVOLT!`);
-            pawnSwitch(allPawnSpawn[i].id, "cyborg");
+            pawnSwitch(allPawnSpawn[i].id, "cyborg", pawnTypeTotal);
         
         } else if (allPawnSpawn[i].health >= 25 && pawnType == "zombie") {
             console.log(`${allPawnSpawn[i].id} is no longer a zombie! ${allPawnSpawn[i].id} rejoins the human race!`);
-            pawnSwitch(allPawnSpawn[i].id, "human");
+            pawnSwitch(allPawnSpawn[i].id, "human", pawnTypeTotal);
 
         } else if (allPawnSpawn[i].health <= 75 && pawnType == "cyborg") {
             console.log(`${allPawnSpawn[i].id} is no longer a cyborg! ${allPawnSpawn[i].id} rejoins the human race!`);
-            pawnSwitch(allPawnSpawn[i].id, "human");
+            pawnSwitch(allPawnSpawn[i].id, "human", pawnTypeTotal);
 
         } else if (allPawnSpawn[i].health < -40 || allPawnSpawn[i].health > 140) {
             console.log(`${allPawnSpawn[i].id} is beyond the reach of the NANITES... ${allPawnSpawn[i].id} has been eliminated!`);
-            pawnSwitch("permafrost"); // TODO: they don't move and potentially block movement and shield attacks from enemies;
+            pawnSwitch(allPawnSpawn[i].id, "permafrost", pawnTypeTotal); // TODO: they don't move and potentially block movement and shield attacks from enemies;
         
         } else {
             console.log("a calculation error has occurred");
             console.log(`i is ${i} and allPawnSpawn[i].health is ${allPawnSpawn[i].health} and  pawnType is ${pawnType}`);
         };
     };
-    updatePercent(pawnTypeTotal);
+    // updatePercent(pawnTypeTotal);
 };
 
 // } else if (allPawnSpawn[i].health > 0 && allPawnSpawn[i].health < 20) {
@@ -312,8 +312,9 @@ module.exports = function Square(x, y, goldilocks) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-healthInfo = __webpack_require__(/*! ./health-info */ "./src/split-logic/health-info.js");
-pawnStats = __webpack_require__(/*! ./pawn-stats */ "./src/split-logic/pawn-stats.js");
+const healthInfo = __webpack_require__(/*! ./health-info */ "./src/split-logic/health-info.js");
+const pawnStats = __webpack_require__(/*! ./pawn-stats */ "./src/split-logic/pawn-stats.js");
+const updatePercent = __webpack_require__(/*! ./test-scripts/update-percent */ "./src/split-logic/test-scripts/update-percent.js");
 
 module.exports = createPawn = function (destinationID, pawnCounter, pawnType) {
     console.log("createPawn function fires");
@@ -366,7 +367,9 @@ module.exports = createPawn = function (destinationID, pawnCounter, pawnType) {
         // return pawnStats;
     } else {
         console.log("destination space is full");
-    }
+    };
+    updatePercent(getPawnTypeTotal(pawnStats));
+
 };
 
 
@@ -778,47 +781,48 @@ const adjacentSpaces = __webpack_require__(/*! ./test-scripts/adj-space-finder *
 const checkPawnStatus = __webpack_require__(/*! ./check-pawn-status */ "./src/split-logic/check-pawn-status.js");
 const goldilocksChecker = __webpack_require__(/*! ./test-scripts/goldilocks-checker */ "./src/split-logic/test-scripts/goldilocks-checker.js");
 const nextTurn = __webpack_require__(/*! ./test-scripts/comp-turn */ "./src/split-logic/test-scripts/comp-turn.js");
+const getTotalPawns = __webpack_require__ (/*! ./get-total-pawns */ "./src/split-logic/get-total-pawns.js");
 
 module.exports = endRound = function () {
-    let pawnType = "";
-    let pawnTypeArr = [];
-    let pawnTypeTotal = {};
+    // let pawnType = "";
+    // let pawnTypeArr = [];
+    // let pawnTypeTotal = {};
 
-    for (pawnType in pawnStats) {
-        console.log("pawnType");
-        console.log(pawnType);
-        console.log("pawnStats[pawnType]");
-        console.log(pawnStats[pawnType]);
-        if (
-            pawnType === "cyborg" ||
-            pawnType === "human" ||
-            pawnType === "zombie"
-        ) {
+    // for (pawnType in pawnStats) {
+    //     console.log("pawnType");
+    //     console.log(pawnType);
+    //     console.log("pawnStats[pawnType]");
+    //     console.log(pawnStats[pawnType]);
+    //     if (
+    //         pawnType === "cyborg" ||
+    //         pawnType === "human" ||
+    //         pawnType === "zombie"
+    //     ) {
 
-            for (let i = 0; i < pawnStats[pawnType].pawnSpawn.length; i++) {
-                console.log("pawnStats[pawnType]::");
-                console.log(pawnStats[pawnType]);
-                console.log(pawnStats[pawnType].pawnSpawn);
-                console.log(pawnStats[pawnType].pawnSpawn[i]);
-                let pawnLoc = pawnStats[pawnType].pawnSpawn[i].loc[0];
-                console.log("pawnStats[pawnType].pawnSpawn[i].loc");
-                console.log(pawnStats[pawnType].pawnSpawn[i].loc);
-                console.log("pawnLoc");
-                console.log(pawnLoc);
+    //         for (let i = 0; i < pawnStats[pawnType].pawnSpawn.length; i++) {
+    //             console.log("pawnStats[pawnType]::");
+    //             console.log(pawnStats[pawnType]);
+    //             console.log(pawnStats[pawnType].pawnSpawn);
+    //             console.log(pawnStats[pawnType].pawnSpawn[i]);
+    //             let pawnLoc = pawnStats[pawnType].pawnSpawn[i].loc[0];
+    //             console.log("pawnStats[pawnType].pawnSpawn[i].loc");
+    //             console.log(pawnStats[pawnType].pawnSpawn[i].loc);
+    //             console.log("pawnLoc");
+    //             console.log(pawnLoc);
 
-                adjacentSpaces(pawnLoc, 1, null, pawnType, "endRound");
-            };
+    //             adjacentSpaces(pawnLoc, 1, null, pawnType, "endRound");
+    //         };
 
-            pawnTypeArr.push(pawnType);
-            pawnTypeTotal[pawnType] = pawnStats[pawnType].pawnSpawn.length;
-        };
-    };
+    //         pawnTypeArr.push(pawnType);
+    //         pawnTypeTotal[pawnType] = pawnStats[pawnType].pawnSpawn.length;
+    //     };
+    // };
 
-    for (let t = 0; t < pawnTypeArr.length; t++) {
-        console.log("pawnType before checkPawnStatus:");
-        console.log(pawnTypeArr[t]);
-        checkPawnStatus(pawnTypeArr[t], pawnTypeTotal);
-    };
+    // for (let t = 0; t < pawnTypeArr.length; t++) {
+    //     console.log("pawnType before checkPawnStatus:");
+    //     console.log(pawnTypeArr[t]);
+    //     checkPawnStatus(pawnTypeArr[t], pawnTypeTotal);
+    // };
 
     setTimeout(function () {
         requestAnimationFrame(function () {
@@ -828,7 +832,15 @@ module.exports = endRound = function () {
     }, 800);
 
     // let turnOrder = TODO: get info from browser? local storage?
-    return nextTurn(true, "zombie", adjacentSpaces);
+    nextTurn(true, "zombie", adjacentSpaces);
+    
+    let pawnTypeObj = getTotalPawns();
+    for (let t = 0; t < pawnTypeObj.pawnTypeArr.length; t++) {
+        console.log("pawnType before checkPawnStatus:");
+        console.log(pawnTypeObj.pawnTypeArr[t]);
+        checkPawnStatus(pawnTypeObj.pawnTypeArr[t], pawnTypeObj.pawnTypeTotal);
+        // checkPawnStatus(pawnTypeArr[t], pawnTypeTotal);
+    };
 };
 
 /***/ }),
@@ -949,6 +961,89 @@ module.exports = enemyMoves = function (homespace, destin, movesMade, adjacentSp
         };
         return movesMade;
     };
+};
+
+/***/ }),
+
+/***/ "./src/split-logic/get-pawn-type-total.js":
+/*!************************************************!*\
+  !*** ./src/split-logic/get-pawn-type-total.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// const pawnStats = require("./pawn-stats");
+
+module.exports = getPawnTypeTotal = function (pawnStats) {
+    let pawnTypeTotal = {
+        cyborg: pawnStats.cyborg.pawnSpawn.length,
+        human: pawnStats.human.pawnSpawn.length,
+        zombie: pawnStats.zombie.pawnSpawn.length
+    };
+    return pawnTypeTotal;
+};
+
+/***/ }),
+
+/***/ "./src/split-logic/get-total-pawns.js":
+/*!********************************************!*\
+  !*** ./src/split-logic/get-total-pawns.js ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+const adjacentSpaces = __webpack_require__(/*! ./test-scripts/adj-space-finder */ "./src/split-logic/test-scripts/adj-space-finder.js");
+const checkPawnStatus = __webpack_require__(/*! ./check-pawn-status */ "./src/split-logic/check-pawn-status.js");
+const pawnStats = __webpack_require__(/*! ./pawn-stats */ "./src/split-logic/pawn-stats.js");
+
+module.exports = getTotalPawns = function () {
+    let pawnType = "";
+    let pawnTypeArr = [];
+    let pawnTypeTotal = {};
+    let pawnTypeObj = {};
+
+    for (pawnType in pawnStats) {
+        console.log("pawnType");
+        console.log(pawnType);
+        console.log("pawnStats[pawnType]");
+        console.log(pawnStats[pawnType]);
+        if (
+            pawnType === "cyborg" ||
+            pawnType === "human" ||
+            pawnType === "zombie"
+        ) {
+
+            for (let i = 0; i < pawnStats[pawnType].pawnSpawn.length; i++) {
+                console.log("pawnStats[pawnType]::");
+                console.log(pawnStats[pawnType]);
+                console.log(pawnStats[pawnType].pawnSpawn);
+                console.log(pawnStats[pawnType].pawnSpawn[i]);
+                let pawnLoc = pawnStats[pawnType].pawnSpawn[i].loc[0];
+                console.log("pawnStats[pawnType].pawnSpawn[i].loc");
+                console.log(pawnStats[pawnType].pawnSpawn[i].loc);
+                console.log("pawnLoc");
+                console.log(pawnLoc);
+
+                adjacentSpaces(pawnLoc, 1, null, pawnType, "endRound");
+            };
+
+
+            pawnTypeArr.push(pawnType);
+            pawnTypeTotal[pawnType] = pawnStats[pawnType].pawnSpawn.length;
+        };
+        pawnTypeObj = {
+            pawnTypeArr: pawnTypeArr,
+            pawnTypeTotal: pawnTypeTotal
+        };
+    };
+    return pawnTypeObj;
+
+    // for (let t = 0; t < pawnTypeArr.length; t++) {
+    //     console.log("pawnType before checkPawnStatus:");
+    //     console.log(pawnTypeArr[t]);
+    //     checkPawnStatus(pawnTypeObj.pawnTypeArr[t], pawnTypeObj.pawnTypeTotal);
+    //     // checkPawnStatus(pawnTypeArr[t], pawnTypeTotal);
+    // };
 };
 
 /***/ }),
@@ -1076,9 +1171,10 @@ module.exports = pawnStats = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-const updatePawnStatus = __webpack_require__(/*! ./update-pawn-status */ "./src/split-logic/update-pawn-status.js"); 
+const updatePawnStatus = __webpack_require__(/*! ./update-pawn-status */ "./src/split-logic/update-pawn-status.js");
+const getPawnTypeTotal = __webpack_require__(/*! ./get-pawn-type-total */ "./src/split-logic/get-pawn-type-total.js");
 
-module.exports = pawnSwitch = function (pawnToSwitch, pawnType) {
+module.exports = pawnSwitch = function (pawnToSwitch, pawnType, pawnTypeTotal) {
     console.log("pawnSwitch function fires");
     console.log("pawnType in pawnSwitch:");
     console.log(pawnType);
@@ -1109,14 +1205,14 @@ module.exports = pawnSwitch = function (pawnToSwitch, pawnType) {
         //     console.log(pawnIdArray);
         //     }
         // }; 
-        updatePawnStatus("switch", pawnToSwitch, pawnTypeSwitch);
+        updatePawnStatus("switch", pawnToSwitch, pawnTypeSwitch, getPawnTypeTotal);
 
     } else if (newPawn.classList.contains("zombie-pawn")) {
         newPawn.classList.remove("zombie-pawn");
         newPawn.classList.add(`${pawnType}-pawn`);
 
         let pawnTypeSwitch = ["zombie", pawnType];
-        updatePawnStatus("switch", pawnToSwitch, pawnTypeSwitch);
+        updatePawnStatus("switch", pawnToSwitch, pawnTypeSwitch, getPawnTypeTotal);
 
 
         // TODO: update stats (remove from type array/object and add to other array/object)
@@ -1128,22 +1224,25 @@ module.exports = pawnSwitch = function (pawnToSwitch, pawnType) {
         newPawn.classList.add(`${pawnType}-pawn`);
 
         let pawnTypeSwitch = ["cyborg", pawnType];
-        updatePawnStatus("switch", pawnToSwitch, pawnTypeSwitch);
+        updatePawnStatus("switch", pawnToSwitch, pawnTypeSwitch, getPawnTypeTotal);
 
     } else if (newPawn.classList.contains("sleepy-zombie-pawn")) {
         newPawn.classList.remove("sleepy-zombie-pawn");
         newPawn.classList.add(`${pawnType}-pawn`);
 
         let pawnTypeSwitch = ["sleepy-zombie-pawn", pawnType];
-        updatePawnStatus("switch", pawnToSwitch, pawnTypeSwitch);
+        updatePawnStatus("switch", pawnToSwitch, pawnTypeSwitch, getPawnTypeTotal);
 
     } else if (newPawn.classList.contains("sleepy-cyborg-pawn")) {
         newPawn.classList.remove("sleepy-cyborg-pawn");
         newPawn.classList.add(`${pawnType}-pawn`);
 
         let pawnTypeSwitch = ["sleepy-cyborg-pawn", pawnType];
-        updatePawnStatus("switch", pawnToSwitch, pawnTypeSwitch);
+        updatePawnStatus("switch", pawnToSwitch, pawnTypeSwitch, getPawnTypeTotal);
     };
+
+    // updatePercent(pawnTypeTotal);
+
 };
 
 // TODO: need to make pawns more generic. 
@@ -2297,7 +2396,9 @@ module.exports = updatePercent = function (pawnTypeTotal) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-pawnStats = __webpack_require__(/*! ./pawn-stats */ "./src/split-logic/pawn-stats.js");
+const getPawnTypeTotal = __webpack_require__(/*! ./get-pawn-type-total */ "./src/split-logic/get-pawn-type-total.js");
+const pawnStats = __webpack_require__(/*! ./pawn-stats */ "./src/split-logic/pawn-stats.js");
+const updatePercent = __webpack_require__(/*! ./test-scripts/update-percent */ "./src/split-logic/test-scripts/update-percent.js");
 
 module.exports = updatePawnStatus = function (string, pawnID, newParentID) {
     console.log(`updatePawnStatus function fires with string = ${string}`);
@@ -2306,6 +2407,7 @@ module.exports = updatePawnStatus = function (string, pawnID, newParentID) {
     console.log("pawnStats");
     console.log(pawnStats);
     let pawnType = "";
+    let pawnTypeTotal = 0;
 
     // "switch" pawn type (pawn-switch):
 
@@ -2347,82 +2449,103 @@ module.exports = updatePawnStatus = function (string, pawnID, newParentID) {
                 console.log(pawnStats[typeBefore]);
                 console.log(`after?`);
                 console.log(pawnStats[typeAfter]);
+
+
             };
         };
-
-
+        // pawnTypeTotal = getPawnTypeTotal();
+        // updatePercent(pawnTypeTotal);
+        
+        
         //     if (pawnID == allPawnSpawn[i].loc) {
-        //         console.log(`${allPawnSpawn[i].id} equals pawnID`);
-        //     };
-        // };
-
-        // if (
-        //     pawn_Type === "cyborg" ||
-        //     pawn_Type === "human" ||
-        //     pawn_Type === "zombie"
-        // ) {
-
-
-        // "location" swap (drag-and-drop):
-    } else if (string === "location") {
-        let pawnElem = document.getElementById(pawnID);
-
-        if (pawnElem.classList.contains("cyborg-pawn")) {
-            console.log("cyborg-pawn");
-            cyborgSpawn = pawnStats.cyborg.pawnSpawn;
-
-            // TODO: update location: 
-            for (let z = 0; z < cyborgSpawn.length; z++) {
-                if (cyborgSpawn[z].id == pawnID) {
-                    console.log(`cyborg- ${pawnID} -found!`); // TODO: use this to find and change class/race
-                    console.log(`cyborg location was: ${cyborgSpawn[z].loc}.`);
-
-                    cyborgSpawn[z].loc[0] = newParentID;
-                    console.log(`cyborg location now is: ${cyborgSpawn[z].loc}.`);
+            //         console.log(`${allPawnSpawn[i].id} equals pawnID`);
+            //     };
+            // };
+            
+            // if (
+                //     pawn_Type === "cyborg" ||
+                //     pawn_Type === "human" ||
+                //     pawn_Type === "zombie"
+                // ) {
+                    
+                    
+                    // "location" swap (drag-and-drop):
+                } else if (string === "location") {
+                    let pawnElem = document.getElementById(pawnID);
+                    
+                    if (pawnElem.classList.contains("cyborg-pawn")) {
+                        console.log("cyborg-pawn");
+                        cyborgSpawn = pawnStats.cyborg.pawnSpawn;
+                        
+                        // TODO: update location: 
+                        for (let z = 0; z < cyborgSpawn.length; z++) {
+                            if (cyborgSpawn[z].id == pawnID) {
+                                console.log(`cyborg- ${pawnID} -found!`); // TODO: use this to find and change class/race
+                                console.log(`cyborg location was: ${cyborgSpawn[z].loc}.`);
+                                
+                                cyborgSpawn[z].loc[0] = newParentID;
+                                console.log(`cyborg location now is: ${cyborgSpawn[z].loc}.`);
+                            };
+                        };
+                        // TODO: update race: 
+                        // TODO: update health?: Already done! Link it!
+                        
+                    } else if (pawnElem.classList.contains("human-pawn")) {
+                        console.log("human-pawn");
+                        humanSpawn = pawnStats.human.pawnSpawn;
+                        
+                        // TODO: update location: 
+                        for (let z = 0; z < humanSpawn.length; z++) {
+                            if (humanSpawn[z].id == pawnID) {
+                                console.log(`human- ${pawnID} -found!`); // TODO: use this to find and change class/race
+                                console.log(`human location was: ${humanSpawn[z].loc}.`);
+                                
+                                humanSpawn[z].loc[0] = newParentID;
+                                console.log(`human location now is: ${humanSpawn[z].loc}.`);
+                            };
+                        };
+                        // TODO: update race: 
+                        // TODO: update health?: Already done! Link it!
+                        
+                    } else if (pawnElem.classList.contains("zombie-pawn")) {
+                        console.log("zombie-pawn");
+                        zombieSpawn = pawnStats.zombie.pawnSpawn;
+                        
+                        // TODO: update location: 
+                        for (let z = 0; z < zombieSpawn.length; z++) {
+                            if (zombieSpawn[z].id == pawnID) {
+                                console.log(`zombie- ${pawnID} -found!`); // TODO: use this to find and change class/race
+                                console.log(`zombie location was: ${zombieSpawn[z].loc}.`);
+                                
+                                zombieSpawn[z].loc[0] = newParentID;
+                                console.log(`zombie location now is: ${zombieSpawn[z].loc}.`);
+                            };
+                        };
+                        // TODO: update race: 
+                        // TODO: update health?: Already done! Link it! 
+                    };
                 };
-            };
-            // TODO: update race: 
-            // TODO: update health?: Already done! Link it!
-
-        } else if (pawnElem.classList.contains("human-pawn")) {
-            console.log("human-pawn");
-            humanSpawn = pawnStats.human.pawnSpawn;
-
-            // TODO: update location: 
-            for (let z = 0; z < humanSpawn.length; z++) {
-                if (humanSpawn[z].id == pawnID) {
-                    console.log(`human- ${pawnID} -found!`); // TODO: use this to find and change class/race
-                    console.log(`human location was: ${humanSpawn[z].loc}.`);
-
-                    humanSpawn[z].loc[0] = newParentID;
-                    console.log(`human location now is: ${humanSpawn[z].loc}.`);
-                };
-            };
-            // TODO: update race: 
-            // TODO: update health?: Already done! Link it!
-
-        } else if (pawnElem.classList.contains("zombie-pawn")) {
-            console.log("zombie-pawn");
-            zombieSpawn = pawnStats.zombie.pawnSpawn;
-
-            // TODO: update location: 
-            for (let z = 0; z < zombieSpawn.length; z++) {
-                if (zombieSpawn[z].id == pawnID) {
-                    console.log(`zombie- ${pawnID} -found!`); // TODO: use this to find and change class/race
-                    console.log(`zombie location was: ${zombieSpawn[z].loc}.`);
-
-                    zombieSpawn[z].loc[0] = newParentID;
-                    console.log(`zombie location now is: ${zombieSpawn[z].loc}.`);
-                };
-            };
-            // TODO: update race: 
-            // TODO: update health?: Already done! Link it! 
-        };
-    };
-
-    // testing ONLY:
+                
+                // pawnTypeTotal = {
+                    //     cyborg: pawnStats.cyborg.pawnSpawn.length,
+                    //     human: pawnStats.human.pawnSpawn.length,
+                    //     zombie: pawnStats.zombie.pawnSpawn.length
+                    // };
+                    
+                    // updatePercent(pawnTypeTotal);
+                    
+                    
+                    // testing ONLY:
     // let pawnSpawn = pawnStats[pawnType]
     // humanPawnSpawn = pawnStats[pawnType].pawnSpawn;
+
+    setTimeout(function () {
+        // requestAnimationFrame(function () {
+        //     // trigger the animation
+        //     nextTurn(true, "cyborg", adjacentSpaces);
+        // });
+        updatePercent(getPawnTypeTotal(pawnStats));
+    }, 200);
 };
 
 /***/ })

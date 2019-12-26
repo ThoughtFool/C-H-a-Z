@@ -20,34 +20,34 @@ module.exports = checkPawnStatus = function (pawnType, pawnTypeTotal) {
         console.log(`health: ${allPawnSpawn[i].health}`);
         if (allPawnSpawn[i].health >= 20 && allPawnSpawn[i].health <= 80 && pawnType == "hazmat-human") {
             console.log(`${allPawnSpawn[i].id} is still HUMAN...for now!`);
-            pawnSwitch(allPawnSpawn[i].id, "human");
+            pawnSwitch(allPawnSpawn[i].id, "human", pawnTypeTotal);
         
         } else if (allPawnSpawn[i].health >= -40 && allPawnSpawn[i].health < 20 && pawnType == "human") {
             console.log(`${allPawnSpawn[i].id} is no longer human! ${allPawnSpawn[i].id} joins ZOMBIE HORDE!`);
-            pawnSwitch(allPawnSpawn[i].id, "zombie");
+            pawnSwitch(allPawnSpawn[i].id, "zombie", pawnTypeTotal);
         
         } else if (allPawnSpawn[i].health > 80 && allPawnSpawn[i].health <= 140 && pawnType == "human") {
             console.log(`${allPawnSpawn[i].id} is no longer human! ${allPawnSpawn[i].id} joins CYBORG REVOLT!`);
-            pawnSwitch(allPawnSpawn[i].id, "cyborg");
+            pawnSwitch(allPawnSpawn[i].id, "cyborg", pawnTypeTotal);
         
         } else if (allPawnSpawn[i].health >= 25 && pawnType == "zombie") {
             console.log(`${allPawnSpawn[i].id} is no longer a zombie! ${allPawnSpawn[i].id} rejoins the human race!`);
-            pawnSwitch(allPawnSpawn[i].id, "human");
+            pawnSwitch(allPawnSpawn[i].id, "human", pawnTypeTotal);
 
         } else if (allPawnSpawn[i].health <= 75 && pawnType == "cyborg") {
             console.log(`${allPawnSpawn[i].id} is no longer a cyborg! ${allPawnSpawn[i].id} rejoins the human race!`);
-            pawnSwitch(allPawnSpawn[i].id, "human");
+            pawnSwitch(allPawnSpawn[i].id, "human", pawnTypeTotal);
 
         } else if (allPawnSpawn[i].health < -40 || allPawnSpawn[i].health > 140) {
             console.log(`${allPawnSpawn[i].id} is beyond the reach of the NANITES... ${allPawnSpawn[i].id} has been eliminated!`);
-            pawnSwitch("permafrost"); // TODO: they don't move and potentially block movement and shield attacks from enemies;
+            pawnSwitch(allPawnSpawn[i].id, "permafrost", pawnTypeTotal); // TODO: they don't move and potentially block movement and shield attacks from enemies;
         
         } else {
             console.log("a calculation error has occurred");
             console.log(`i is ${i} and allPawnSpawn[i].health is ${allPawnSpawn[i].health} and  pawnType is ${pawnType}`);
         };
     };
-    updatePercent(pawnTypeTotal);
+    // updatePercent(pawnTypeTotal);
 };
 
 // } else if (allPawnSpawn[i].health > 0 && allPawnSpawn[i].health < 20) {

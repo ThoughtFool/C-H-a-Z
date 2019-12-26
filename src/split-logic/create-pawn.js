@@ -1,5 +1,6 @@
-healthInfo = require("./health-info");
-pawnStats = require("./pawn-stats");
+const healthInfo = require("./health-info");
+const pawnStats = require("./pawn-stats");
+const updatePercent = require("./test-scripts/update-percent");
 
 module.exports = createPawn = function (destinationID, pawnCounter, pawnType) {
     console.log("createPawn function fires");
@@ -52,7 +53,9 @@ module.exports = createPawn = function (destinationID, pawnCounter, pawnType) {
         // return pawnStats;
     } else {
         console.log("destination space is full");
-    }
+    };
+    updatePercent(getPawnTypeTotal(pawnStats));
+
 };
 
 

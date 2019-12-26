@@ -1,6 +1,7 @@
-const updatePawnStatus = require("./update-pawn-status"); 
+const updatePawnStatus = require("./update-pawn-status");
+const getPawnTypeTotal = require("./get-pawn-type-total");
 
-module.exports = pawnSwitch = function (pawnToSwitch, pawnType) {
+module.exports = pawnSwitch = function (pawnToSwitch, pawnType, pawnTypeTotal) {
     console.log("pawnSwitch function fires");
     console.log("pawnType in pawnSwitch:");
     console.log(pawnType);
@@ -31,14 +32,14 @@ module.exports = pawnSwitch = function (pawnToSwitch, pawnType) {
         //     console.log(pawnIdArray);
         //     }
         // }; 
-        updatePawnStatus("switch", pawnToSwitch, pawnTypeSwitch);
+        updatePawnStatus("switch", pawnToSwitch, pawnTypeSwitch, getPawnTypeTotal);
 
     } else if (newPawn.classList.contains("zombie-pawn")) {
         newPawn.classList.remove("zombie-pawn");
         newPawn.classList.add(`${pawnType}-pawn`);
 
         let pawnTypeSwitch = ["zombie", pawnType];
-        updatePawnStatus("switch", pawnToSwitch, pawnTypeSwitch);
+        updatePawnStatus("switch", pawnToSwitch, pawnTypeSwitch, getPawnTypeTotal);
 
 
         // TODO: update stats (remove from type array/object and add to other array/object)
@@ -50,22 +51,25 @@ module.exports = pawnSwitch = function (pawnToSwitch, pawnType) {
         newPawn.classList.add(`${pawnType}-pawn`);
 
         let pawnTypeSwitch = ["cyborg", pawnType];
-        updatePawnStatus("switch", pawnToSwitch, pawnTypeSwitch);
+        updatePawnStatus("switch", pawnToSwitch, pawnTypeSwitch, getPawnTypeTotal);
 
     } else if (newPawn.classList.contains("sleepy-zombie-pawn")) {
         newPawn.classList.remove("sleepy-zombie-pawn");
         newPawn.classList.add(`${pawnType}-pawn`);
 
         let pawnTypeSwitch = ["sleepy-zombie-pawn", pawnType];
-        updatePawnStatus("switch", pawnToSwitch, pawnTypeSwitch);
+        updatePawnStatus("switch", pawnToSwitch, pawnTypeSwitch, getPawnTypeTotal);
 
     } else if (newPawn.classList.contains("sleepy-cyborg-pawn")) {
         newPawn.classList.remove("sleepy-cyborg-pawn");
         newPawn.classList.add(`${pawnType}-pawn`);
 
         let pawnTypeSwitch = ["sleepy-cyborg-pawn", pawnType];
-        updatePawnStatus("switch", pawnToSwitch, pawnTypeSwitch);
+        updatePawnStatus("switch", pawnToSwitch, pawnTypeSwitch, getPawnTypeTotal);
     };
+
+    // updatePercent(pawnTypeTotal);
+
 };
 
 // TODO: need to make pawns more generic. 
