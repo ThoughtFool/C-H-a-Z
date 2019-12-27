@@ -11,12 +11,17 @@ var randBtn = document.getElementById("create-pawn");
 var endRoundBtn = document.getElementById("end-round");
 
 // set the local storage to client gameboard size:
+const playGameBtn = document.getElementById("play-game-btn");
 var getTestNum = document.getElementById("test-nums");
 var startBtn = document.getElementById("submit-test-num");
 var accordMenu = document.getElementsByClassName("accordion");
 
 // disable all console messages:
 console.log = function () {};
+
+playGameBtn.addEventListener("click", function name(params) {
+    console.log("startBtn 'click' function fires");
+});
 
 for (let i = 0; i < accordMenu.length; i++) {
     accordMenu[i].addEventListener("click", function (e) {

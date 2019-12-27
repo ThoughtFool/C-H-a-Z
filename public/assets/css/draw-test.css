@@ -693,3 +693,40 @@ p {
     border-radius: 50%;
     /* background-size: 100vw 100vh; */
 }
+/* /////////////////////////////////////////////////////// */
+
+.main-story-container {
+    background-image: url("../images/Cryo-Wars-lab.png");
+    height: 80vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+}
+
+#sos-msg {
+    margin-left: 10vw;
+    margin-right: 10vw;
+    padding: 15%;
+    height: 80vh;
+    width: 80vw;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    /* background-color: rgba(137, 43, 226, 0.233); */
+}
+
+
+/* #sos-msg {
+    height: 80%;
+    width: 50%;
+    display: flex;
+    border-radius: 15px;
+    align-items: center;
+    flex-flow: column;
+    background-image: linear-gradient(rgba(210, 38, 253, 0.383) rgba(52, 64, 235, 0.61));
+} */
+
+.msg-items {
+    display: flex;
+}
