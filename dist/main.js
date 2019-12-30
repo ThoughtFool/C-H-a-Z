@@ -101,6 +101,8 @@ const dragAndDrop = __webpack_require__(/*! ./split-logic/drag-and-drop */ "./sr
 const touchEvents = __webpack_require__(/*! ./split-logic/test-scripts/touch-events */ "./src/split-logic/test-scripts/touch-events.js");
 const endRound = __webpack_require__(/*! ./split-logic/end-round */ "./src/split-logic/end-round.js");
 const deployDrone = __webpack_require__(/*! ./split-logic/deploy-drone */ "./src/split-logic/deploy-drone.js");
+const startModal = __webpack_require__(/*! ./split-logic/modal */ "./src/split-logic/modal.js");
+const outerModal = document.getElementById("modal-outer");
 
 var randBtn = document.getElementById("create-pawn");
 var endRoundBtn = document.getElementById("end-round");
@@ -113,6 +115,8 @@ var accordMenu = document.getElementsByClassName("accordion");
 
 // disable all console messages:
 console.log = function () {};
+
+startModal();
 
 // playGameBtn.addEventListener("click", function name(params) {
 //     console.log("startBtn 'click' function fires");
@@ -154,7 +158,8 @@ startBtn.addEventListener("click", function () {
     } else {
         startBtn.style.display = "block";
     };
-
+    
+    // modal toggle:
     if (getTestNum.style.display === "block") {
         getTestNum.style.display = "none";
     } else {
@@ -165,6 +170,14 @@ startBtn.addEventListener("click", function () {
         randBtn.style.display = "none";
     } else {
         randBtn.style.display = "block";
+    };
+
+    if (outerModal.classList.contains("hide-modal")) {
+        outerModal.classList.remove("hide-modal");
+        outerModal.classList.add("show-modal");
+    } else {
+        outerModal.classList.remove("show-modal");
+        outerModal.classList.add("hide-modal");
     };
 
     createBoard(userNum);
@@ -1129,6 +1142,34 @@ module.exports = healthInfo = function (pawnType, pawnId) {
 module.exports = isSquare = function (num) {
         return num > 4 && Math.sqrt(num) % 1 === 0;
     };
+
+/***/ }),
+
+/***/ "./src/split-logic/modal.js":
+/*!**********************************!*\
+  !*** ./src/split-logic/modal.js ***!
+  \**********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = function () {
+    const outerModal = document.getElementById("modal-outer");
+    const snoozeBtn = document.getElementById("snooze-btn");
+    const gameIntroMsg = document.getElementById("game-cont");
+
+    snoozeBtn.addEventListener("click", function () {
+        console.log("listener fires");
+        if (outerModal.classList.contains("hide-modal")) {
+            outerModal.classList.remove("hide-modal");
+            outerModal.classList.add("show-modal");
+        } else {
+            outerModal.classList.remove("show-modal");
+            outerModal.classList.add("hide-modal");
+        };
+
+        gameIntroMsg.style = "display: none;";
+    });
+};
 
 /***/ }),
 

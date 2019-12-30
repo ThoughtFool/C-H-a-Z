@@ -6,6 +6,8 @@ const dragAndDrop = require("./split-logic/drag-and-drop");
 const touchEvents = require("./split-logic/test-scripts/touch-events");
 const endRound = require("./split-logic/end-round");
 const deployDrone = require("./split-logic/deploy-drone");
+const startModal = require("./split-logic/modal");
+const outerModal = document.getElementById("modal-outer");
 
 var randBtn = document.getElementById("create-pawn");
 var endRoundBtn = document.getElementById("end-round");
@@ -18,6 +20,8 @@ var accordMenu = document.getElementsByClassName("accordion");
 
 // disable all console messages:
 console.log = function () {};
+
+startModal();
 
 // playGameBtn.addEventListener("click", function name(params) {
 //     console.log("startBtn 'click' function fires");
@@ -59,7 +63,8 @@ startBtn.addEventListener("click", function () {
     } else {
         startBtn.style.display = "block";
     };
-
+    
+    // modal toggle:
     if (getTestNum.style.display === "block") {
         getTestNum.style.display = "none";
     } else {
@@ -70,6 +75,14 @@ startBtn.addEventListener("click", function () {
         randBtn.style.display = "none";
     } else {
         randBtn.style.display = "block";
+    };
+
+    if (outerModal.classList.contains("hide-modal")) {
+        outerModal.classList.remove("hide-modal");
+        outerModal.classList.add("show-modal");
+    } else {
+        outerModal.classList.remove("show-modal");
+        outerModal.classList.add("hide-modal");
     };
 
     createBoard(userNum);

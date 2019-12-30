@@ -488,27 +488,28 @@ p {
     width: 25%;
     color: white;
     padding: 8px;
-    height: 24px;
+    height: 2em;
     text-align: center;
     text-decoration: none;
     font-size: .5em;
+    line-height: 1em;
     margin: 4px 2px;
     border-radius: 12px 12px 2px 2px;
     cursor: pointer;
-
 }
-
+/* 
 .jumbotron {
     background-image: linear-gradient(to top right, rgb(22, 5, 70), rgb(64, 219, 240));
     border-radius: 0% 0% 75% 1%;
     color: white;
-}
+} */
 
 #test-nums {
     border: none;
     width: 25%;
     padding: 8px;
-    height: 24px;
+    height: 2em;
+    font-size: .5em;
     text-align: center;
     text-decoration: none;
     margin: 4px 2px;
@@ -716,4 +717,55 @@ p {
 #game-intro-msg {
     display: block;
     position: absolute;
+}
+
+#game-info {
+    word-wrap: break-word;
+    color: blanchedalmond;
+    font-size: 2rem;
+    line-height: 3rem;
+    padding-top: 5rem;
+    text-align: justify;
+    /* border: 3px gray solid; */
+}
+
+#btn-block {
+    padding: 1em;
+    align-items: center;
+}
+
+.bg-modal {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    /* width: 100%; */
+    width: 100vw;
+    /* height: 100%; */
+    height: 100vh;
+    /* background-image: cross-fade(rgba(0, 0, 0, 0.705) rgba(192, 192, 192, 0.705)); */
+    background-color: rgba(0, 0, 0, 0.705);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    width: 60vw;
+    height: 20vw;
+    padding: 2rem;
+    border-radius: 5px;
+    background-color: rgba(122, 14, 141, 0.822);
+    font-size: 2.5rem;
+    text-align: center;
+}
+
+.show-modal {
+    display: flex;
+    transition: ease-in-out;
+    transition-duration: 500ms;
+}
+
+.hide-modal {
+    transition: ease-in-out;
+    display: none;
 }
