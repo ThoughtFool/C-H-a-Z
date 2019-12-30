@@ -4,7 +4,9 @@
         <div class="game-panel">
             <div class="gameboard">
                 <!-- insert dynamically-generated spaces -->
-                <div id="board-holder"></div>
+                <div id="board-holder">
+                    <!-- <div id="game-intro-msg"></div> -->
+                </div>
             </div>
         </div>
 
@@ -28,44 +30,41 @@
             <div class="game-menu">
                 <!-- insert collapsible menu -->
                 <!-- <button class="accordion"><i class="fas fa-thermometer-half"></i> LIFEFORM STATS <i -->
-                        <!-- class="fas fa-battery-quarter"></i></button> -->
+                <!-- class="fas fa-battery-quarter"></i></button> -->
                 <div class="panel-null" id="stats-panel">
                     <!-- percentage of each lifeform (progress bars) -->
                     <div class="percentage-panel">
                         <div class="progress-bar-row">
-                            <div class="icon">C</div>
+                            <div class="icon" id="cyb-icon">C</div>
                             <div class="progress-container">
-                                <div class="percent-background"> 
+                                <div class="percent-background">
                                     <div class="progress-bar" id="cyborg-bar">CYBORGS</div>
                                 </div>
                             </div>
-
                             <div class="percent"><span id="cyborg-percentage"></span>%</div>
                         </div>
                     </div>
 
                     <div class="percentage-panel">
                         <div class="progress-bar-row">
-                            <div class="icon">H</div>
+                            <div class="icon" id="hum-icon">H</div>
                             <div class="progress-container">
                                 <div class="percent-background">
                                     <div class="progress-bar" id="human-bar">HUMANS</div>
                                 </div>
                             </div>
-
                             <div class="percent"><span id="human-percentage"></span>%</div>
                         </div>
                     </div>
 
                     <div class="percentage-panel">
                         <div class="progress-bar-row">
-                            <div class="icon">Z</div>
+                            <div class="icon" id="zom-icon">Z</div>
                             <div class="progress-container">
                                 <div class="percent-background">
                                     <div class="progress-bar" id="zombie-bar">ZOMBIES</div>
                                 </div>
                             </div>
-
                             <div class="percent"><span id="zombie-percentage"></span>%</div>
                         </div>
                     </div>
@@ -100,11 +99,12 @@
                     <input type="text" class="test-input" id="test-nums" style="display: block;">
                     <div class="btn btn-danger" id="end-round" style="display: none;">endRound func</div>
                     <div class="btn btn-success" id="create-pawn" style="display: none;">Create Pawn</div>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                        labore
-                        et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
-                        ut
-                        aliquip ex ea commodo consequat.</p>
+                    <p>We've done it! Science has finally cured every disease that has ever plagued
+                        man...even death
+                        itself. There are worse things than death though and unfortunately, we gave up something in the
+                        trade; our
+                        very
+                        humanity.</p>
                 </div>
             </div>
         </div>

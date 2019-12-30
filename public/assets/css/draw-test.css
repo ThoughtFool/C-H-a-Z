@@ -61,15 +61,11 @@
 }
 
 .gameboard {
-    /* padding-top: 50px; */
     padding-left: 2em;
-
-
     height: 100%;
     width: 100%;
     background-color: rgba(108, 58, 245, 0.904);
     box-shadow: inset 0 0 10px #5c0464;
-
     /* background-image: cross-fade(rgba(117, 52, 238, 0.904), rgba(185, 57, 245, 0.884)); */
 }
 
@@ -120,7 +116,6 @@
     border: none;
     text-align: left;
     outline: none;
-    /* font-size: 15px; */
     font-size: .5em;
     box-shadow: 5 5 5 #ddd;
     transition: 0.4s;
@@ -134,7 +129,6 @@
 .panel {
     padding: 0 18px;
     background-color: rgba(64, 58, 97, 0.904);
-    /* background-color: rgba(255, 255, 255, 0.301); */
     max-height: 0;
     width: 100%;
     overflow: hidden;
@@ -164,12 +158,8 @@
 }
 
 .progress-container {
-    /* height: 100%; */
     height: .5em;
     width: 80%;
-    /* background-color: #ddd; */
-    /* background-color: rgba(255, 255, 255, 0.301); */
-
     display: flex;
     align-items: center;
     position: relative;
@@ -178,16 +168,33 @@
 
 .icon {
     width: 10%;
-    background-image: url("../images/cyborg-pawn.png");
-    object-fit: cover;
-    /* background-color: rgb(126, 174, 240); */
 }
 
-.percent-background {
+#cyb-icon {
+    background-image: url("../images/cyborg-pawn.png");
+    text-align: center;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+}
+
+#hum-icon {
+    background-image: url("../images/human-pawn.png");
+    text-align: center;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+}
+
+#zom-icon {
+    background-image: url("../images/zombie-pawn.png");
+    text-align: center;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+}
+
+.percent-background { 
     width: 100%;
     background-color: rgba(255, 255, 255, 0.301);
-    /* background-color: #ddd; */
-    padding: 3px;
+    padding: 2px;
     border-radius: 5px;
     border-top-right-radius: 15px;
     border-bottom-right-radius: 15px;
@@ -198,50 +205,39 @@
 
 .percent {
     width: 10%;
-    /* background-color: rgb(240, 180, 180); */
 }
 
 #cyborg-bar {
-    /* width: 30%; */
     width: var(--cyborg-health);
     border-top-right-radius: 15px;
     border-bottom-right-radius: 15px;
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
     background-color: #2196F3;
+    /* position: relative;
+    overflow: hidden; */
 }
 
 #human-bar {
-    /* width: 55%; */
     width: var(--human-health);
-    /* background-color: #4CAF50; */
-
     border-top-right-radius: 15px;
     border-bottom-right-radius: 15px;
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
     background-color: rgb(43, 194, 83);
-    /* background-image: linear-gradient(
-            center bottom,
-            rgb(43, 4, 75) 37%,
-            rgb(196, 84, 240) 69%
-            ); */
-    /* box-shadow: 5px 10px 18px 10px #888888; */
-
-    position: relative;
-    overflow: hidden;
+    /* position: relative;
+    overflow: hidden; */
 }
 
 #zombie-bar {
-    /* width: 15%; */
     width: var(--zombie-health);
-
     border-top-right-radius: 15px;
     border-bottom-right-radius: 15px;
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
     background-color: #f44336;
-
+    /* position: relative;
+    overflow: hidden; */
 }
 
 /* =============================================== */
@@ -253,10 +249,7 @@
 .user-stats-panel {
     background-color: rgba(255, 255, 255, 0.301);
     margin: 1rem;
-    /* background-color: aquamarine; */
-    /* height: 60%; */
     height: 20vh;
-
     width: 80%;
     border-radius: 1em 3em 3em 1em;
     display: flex;
@@ -281,18 +274,12 @@
     background-repeat: no-repeat;
     background-size: cover;
     border-radius: 1em;
-    /* width: 100%; */
     position: relative;
-
-    /* background-position: center; */
-
     height: 100%;
-    /* width: 15vh; */
 }
 
 /* ============================================ */
 .cryo-lab-wrapper {
-    /* background-image: url("../images/ZHC-Lab-3.png"); */
     background-image: url("../images/Cryo-Wars-lab.png");
     width: 100vw;
     height: 100vh;
@@ -301,7 +288,7 @@
     background-size: 100vw 100vh;
 }
 
-.mission-control-panel {
+/* .mission-control-panel {
     display: inline-block;
     border-radius: 25px;
     background-color: rgba(64, 219, 240, 0.774);
@@ -311,8 +298,7 @@
     filter: blur(15px);
 }
 
-.mission-control-panel {
-    /* .mission-control-panel:hover { */
+.mission-control-panel:hover {
     opacity: .85;
     box-shadow: 0 0 30px purple;
     z-index: -1;
@@ -324,13 +310,13 @@
     box-shadow: 0 0 20px purple;
     z-index: -1;
     filter: blur(15px);
-}
+} */
 
-.light-array {
+/* .light-array {
     padding: 10% 0 0 10%;
     height: 10vh;
     width: 100vw;
-}
+} */
 
 .main-screen {
     border-radius: 10px;
@@ -369,7 +355,7 @@
     border-radius: 15px;
 }
 
-.small-screen-holder {
+/* .small-screen-holder {
     border-radius: 15px;
     background-color: white;
     width: 30%;
@@ -402,9 +388,9 @@
     height: 95%;
     margin: 10px 5px;
     float: left;
-}
+} */
 
-.big-screen-1 {
+/* .big-screen-1 {
     border-radius: 15px;
     background-color: #000;
     width: 60%;
@@ -484,7 +470,7 @@
     height: 100%;
     width: 5%;
     float: left;
-}
+} */
 
 body {
     max-height: 100vh;
@@ -521,14 +507,12 @@ p {
 #test-nums {
     border: none;
     width: 25%;
-    /* padding: 15px; */
     padding: 8px;
     height: 24px;
     text-align: center;
     text-decoration: none;
     margin: 4px 2px;
     border-radius: 2px 2px 12px 12px;
-    /* border-radius: 15px 50px 30px 5px; */
 }
 
 #board-holder {
@@ -536,8 +520,6 @@ p {
     padding-top: 3%;
     width: 90%;
     border-radius: 5px;
-    /* height: aspect-ratio(16/9); */
-    /* padding-bottom: 80%; */
     position: relative;
 }
 
@@ -547,8 +529,6 @@ p {
     background-image: linear-gradient(to top right, rgb(121, 76, 243), rgb(64, 219, 240));
     border: 1.5px solid #000;
     border-radius: 15%;
-    /* transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1); */
-    /* border-radius: 15px; */
 }
 
 .dyna-square:after {
@@ -556,11 +536,6 @@ p {
     display: block;
     padding-bottom: 100%;
     border-radius: 15%;
-    /* transition: background 0.2s ease-in-out; */
-    /* transition-property: background,
-    border-radius;
-    transition-duration: 1s;
-    transition-timing-function: linear */
 }
 
 .dyna-square:hover {
@@ -573,7 +548,6 @@ p {
     height: 100%;
     text-align: center;
     transition: background 0.2s ease-in-out;
-    /* transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1); */
 }
 
 .circle-shape {
@@ -595,6 +569,10 @@ p {
     transition: 350ms ease-in-out;
 }
 
+.holding:active {
+    transform: scale(80%);
+}
+
 .available {
     box-shadow: inset #f0f;
 }
@@ -611,48 +589,36 @@ p {
     text-align: right;
     z-index: 99;
     transform: initial;
-    /* font-size: 50%; */
     top: 0;
     right: .1;
-    /* border-radius: calc(15px); */
     border-radius: calc(calc(var(--drone-btn) / 15) * 1%);
 }
 
 .health-score>span {
-    /* background-color: #f0f; */
     width: 100%;
     height: 100%;
-    /* display: inline-block; */
     display: flex;
     vertical-align: middle;
     line-height: 150%;
     padding-left: 15%;
-    /* line-height: normal; */
-    /* font-size: var(--health-font); */
     font-size: 200%;
-    /* font-size: calc(var(--health-font) * 1%); */
 }
 
 
 .drone-icon {
     margin-top: calc(var(--drone-square) / 3);
-    /* height: var(--drone-square);
-    width: var(--drone-square); */
     height: var(--drone-btn);
     width: var(--drone-btn);
     display: flex;
     text-align: center;
     background-color: rgba(40, 40, 41, 0.863);
-    /* border-radius: 8px; */
     border-radius: 50%;
-    /* border-radius: 15%; */
     cursor: pointer;
 }
 
 .drone-icon:hover {
     background-color: rgba(194, 194, 248, 0.863);
     box-shadow: 
-    /* #5c0464 */
     /* middle */
     0 0 10px 2px #f0f,
     /* outer */
@@ -667,8 +633,6 @@ p {
     background-repeat: no-repeat;
     background-size: cover;
     border-radius: 50%;
-    /* border-radius: 15%; */
-    /* background-size: 100vw 100vh; */
 }
 
 /* <i class="fas fa-biohazard"></i> */
@@ -680,7 +644,6 @@ p {
     background-repeat: no-repeat;
     background-size: cover;
     border-radius: 50%;
-    /* background-size: 100vw 100vh; */
 }
 
 #bio-flare-drone-btn {
@@ -691,7 +654,6 @@ p {
     background-repeat: no-repeat;
     background-size: cover;
     border-radius: 50%;
-    /* background-size: 100vw 100vh; */
 }
 /* /////////////////////////////////////////////////////// */
 
@@ -713,20 +675,45 @@ p {
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
-    /* background-color: rgba(137, 43, 226, 0.233); */
 }
 
-
-/* #sos-msg {
-    height: 80%;
-    width: 50%;
-    display: flex;
-    border-radius: 15px;
-    align-items: center;
-    flex-flow: column;
-    background-image: linear-gradient(rgba(210, 38, 253, 0.383) rgba(52, 64, 235, 0.61));
-} */
+#play-game-btn:active {
+        box-shadow: 0 2px 0 #006599;
+        transform: translateY(3px);
+}
 
 .msg-items {
     display: flex;
+}
+
+.msg-holder {
+    display: flex;
+    align-items: center;
+}
+
+#backstory-left {
+    margin: 2em;
+    flex-flow: wrap;
+    flex: auto;
+    height: 50vh;
+    width: 50vh;
+    display: flex;
+    background-color: rgba(137, 43, 226, 0.63);
+    border-radius: 1rem;
+}
+
+#backstory-right {
+    margin: 2em;
+    flex-flow: wrap;
+    flex: auto;
+    height: 50vh;
+    width: 50vh;
+    display: flex;
+    background-color: rgba(130, 255, 47, 0.849);
+    border-radius: 1rem;
+}
+
+#game-intro-msg {
+    display: block;
+    position: absolute;
 }
