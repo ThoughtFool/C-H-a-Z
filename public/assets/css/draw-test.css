@@ -166,6 +166,10 @@
 .icon {
     width: 10%;
 }
+.icon-info>li>img {
+    height: 2.5rem;
+    width: 2rem;
+}
 
 #cyb-icon {
     background-image: url("../images/cyborg-pawn.png");
