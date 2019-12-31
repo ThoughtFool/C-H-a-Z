@@ -517,6 +517,8 @@ p {
     text-decoration: none;
     margin: 4px 2px;
     border-radius: 2px 2px 12px 12px;
+    color: aliceblue;
+    background-color: rgba(64, 58, 97, 0.904);
 }
 
 #board-holder {
