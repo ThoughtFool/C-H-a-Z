@@ -10,9 +10,9 @@
     --drone-square: calc(100vh / 5);
     --drone-btn: calc(var(--ctrl-panel) / 10);
     --health-font: calc(var(--drone-square) / 4);
-    --cyborg-health: ---;
-    --human-health: ---;
-    --zombie-health: ---;
+    --cyborg-health: 0;
+    --human-health: 0;
+    --zombie-health: 0;
 
     /* --health-font: calc(var(--drone-btn) / 4); */
 }
@@ -656,6 +656,16 @@ p {
     background-size: cover;
     border-radius: 50%;
 }
+
+#end-round-btn {
+    height: 100%;
+    width: 100%;
+    background-image: url("../images/hazmat-runner-frontside-single.png");
+    text-align: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 50%;
+}
 /* /////////////////////////////////////////////////////// */
 
 .main-story-container {
@@ -768,4 +778,20 @@ p {
 .hide-modal {
     transition: ease-in-out;
     display: none;
+}
+
+#stats-panel {
+    font-size: 1em;
+    min-height: 10vh;
+    padding: 1em;
+    align-items: center;
+    transition: ease-in-out;
+}
+
+#option-panel>p {
+    font-size: 1.5rem;
+}
+
+#message-panel>p {
+    font-size: 1.5rem;
 }

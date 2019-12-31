@@ -55,21 +55,6 @@ module.exports = updatePawnStatus = function (string, pawnID, newParentID) {
 
             };
         };
-        // pawnTypeTotal = getPawnTypeTotal();
-        // updatePercent(pawnTypeTotal);
-        
-        
-        //     if (pawnID == allPawnSpawn[i].loc) {
-            //         console.log(`${allPawnSpawn[i].id} equals pawnID`);
-            //     };
-            // };
-            
-            // if (
-                //     pawn_Type === "cyborg" ||
-                //     pawn_Type === "human" ||
-                //     pawn_Type === "zombie"
-                // ) {
-                    
                     
                     // "location" swap (drag-and-drop):
                 } else if (string === "location") {
@@ -89,8 +74,6 @@ module.exports = updatePawnStatus = function (string, pawnID, newParentID) {
                                 console.log(`cyborg location now is: ${cyborgSpawn[z].loc}.`);
                             };
                         };
-                        // TODO: update race: 
-                        // TODO: update health?: Already done! Link it!
                         
                     } else if (pawnElem.classList.contains("human-pawn")) {
                         console.log("human-pawn");
@@ -106,8 +89,6 @@ module.exports = updatePawnStatus = function (string, pawnID, newParentID) {
                                 console.log(`human location now is: ${humanSpawn[z].loc}.`);
                             };
                         };
-                        // TODO: update race: 
-                        // TODO: update health?: Already done! Link it!
                         
                     } else if (pawnElem.classList.contains("zombie-pawn")) {
                         console.log("zombie-pawn");
@@ -123,29 +104,10 @@ module.exports = updatePawnStatus = function (string, pawnID, newParentID) {
                                 console.log(`zombie location now is: ${zombieSpawn[z].loc}.`);
                             };
                         };
-                        // TODO: update race: 
-                        // TODO: update health?: Already done! Link it! 
                     };
                 };
-                
-                // pawnTypeTotal = {
-                    //     cyborg: pawnStats.cyborg.pawnSpawn.length,
-                    //     human: pawnStats.human.pawnSpawn.length,
-                    //     zombie: pawnStats.zombie.pawnSpawn.length
-                    // };
-                    
-                    // updatePercent(pawnTypeTotal);
-                    
-                    
-                    // testing ONLY:
-    // let pawnSpawn = pawnStats[pawnType]
-    // humanPawnSpawn = pawnStats[pawnType].pawnSpawn;
 
     setTimeout(function () {
-        // requestAnimationFrame(function () {
-        //     // trigger the animation
-        //     nextTurn(true, "cyborg", adjacentSpaces);
-        // });
         updatePercent(getPawnTypeTotal(pawnStats));
     }, 200);
 };

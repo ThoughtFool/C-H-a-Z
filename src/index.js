@@ -37,12 +37,19 @@ for (let i = 0; i < accordMenu.length; i++) {
             if (active) {
                 active.classList.remove('active');
                 let panel = active.nextElementSibling;
+                panel.style.fontSize = null;
                 panel.style.maxHeight = null;
+                panel.style.minHeight = null;
             };
             e.target.classList.add('active');
-            activePanel.style.maxHeight = 75 + "%";
+            // activePanel.style.maxHeight = 75 + "%";
+            activePanel.style.fontSize = "1em";
+            activePanel.style.minHeight = "50vh";
+            activePanel.style.maxHeight = "80vh";
         } else {
             e.target.classList.remove('active');
+            activePanel.style.fontSize = null;
+            activePanel.style.minHeight = null;
             activePanel.style.maxHeight = null;
         };
     });
