@@ -103,6 +103,7 @@ const endRound = __webpack_require__(/*! ./split-logic/end-round */ "./src/split
 const deployDrone = __webpack_require__(/*! ./split-logic/deploy-drone */ "./src/split-logic/deploy-drone.js");
 const startModal = __webpack_require__(/*! ./split-logic/modal */ "./src/split-logic/modal.js");
 const outerModal = document.getElementById("modal-outer");
+const outerModal_2 = document.getElementById("modal-outer-2");
 
 var randBtn = document.getElementById("create-pawn");
 var endRoundBtn = document.getElementById("end-round");
@@ -150,6 +151,16 @@ for (let i = 0; i < accordMenu.length; i++) {
     });
 };
 
+getTestNum.addEventListener("click", function () {
+    if (getTestNum.value != 0) {
+        if (startBtn.style.display === "block") {
+            startBtn.style.display = "none";
+        } else {
+            startBtn.style.display = "block";
+        };
+    };
+});
+
 startBtn.addEventListener("click", function () {
     console.log("startBtn 'click' function fires");
 
@@ -187,8 +198,19 @@ startBtn.addEventListener("click", function () {
         outerModal.classList.add("hide-modal");
     };
 
+    if (outerModal_2.classList.contains("hide-modal")) {
+        outerModal_2.classList.remove("hide-modal");
+        outerModal_2.classList.add("show-modal");
+    } else {
+        outerModal_2.classList.remove("show-modal");
+        outerModal_2.classList.add("hide-modal");
+    };
+
+    
+
     createBoard(userNum);
 });
+
 
 randBtn.addEventListener("click", function () {
     console.log("randBtn 'click' function fires");
@@ -204,6 +226,14 @@ randBtn.addEventListener("click", function () {
         randBtn.style.display = "none";
     } else {
         randBtn.style.display = "block";
+    };
+
+    if (outerModal_2.classList.contains("hide-modal")) {
+        outerModal_2.classList.remove("hide-modal");
+        outerModal_2.classList.add("show-modal");
+    } else {
+        outerModal_2.classList.remove("show-modal");
+        outerModal_2.classList.add("hide-modal");
     };
 
     if (endRoundBtn.style.display === "block") {

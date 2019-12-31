@@ -1,8 +1,3 @@
-/* body {
-    background-color: lightblue;
-} */
-
-
 :root {
     --ctrl-panel: calc(100vw - 100vh);
     --accordion-padding: 18px;
@@ -281,6 +276,7 @@
 }
 
 /* ============================================ */
+
 .cryo-lab-wrapper {
     background-image: url("../images/Cryo-Wars-lab.png");
     width: 100vw;
@@ -290,35 +286,18 @@
     background-size: 100vw 100vh;
 }
 
-/* .mission-control-panel {
-    display: inline-block;
-    border-radius: 25px;
-    background-color: rgba(64, 219, 240, 0.774);
-    padding: 10px;
-    width: 75vw;
-    height: 75vh;
-    filter: blur(15px);
+#cryo-lab-screen {
+    background-image: url("../images/Cryo-Wars-lab.png");
+    margin: 0 10rem;
+    padding-top: 20%;
+    width: auto;
+    height: 35vw;
+    text-align: center;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    display: flex;
 }
-
-.mission-control-panel:hover {
-    opacity: .85;
-    box-shadow: 0 0 30px purple;
-    z-index: -1;
-    filter: blur(0px);
-}
-
-.mission-control-panel:after {
-    border: 10px solid purple;
-    box-shadow: 0 0 20px purple;
-    z-index: -1;
-    filter: blur(15px);
-} */
-
-/* .light-array {
-    padding: 10% 0 0 10%;
-    height: 10vh;
-    width: 100vw;
-} */
 
 .main-screen {
     border-radius: 10px;
@@ -330,23 +309,6 @@
     float: left;
 }
 
-/* .speaker-panel {
-  border-radius: 50%;
-  background-color: purple;
-  width: 75px;
-  height: 75px;
-  display: inline-block;
-  position: relative;
-}
-
-.speaker {
-  border-radius: 50%;
-  background-color: black;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-} */
-
 .game-screen {
     background-color: rgba(255, 255, 255, 0.418);
     width: 60vw;
@@ -356,123 +318,6 @@
     text-align: center;
     border-radius: 15px;
 }
-
-/* .small-screen-holder {
-    border-radius: 15px;
-    background-color: white;
-    width: 30%;
-    height: 95%;
-    margin: 10px 5px 10px 0px;
-    float: right;
-}
-
-.small-screen-1 {
-    border-radius: 15px;
-    background-color: #000;
-    width: 90%;
-    height: 90%;
-    margin: 5% 5% 5% 5%;
-    float: left;
-}
-
-.small-screen-2 {
-    border-radius: 15px;
-    width: 90%;
-    height: 0%;
-    margin: 5% 5% 0% 5%;
-    float: left;
-}
-
-.pawn-lites {
-    border-radius: 15px;
-    background-color: white;
-    width: 5%;
-    height: 95%;
-    margin: 10px 5px;
-    float: left;
-} */
-
-/* .big-screen-1 {
-    border-radius: 15px;
-    background-color: #000;
-    width: 60%;
-    margin: auto;
-    margin-top: 0px;
-    float: left;
-    height: 95%;
-    padding: 3%;
-    padding-bottom: 60%;
-    position: relative;
-    text-align: center;
-    display: inline-block;
-
-}
-
-.pawn-lites {
-    text-align: center;
-}
-
-.lite {
-    display: inline-block;
-    margin-top: 50%;
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-}
-
-#red-lite {
-    background-color: red;
-}
-
-#yellow-lite {
-    background-color: yellow;
-}
-
-#blue-lite {
-    background-color: blue;
-}
-
-#purple-lite {
-    background-color: purple;
-}
-
-.bulb {
-    border-radius: 45%;
-    height: 75%;
-    width: 100%;
-    float: left;
-}
-
-#red-bulb {
-    background-color: red;
-}
-
-#yellow-bulb {
-    background-color: yellow;
-}
-
-#blue-bulb {
-    background-color: blue;
-}
-
-#purple-bulb {
-    background-color: purple;
-}
-
-.bulb-outlet-holder {
-    background-color: gray;
-    height: 30%;
-    width: 100%;
-    border-radius: 5px 5px 5px 5px;
-    float: left;
-}
-
-.bulb-pack {
-    margin: 0 0 0 10%;
-    height: 100%;
-    width: 5%;
-    float: left;
-} */
 
 body {
     max-height: 100vh;
@@ -485,7 +330,7 @@ p {
 }
 
 .btn {
-    background-image: linear-gradient(to top right, rgb(10, 184, 228), rgb(204, 86, 219));
+    background-image: linear-gradient(to top right, rgba(10, 184, 228, 0.931), rgb(204, 86, 219));
     border: none;
     width: 25%;
     color: white;
@@ -497,28 +342,29 @@ p {
     line-height: 1em;
     margin: 4px 2px;
     border-radius: 12px 12px 2px 2px;
+    float: right;
     cursor: pointer;
 }
-
-/* 
-.jumbotron {
-    background-image: linear-gradient(to top right, rgb(22, 5, 70), rgb(64, 219, 240));
-    border-radius: 0% 0% 75% 1%;
-    color: white;
-} */
 
 #test-nums {
     border: none;
     width: 25%;
-    padding: 8px;
-    height: 2em;
+    padding: .25rem;
+    height: 100%;
     font-size: .5em;
     text-align: center;
     text-decoration: none;
     margin: 4px 2px;
     border-radius: 2px 2px 12px 12px;
     color: aliceblue;
-    background-color: rgba(64, 58, 97, 0.904);
+    background-color: rgba(64, 58, 97, 0.829);
+    align-content: center;
+    display: flex;
+    cursor: pointer;
+}
+
+#submit-test-num {
+    display: flex;
 }
 
 #board-holder {
@@ -670,6 +516,7 @@ p {
     background-repeat: no-repeat;
     background-size: cover;
     border-radius: 50%;
+    cursor: pointer;
 }
 
 /* /////////////////////////////////////////////////////// */
@@ -747,22 +594,21 @@ p {
 
 #btn-block {
     height: auto;
-    padding: 1em;
+    width: 100%;
+    padding: 1rem;
     align-items: center;
+    justify-content: center;
+    display: flex;
 }
 
 .bg-modal {
     position: absolute;
     top: 0px;
     left: 0px;
-    /* width: 100%; */
     width: 100vw;
-    /* height: 100%; */
     height: 100vh;
-    /* background-image: cross-fade(rgba(0, 0, 0, 0.705) rgba(192, 192, 192, 0.705)); */
-    background-color: rgba(0, 0, 0, 0.705);
-    display: flex;
     justify-content: center;
+    background-image: repeating-linear-gradient(rgba(48, 9, 66, 0.678), rgba(20, 15, 19, 0.575));
     align-items: center;
 }
 
@@ -772,18 +618,20 @@ p {
     height: 50vh;
     padding: var(--health-font);
     padding-top: 2rem;
-    /* line-height: 2rem; */
     border-radius: 2rem;
-    background-color: rgba(122, 14, 141, 0.822);
+    background-color: rgba(122, 14, 141, 0.555);
     font-size: var(--health-font);
-    /* font-size: calc(var(--health-font) * 2); */
     text-align: justify;
+    justify-content: center;
+    transition: ease-in-out;
+    transition-duration: 1s;
 }
 
 .show-modal {
+    z-index: 5;
     display: flex;
     transition: ease-in-out;
-    transition-duration: 500ms;
+    transition-duration: 1s;
 }
 
 .hide-modal {
@@ -809,11 +657,19 @@ p {
     overflow: hidden;
 }
 
-/* typewriter effect */
+.comm-screen {
+    background-color: rgba(64, 58, 97, 0.904);
+    /* background-color:rgba(240, 39, 206, 0.185); */
+    padding: .75rem;
+    border-radius: 1rem;
+}
 
+/* .comm-screen:hover {
+    background-image: radial-gradient(rgba(230, 11, 219, 0.507), rgba(39, 200, 240, 0.637), rgba(240, 39, 223, 0.883));
+} */
+
+/* typewriter effect */
 #end-round-btn,
-/* .btn-block, */
-/* .modal-content>p, */
 #game-info>p {
     overflow: hidden;
     border-bottom: .15em solid rgb(247, 0, 255);
