@@ -1,4 +1,4 @@
-const adjacentSpaces = require("./test-scripts/adj-space-finder");
+const adjacentSpaces = require("./adj-space-finder");
 const checkPawnStatus = require("./check-pawn-status");
 const pawnStats = require("./pawn-stats");
 

@@ -1,8 +1,8 @@
 const pawnStats = require("./pawn-stats");
-const adjacentSpaces = require("./test-scripts/adj-space-finder");
+const adjacentSpaces = require("./adj-space-finder");
 const checkPawnStatus = require("./check-pawn-status");
-const goldilocksChecker = require("./test-scripts/goldilocks-checker");
-const nextTurn = require("./test-scripts/comp-turn");
+const goldilocksChecker = require("./goldilocks-checker");
+const nextTurn = require("./comp-turn");
 const getTotalPawns = require ("./get-total-pawns");
 
 module.exports = endRound = function () {

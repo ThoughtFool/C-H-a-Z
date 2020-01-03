@@ -1,7 +1,7 @@
-const enemyMoves = require("../enemy-moves");
+const enemyMoves = require("./enemy-moves");
 const Goldilocks = require("./goldilocks-constructor");
-const rateSpace = require("./rate-space");
-const pawnStats = require("../pawn-stats");
+const rateSpace = require("./rate-space"); 
+const pawnStats = require("./pawn-stats");
 
 // const adjSpaceFinder = require("./adj-space-finder");
 

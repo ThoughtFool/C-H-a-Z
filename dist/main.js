@@ -98,7 +98,7 @@ createBoard = __webpack_require__(/*! ./split-logic/createBoard */ "./src/split-
 counter = 0;
 const randomPlace = __webpack_require__(/*! ./split-logic/random-place */ "./src/split-logic/random-place.js");
 const dragAndDrop = __webpack_require__(/*! ./split-logic/drag-and-drop */ "./src/split-logic/drag-and-drop.js");
-const touchEvents = __webpack_require__(/*! ./split-logic/test-scripts/touch-events */ "./src/split-logic/test-scripts/touch-events.js");
+const touchEvents = __webpack_require__(/*! ./split-logic/touch-events */ "./src/split-logic/touch-events.js");
 const endRound = __webpack_require__(/*! ./split-logic/end-round */ "./src/split-logic/end-round.js");
 const deployDrone = __webpack_require__(/*! ./split-logic/deploy-drone */ "./src/split-logic/deploy-drone.js");
 const startModal = __webpack_require__(/*! ./split-logic/modal */ "./src/split-logic/modal.js");
@@ -263,6 +263,222 @@ endRoundBtn.addEventListener("click", function () {
 
 /***/ }),
 
+/***/ "./src/split-logic/adj-contentID-string-array.js":
+/*!*******************************************************!*\
+  !*** ./src/split-logic/adj-contentID-string-array.js ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+
+module.exports = adjContentIDStringArr = function (homespace, adjacentSpaceObj, availableMoves) {
+    const firstSquare = {};
+    const adjacentSquares = [];
+
+    firstSquare.x = 1001;
+    firstSquare.y = 1001;
+
+    // if (pawnStats.gameBoard[0].includes())
+    // lastSquare.x = 1001;
+    // lastSquare.y = 1001;
+
+    //     // baseNum = 1000;
+    //     let numberOfSpaces = localStorage.getItem("boardSize");
+    //     console.log("square root of " + numberOfSpaces);
+
+    //     let sqRootNum = Math.sqrt(numberOfSpaces);
+    //     console.log(sqRootNum);
+
+    //     for (let i = 1; i <= sqRootNum; i++) {
+    //         for (let j = 1; j <= sqRootNum; j++) {
+    //         }
+    //     };
+
+
+    let loopSize = availableMoves * 2 + 1;
+
+    for (let i = 0; i < loopSize; i++) {
+        coord_x = adjacentSpaceObj.x[i]; // ???
+
+        for (let j = 0; j < loopSize; j++) {
+            coord_y = adjacentSpaceObj.y[j]; // ???
+            // contentID = [coord_x, coord_y];
+            contentID = `content-x${coord_x}-y${coord_y}`;
+            console.log("contentID");
+            console.log(contentID);
+            console.log("homespace");
+            console.log(homespace);
+            console.log("coord_x");
+            console.log(coord_x);
+            console.log("coord_y");
+            console.log(coord_y);
+            
+            if (coord_x >= firstSquare.x && coord_y >= firstSquare.y) {
+                if (coord_x === homespace[0] && coord_y === homespace[1]) {
+                // if (coord_x === parseInt(homespace[0]) && coord_y === parseInt(homespace[1])) {
+                    // console.log(`homespace_idString: ${contentID}`);
+                } else {
+                    // console.log(`${contentID} != ${homespace_idString}`);
+                    adjacentSquares.push(contentID); // ???
+                };
+            };
+        };
+    };
+
+    console.log("adjacentSquares::");
+    console.log(adjacentSquares);
+    adjacentSpaceObj.comb = adjacentSquares;
+
+    return adjacentSpaceObj;
+};
+
+/***/ }),
+
+/***/ "./src/split-logic/adj-space-finder.js":
+/*!*********************************************!*\
+  !*** ./src/split-logic/adj-space-finder.js ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// const adjacentSquares = [];
+const adjacentSpacesHolder = [];
+// const firstSquare = {};
+// firstSquare.x = 1;
+// firstSquare.y = 1;
+// const friendOrFoe = require("../friend-or-foe");
+const friendOrFoe = __webpack_require__(/*! ./friend-or-foe-test */ "./src/split-logic/friend-or-foe-test.js");
+
+const adjContentIDStringArr = __webpack_require__(/*! ./adj-contentID-string-array */ "./src/split-logic/adj-contentID-string-array.js");
+const goldilocksChecker = __webpack_require__(/*! ./goldilocks-checker */ "./src/split-logic/goldilocks-checker.js");
+
+
+const movesMade = [];
+
+module.exports = function adjacentSpaces (homespace, availableMoves, destination, pawnType, message) {
+    console.log("adjacentSpaces function fires");
+
+    const adjacentSquares = [];
+
+//////////////////////////////////////////////////////////
+// TODO: export this into a function?
+
+    let homespace_idString = homespace;
+    console.log("homespace_idString");
+    console.log(homespace_idString);
+    homespace = homespace.match(/\d+/g);
+    console.log("homespace after match:");
+    console.log(homespace);
+
+
+    let adjacentSpaceObj = {
+        homespace: homespace,
+        homespace_idString: homespace_idString,
+        x: [],
+        y: [],
+        comb: []
+    };
+
+    x_Loc = homespace[0] = parseInt(homespace[0]);
+    console.log("x_Loc");
+    console.log(x_Loc);
+
+    y_Loc = homespace[1] = parseInt(homespace[1]);
+    console.log("y_Loc");
+    console.log(y_Loc);
+
+//////////////////////////////////////////////////////////
+
+    for (let q = 0; q <= availableMoves; q++) {
+
+        if (q > 0) {
+            adjacentSpaceObj.x.push(
+                x_Loc + q,
+                x_Loc - q);
+
+            adjacentSpaceObj.y.push(
+                y_Loc + q,
+                y_Loc - q);
+        } else {
+            adjacentSpaceObj.x.push(x_Loc + q);
+            adjacentSpaceObj.y.push(y_Loc + q);
+        };
+    };
+
+    console.log("adjacentSpaceObj");
+    console.log(adjacentSpaceObj);
+    
+//////////////////////////////////////////////////////////
+
+adjacentSpaceObj = adjContentIDStringArr(homespace, adjacentSpaceObj, availableMoves);
+
+    console.log("adjacentSpaceObj.comb");
+    console.log(adjacentSpaceObj.comb);
+
+    if (message === "endRound") {
+        return friendOrFoe(homespace_idString, adjacentSpaceObj.comb, pawnType);
+    } else if (message === "compTurn") {
+        console.log("compTurn msg in adjSpacesFinder");
+        return adjacentSpaceObj;
+    } else {
+        return adjacentSpaceObj;
+    }
+    // return friendOrFoe(idString, adjacentSquares, pawnType);
+};
+
+// let homeSpace = [3, 3];
+// let totNumMoves = 2;
+
+// adjacentSpaces(homeSpace, totNumMoves, null, null);
+
+/***/ }),
+
+/***/ "./src/split-logic/best-move.js":
+/*!**************************************!*\
+  !*** ./src/split-logic/best-move.js ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = bestMove = function (goldSpaceArr) {
+    console.log("bestMove function fires");
+    console.log(goldSpaceArr);
+
+    let newGoldSpaceArr = {};
+
+    for (let g = 1; g < goldSpaceArr.length; g++) {
+
+        if (goldSpaceArr[0] != null) {
+            if (goldSpaceArr[g - 1].weight != null) {
+                if (goldSpaceArr[g].weight > goldSpaceArr[g - 1].weight) {
+                    goldSpaceArr.splice((g - 1), 1);
+                    console.log("g is bigger");
+                    console.log(goldSpaceArr);
+
+                } else if (goldSpaceArr[g].weight <= goldSpaceArr[g - 1].weight) {
+                    goldSpaceArr.splice(g, 1);
+                    console.log("g - 1 is bigger");
+                    console.log(goldSpaceArr);
+
+                    // } else if (goldSpaceArr[0] == null) {
+                    //     goldSpaceArr.splice(0, 1);
+                    //     console.log("g - 1 is bigger than [0] == null");
+                    //     console.log(goldSpaceArr);
+
+                };
+            };
+        } else {
+            goldSpaceArr.splice(0, 1);
+            console.log("g - 1 is bigger than [0] == null");
+            console.log(goldSpaceArr);
+        };
+        newGoldSpaceArr = goldSpaceArr;
+    };
+    return newGoldSpaceArr;
+};
+
+/***/ }),
+
 /***/ "./src/split-logic/check-pawn-status.js":
 /*!**********************************************!*\
   !*** ./src/split-logic/check-pawn-status.js ***!
@@ -272,7 +488,7 @@ endRoundBtn.addEventListener("click", function () {
 
 const pawnStats = __webpack_require__(/*! ./pawn-stats */ "./src/split-logic/pawn-stats.js");
 const pawnSwitch = __webpack_require__(/*! ./pawn-switch */ "./src/split-logic/pawn-switch.js");
-const updatePercent = __webpack_require__(/*! ./test-scripts/update-percent */ "./src/split-logic/test-scripts/update-percent.js");
+const updatePercent = __webpack_require__(/*! ./update-percent */ "./src/split-logic/update-percent.js");
 
 module.exports = checkPawnStatus = function (pawnType, pawnTypeTotal) {
     console.log("checkPawnStatus function fires");
@@ -334,6 +550,186 @@ module.exports = checkPawnStatus = function (pawnType, pawnTypeTotal) {
 
 /***/ }),
 
+/***/ "./src/split-logic/comp-turn.js":
+/*!**************************************!*\
+  !*** ./src/split-logic/comp-turn.js ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+const pawnStats = __webpack_require__(/*! ./pawn-stats */ "./src/split-logic/pawn-stats.js");
+const bestMove = __webpack_require__(/*! ./best-move */ "./src/split-logic/best-move.js");
+// const adjacentSpaces = require("./adj-space-finder");
+const moveEnemyPawnFunc = __webpack_require__(/*! ./move-enemy-pawn-func */ "./src/split-logic/move-enemy-pawn-func.js");
+const updatePawnStatus = __webpack_require__(/*! ./update-pawn-status */ "./src/split-logic/update-pawn-status.js");
+
+module.exports = compTurn = function (computerBool, pawnType, adjacentSpaces) {
+    ///////////////////////  call function to addWeight (adjSpaces) ///////////////////////
+
+    ///////////////////////  add weight value to each space in adjSpaces connected to pawnID ///////////////////////
+
+    ///////////////////////  replace lower weight value / keep higher weight with spaceID ///////////////////////
+
+    console.log("nextTurn function fires");
+    console.log("computerBool");
+    console.log(computerBool);
+    console.log("pawnType");
+    console.log(pawnType);
+
+    let currentGoldiPawns = [];
+    // let goldilocksObjectHolder = {};
+    // let goldSpaceArr = [];
+    // let moveEnemyPawn = [null];
+
+    if (computerBool === true) {
+        console.log("pawnStats[pawnType].pawnSpawn.length");
+        console.log(pawnStats[pawnType].pawnSpawn.length);
+
+        // TODO: create an if conditional that errors out if the pawnType doesn't exist or equals zero:
+
+        ///////////////////////  loop through pawnIDs ///////////////////////
+        console.log(pawnStats[pawnType].pawnSpawn.length);
+        for (let loop = 0; loop < pawnStats[pawnType].pawnSpawn.length; loop++) {
+            let currentPawnLoc = pawnStats[pawnType].pawnSpawn[loop].loc;
+            let currentPawnID = pawnStats[pawnType].pawnSpawn[loop].id;
+            let goldilocksObjectHolder = {};
+            let goldSpaceArr = [];
+
+            /////////////////////// 1) get pawnIDs ///////////////////////
+            console.log("currentPawnID");
+            console.log(currentPawnID);
+
+            console.log("currentPawnLoc");
+            console.log(currentPawnLoc);
+
+            ///////////////////////  get adjacentSpaces from each pawnID ///////////////////////
+            let currentAdjSpaceArr = adjacentSpaces(currentPawnLoc[0], 1, null, pawnType, "compTurn");
+
+            ///////////////////////  loop through adjacentSpaces ///////////////////////
+            // for (let cur = 0; cur < currentAdjSpaceArr.comb.length; cur++) {
+            //     console.log(goldilocksChecker()); // homeSpace, targetSpace, pawnType
+            // }
+
+            // currentGoldiPawns.pawnID = currentPawnID;
+            // currentGoldiPawns.pawnLoc = currentPawnLoc;
+            // currentGoldiPawns.adjSpaceArray = currentAdjSpaceArr.comb;
+            let moveEnemyPawn = [null];
+
+            for (let adj = 0; adj < currentAdjSpaceArr.comb.length; adj++) {
+                console.log("before goldilocksChecker is called");
+                // moveEnemyPawn[0] = null;
+
+                console.log(`currentAdjSpaceArr.comb.length = ${currentAdjSpaceArr.comb.length}`);
+
+                let targetSpace_idString = currentAdjSpaceArr.comb[adj];
+                let targetSpace = targetSpace_idString;
+
+                console.log("targetSpace_idString");
+                console.log(targetSpace_idString);
+                targetSpace = targetSpace.match(/\d+/g);
+                console.log("targetSpace after match:");
+                console.log(targetSpace);
+                targetSpace = [parseInt(targetSpace[0]), parseInt(targetSpace[1])];
+
+                //////////////////////////////////////////////////////////////////////////
+
+                let currentPawnHomespace_idString = currentPawnLoc[0];
+                let currentTargetElem = document.getElementById(targetSpace_idString);
+                let currentPawnHomespace = currentPawnHomespace_idString;
+
+                if (currentTargetElem != null) {
+                    if (!currentTargetElem.classList.contains("empty-space")) {
+                        console.log("currentTargetElem is NOT an empty space:");
+                        console.log(currentTargetElem);
+                    } else {
+                        console.log("currentTargetElem is an empty space:");
+                        console.log(currentTargetElem);
+
+                        console.log("currentPawnHomespace_idString");
+                        console.log(currentPawnHomespace_idString);
+                        currentPawnHomespace = currentPawnHomespace.match(/\d+/g);
+                        console.log("currentPawnHomespace after match:");
+                        console.log(currentPawnHomespace);
+                        currentPawnHomespace = [parseInt(currentPawnHomespace[0]), parseInt(currentPawnHomespace[1])];
+
+                        // console.log(goldilocksChecker(currentPawnHomespace, targetSpace, pawnType, adjacentSpaces, currentPawnHomespace_idString)); // homeSpace, targetSpace, pawnType
+                        // create a function to compare returned values:
+                        goldilocksObjectHolder = goldilocksChecker(currentPawnHomespace, targetSpace, pawnType, adjacentSpaces, currentPawnHomespace_idString);
+                        goldSpaceArr.push(goldilocksObjectHolder);
+
+                        console.log("goldSpaceArr (before):");
+                        console.log(goldSpaceArr);
+
+                        if (goldSpaceArr.length > 1) { // TODO: check for errors if equal to "1"
+                        // if (goldSpaceArr.length >= 1 && moveEnemyPawn[0] != null) { // TODO: check for errors if equal to "1"
+                            
+                            if (typeof moveEnemyPawn[0] == null || moveEnemyPawn[0] == null && goldSpaceArr.length == 1) {
+                            } else if (goldSpaceArr.length > 1) {
+                                console.log("bestMove(goldSpaceArr):");
+                                moveEnemyPawn = bestMove(goldSpaceArr);
+
+                            // } else if (goldSpaceArr.length === 1) {
+                            } else {
+                                console.log("error?");
+                                // return moveEnemyPawnFunc(moveEnemyPawn); TODO: break apart in next function, not here ^^^
+                            };
+                        } else {
+                            if (typeof moveEnemyPawn[0] == null || moveEnemyPawn[0] == null) {
+                                console.log("moveEnemyPawn[0] == null");
+
+                            } else {
+                                console.log("moveEnemyPawn[0].homespace_idString");
+                                console.log(moveEnemyPawn[0].homespace_idString);
+                                console.log("moveEnemyPawn[0].targetSpace_idString");
+                                console.log(moveEnemyPawn[0].targetSpace_idString);
+
+                                // TODO: check after each "zombie" bestMove
+                            };
+                        };
+                        
+                        console.log("goldSpaceArr (after):");
+                        console.log(goldSpaceArr);
+                    };
+                };
+            };
+            if (moveEnemyPawn[0] != null) {
+                moveEnemyPawnFunc(moveEnemyPawn[0].homespace_idString, moveEnemyPawn[0].targetSpace_idString, updatePawnStatus);
+            };
+            //////////////////////////////////////////////////////////////////////////
+            // if (typeof moveEnemyPawn[0] == null) {
+
+            // } else {
+            //     console.log("moveEnemyPawn[0].homespace_idString");
+            //     console.log(moveEnemyPawn[0].homespace_idString);
+            //     console.log("moveEnemyPawn[0].targetSpace_idString");
+            //     console.log(moveEnemyPawn[0].targetSpace_idString);
+    
+            //     // TODO: check after each "zombie" bestMove
+            //     moveEnemyPawnFunc(moveEnemyPawn[0].homespace_idString, moveEnemyPawn[0].targetSpace_idString, updatePawnStatus);
+    
+            //     // return moveEnemyPawnFunc(moveEnemyPawn); TODO: break apart in next function, not here ^^^
+            // };
+        };
+
+    } else {
+        console.log(`computerBool is ${computerBool}`);
+    };
+};
+
+//////////////////////////////////////////////////////////////////////////
+// need TODO: create a function to change to contentID string and reverse:
+
+// let homespace_idString = homespace;
+// console.log("homespace_idString");
+// console.log(homespace_idString);
+// homespace = homespace.match(/\d+/g);
+// console.log("homespace after match:");
+// console.log("currentGoldiPawns");
+// console.log(currentGoldiPawns);
+// };
+
+/***/ }),
+
 /***/ "./src/split-logic/constructor.js":
 /*!****************************************!*\
   !*** ./src/split-logic/constructor.js ***!
@@ -369,7 +765,7 @@ module.exports = function Square(x, y, goldilocks) {
 
 const healthInfo = __webpack_require__(/*! ./health-info */ "./src/split-logic/health-info.js");
 const pawnStats = __webpack_require__(/*! ./pawn-stats */ "./src/split-logic/pawn-stats.js");
-const updatePercent = __webpack_require__(/*! ./test-scripts/update-percent */ "./src/split-logic/test-scripts/update-percent.js");
+const updatePercent = __webpack_require__(/*! ./update-percent */ "./src/split-logic/update-percent.js");
 
 module.exports = createPawn = function (destinationID, pawnCounter, pawnType) {
     console.log("createPawn function fires");
@@ -832,10 +1228,10 @@ module.exports = dynaFont = function (inputVal) {
 /***/ (function(module, exports, __webpack_require__) {
 
 const pawnStats = __webpack_require__(/*! ./pawn-stats */ "./src/split-logic/pawn-stats.js");
-const adjacentSpaces = __webpack_require__(/*! ./test-scripts/adj-space-finder */ "./src/split-logic/test-scripts/adj-space-finder.js");
+const adjacentSpaces = __webpack_require__(/*! ./adj-space-finder */ "./src/split-logic/adj-space-finder.js");
 const checkPawnStatus = __webpack_require__(/*! ./check-pawn-status */ "./src/split-logic/check-pawn-status.js");
-const goldilocksChecker = __webpack_require__(/*! ./test-scripts/goldilocks-checker */ "./src/split-logic/test-scripts/goldilocks-checker.js");
-const nextTurn = __webpack_require__(/*! ./test-scripts/comp-turn */ "./src/split-logic/test-scripts/comp-turn.js");
+const goldilocksChecker = __webpack_require__(/*! ./goldilocks-checker */ "./src/split-logic/goldilocks-checker.js");
+const nextTurn = __webpack_require__(/*! ./comp-turn */ "./src/split-logic/comp-turn.js");
 const getTotalPawns = __webpack_require__ (/*! ./get-total-pawns */ "./src/split-logic/get-total-pawns.js");
 
 module.exports = endRound = function () {
@@ -1020,841 +1416,15 @@ module.exports = enemyMoves = function (homespace, destin, movesMade, adjacentSp
 
 /***/ }),
 
-/***/ "./src/split-logic/get-pawn-type-total.js":
-/*!************************************************!*\
-  !*** ./src/split-logic/get-pawn-type-total.js ***!
-  \************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-// const pawnStats = require("./pawn-stats");
-
-module.exports = getPawnTypeTotal = function (pawnStats) {
-    let pawnTypeTotal = {
-        cyborg: pawnStats.cyborg.pawnSpawn.length,
-        human: pawnStats.human.pawnSpawn.length,
-        zombie: pawnStats.zombie.pawnSpawn.length
-    };
-    return pawnTypeTotal;
-};
-
-/***/ }),
-
-/***/ "./src/split-logic/get-total-pawns.js":
-/*!********************************************!*\
-  !*** ./src/split-logic/get-total-pawns.js ***!
-  \********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-const adjacentSpaces = __webpack_require__(/*! ./test-scripts/adj-space-finder */ "./src/split-logic/test-scripts/adj-space-finder.js");
-const checkPawnStatus = __webpack_require__(/*! ./check-pawn-status */ "./src/split-logic/check-pawn-status.js");
-const pawnStats = __webpack_require__(/*! ./pawn-stats */ "./src/split-logic/pawn-stats.js");
-
-module.exports = getTotalPawns = function () {
-    let pawnType = "";
-    let pawnTypeArr = [];
-    let pawnTypeTotal = {};
-    let pawnTypeObj = {};
-
-    for (pawnType in pawnStats) {
-        console.log("pawnType");
-        console.log(pawnType);
-        console.log("pawnStats[pawnType]");
-        console.log(pawnStats[pawnType]);
-        if (
-            pawnType === "cyborg" ||
-            pawnType === "human" ||
-            pawnType === "zombie"
-        ) {
-
-            for (let i = 0; i < pawnStats[pawnType].pawnSpawn.length; i++) {
-                console.log("pawnStats[pawnType]::");
-                console.log(pawnStats[pawnType]);
-                console.log(pawnStats[pawnType].pawnSpawn);
-                console.log(pawnStats[pawnType].pawnSpawn[i]);
-                let pawnLoc = pawnStats[pawnType].pawnSpawn[i].loc[0];
-                console.log("pawnStats[pawnType].pawnSpawn[i].loc");
-                console.log(pawnStats[pawnType].pawnSpawn[i].loc);
-                console.log("pawnLoc");
-                console.log(pawnLoc);
-
-                adjacentSpaces(pawnLoc, 1, null, pawnType, "endRound");
-            };
-
-
-            pawnTypeArr.push(pawnType);
-            pawnTypeTotal[pawnType] = pawnStats[pawnType].pawnSpawn.length;
-        };
-        pawnTypeObj = {
-            pawnTypeArr: pawnTypeArr,
-            pawnTypeTotal: pawnTypeTotal
-        };
-    };
-    return pawnTypeObj;
-
-    // for (let t = 0; t < pawnTypeArr.length; t++) {
-    //     console.log("pawnType before checkPawnStatus:");
-    //     console.log(pawnTypeArr[t]);
-    //     checkPawnStatus(pawnTypeObj.pawnTypeArr[t], pawnTypeObj.pawnTypeTotal);
-    //     // checkPawnStatus(pawnTypeArr[t], pawnTypeTotal);
-    // };
-};
-
-/***/ }),
-
-/***/ "./src/split-logic/health-info.js":
-/*!****************************************!*\
-  !*** ./src/split-logic/health-info.js ***!
-  \****************************************/
+/***/ "./src/split-logic/friend-or-foe-test.js":
+/*!***********************************************!*\
+  !*** ./src/split-logic/friend-or-foe-test.js ***!
+  \***********************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 pawnStats = __webpack_require__(/*! ./pawn-stats */ "./src/split-logic/pawn-stats.js");
-showHealth = __webpack_require__(/*! ./show-health */ "./src/split-logic/show-health.js");
-dynaFont = __webpack_require__(/*! ./dyna-font */ "./src/split-logic/dyna-font.js");
-
-// function healthInfo(pawnType, pawnId) { 
-module.exports = healthInfo = function (pawnType, pawnId) {
-    console.log("healthInfo function fires");
-
-    pawnParent = document.getElementById(pawnId).parentNode;
-    if (pawnParent.childNodes[1] != null) {
-        pawnParent.removeChild(pawnParent.childNodes[1]);
-    };
-
-    // refreshPawn.removeChild(refreshPawn.childNodes[0]);
-
-    contentCornerHealth = document.createElement("div");
-    contentHealthId = `content-health-${pawnId}`;
-    contentCornerHealth.setAttribute("id", contentHealthId);
-    pawnParent.appendChild(contentCornerHealth);
-    healthCircle = document.getElementById(contentHealthId);
-    healthCircle.classList.add("empty-health");
-    healthCircle.classList.add("health-score");
-    // healthCircle.style.setProperty(`--health-font`, `'${healthFontSize}'`);
-
-    // get userNum and run function to create dynamic pixel size:
-    userNum = localStorage.getItem("boardSize");
-    healthCircle.style.fontSize = `${dynaFont(userNum)}px`;
-    pawnParent.classList.remove("empty-space");
-    console.log("contentCornerHealth");
-    console.log(contentCornerHealth);
-
-    showHealth(pawnType, pawnId, healthCircle);
-
-    ///////////////////////////////////////////////////
-
-    // // console.log(pawnSpawn[pawnType].pawnSpawn.health);
-    // var newSpan = document.createElement("span"); // Create span node
-    // var pawnSpawn = pawnStats[pawnType].pawnSpawn;
-    // for (let i = 0; i < pawnSpawn.length; i++) {
-    //     console.log("pawnSpawn[i]");
-    //     console.log(pawnSpawn[i]);
-
-    //     console.log("pawnId");
-    //     console.log(pawnId);
-    //     console.log("pawnSpawn[i].id");
-    //     console.log(pawnSpawn[i].id);        
-
-    //     if (pawnSpawn[i].id == pawnId) {
-    //         healthNum = pawnSpawn[i].health;
-    //         var textnode = document.createTextNode(healthNum); // Create a text node
-    //         newSpan.appendChild(textnode); // Append the text to <li>
-    //         healthCircle.appendChild(newSpan);
-    //     };
-    // };
-};
-// exports.healthInfo = healthInfo;
-
-/***/ }),
-
-/***/ "./src/split-logic/isSquare.js":
-/*!*************************************!*\
-  !*** ./src/split-logic/isSquare.js ***!
-  \*************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = isSquare = function (num) {
-        return num > 4 && Math.sqrt(num) % 1 === 0;
-    };
-
-/***/ }),
-
-/***/ "./src/split-logic/modal.js":
-/*!**********************************!*\
-  !*** ./src/split-logic/modal.js ***!
-  \**********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = function () {
-    const outerModal = document.getElementById("modal-outer");
-    const snoozeBtn = document.getElementById("snooze-btn");
-    const gameIntroMsg = document.getElementById("game-cont");
-
-    snoozeBtn.addEventListener("click", function () {
-        console.log("listener fires");
-        if (outerModal.classList.contains("hide-modal")) {
-            outerModal.classList.remove("hide-modal");
-            outerModal.classList.add("show-modal");
-        } else {
-            outerModal.classList.remove("show-modal");
-            outerModal.classList.add("hide-modal");
-        };
-
-        gameIntroMsg.style = "display: none;";
-    });
-};
-
-/***/ }),
-
-/***/ "./src/split-logic/pawn-stats.js":
-/*!***************************************!*\
-  !*** ./src/split-logic/pawn-stats.js ***!
-  \***************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = pawnStats = {
-    human: {
-        // pawnCounter: 0, // to be used with length in array of ids below
-        pawnSpawn: [
-            // {
-            //     dynaID: id
-            // }, // use constructor to assign values to each uniquely created and played pawn
-        ] // push objects into array of new pawns
-    },
-    zombie: {
-        // pawnCounter: 0, // to be used with length in array of ids below
-        pawnSpawn: []
-    },
-    cyborg: {
-        // pawnCounter: 0, // to be used with length in array of ids below
-        pawnSpawn: []
-    },
-
-    pawnCounter: 0,
-    // testing ONLY TODO: move into above^^^
-    pawnIdArray: {
-        human: [],
-        zombie: [],
-        cyborg: []
-    },
-    gameBoard: []
-};
-
-/***/ }),
-
-/***/ "./src/split-logic/pawn-switch.js":
-/*!****************************************!*\
-  !*** ./src/split-logic/pawn-switch.js ***!
-  \****************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-const updatePawnStatus = __webpack_require__(/*! ./update-pawn-status */ "./src/split-logic/update-pawn-status.js");
-const getPawnTypeTotal = __webpack_require__(/*! ./get-pawn-type-total */ "./src/split-logic/get-pawn-type-total.js");
-
-module.exports = pawnSwitch = function (pawnToSwitch, pawnType, pawnTypeTotal) {
-    console.log("pawnSwitch function fires");
-    console.log("pawnType in pawnSwitch:");
-    console.log(pawnType);
-
-    // pawnIdArray = pawnStats.pawnIdArray[`${pawnType}`];
-
-    newPawn = document.getElementById(pawnToSwitch);
-    newPawn.src = `/assets/images/${pawnType}-pawn.png`;
-    // newPawn.classList.remove("empty-space"); check for current class TODO: if contains
-    if (newPawn.classList.contains("human-pawn")) {
-        newPawn.classList.remove("human-pawn");
-        newPawn.classList.add(`${pawnType}-pawn`);
-
-        let pawnTypeSwitch = ["human", pawnType];
-
-        // remove location id from array of human and add to ${pawnType}:
-        // for (let i = 0; i < pawnStats.pawnIdArray.human.length; i++) {
-        //     console.log(newPawn.parentNode.id);
-        //     if (i === newPawn.parentNode.id) {
-        //         console.log("pawnStats.pawnIdArray.human");
-        //         console.log(pawnStats.pawnIdArray.human);
-        //     }
-        // };
-        // for (let i = 0; i < pawnIdArray.length; i++) {
-        //     console.log(newPawn.parentNode.id);
-        //     if (i === newPawn.parentNode.id) {
-        //     console.log("pawnIdArray");
-        //     console.log(pawnIdArray);
-        //     }
-        // }; 
-        updatePawnStatus("switch", pawnToSwitch, pawnTypeSwitch, getPawnTypeTotal);
-
-    } else if (newPawn.classList.contains("zombie-pawn")) {
-        newPawn.classList.remove("zombie-pawn");
-        newPawn.classList.add(`${pawnType}-pawn`);
-
-        let pawnTypeSwitch = ["zombie", pawnType];
-        updatePawnStatus("switch", pawnToSwitch, pawnTypeSwitch, getPawnTypeTotal);
-
-
-        // TODO: update stats (remove from type array/object and add to other array/object)
-        
-
-
-    } else if (newPawn.classList.contains("cyborg-pawn")) {
-        newPawn.classList.remove("cyborg-pawn");
-        newPawn.classList.add(`${pawnType}-pawn`);
-
-        let pawnTypeSwitch = ["cyborg", pawnType];
-        updatePawnStatus("switch", pawnToSwitch, pawnTypeSwitch, getPawnTypeTotal);
-
-    } else if (newPawn.classList.contains("sleepy-zombie-pawn")) {
-        newPawn.classList.remove("sleepy-zombie-pawn");
-        newPawn.classList.add(`${pawnType}-pawn`);
-
-        let pawnTypeSwitch = ["sleepy-zombie-pawn", pawnType];
-        updatePawnStatus("switch", pawnToSwitch, pawnTypeSwitch, getPawnTypeTotal);
-
-    } else if (newPawn.classList.contains("sleepy-cyborg-pawn")) {
-        newPawn.classList.remove("sleepy-cyborg-pawn");
-        newPawn.classList.add(`${pawnType}-pawn`);
-
-        let pawnTypeSwitch = ["sleepy-cyborg-pawn", pawnType];
-        updatePawnStatus("switch", pawnToSwitch, pawnTypeSwitch, getPawnTypeTotal);
-    };
-
-    // updatePercent(pawnTypeTotal);
-
-};
-
-// TODO: need to make pawns more generic. 
-// change dynamic ids to counter, based on order of creation ONLY, not pawnType
-// the track all pawnTypes by either data- or class
-
-/***/ }),
-
-/***/ "./src/split-logic/random-place.js":
-/*!*****************************************!*\
-  !*** ./src/split-logic/random-place.js ***!
-  \*****************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-pawnStats = __webpack_require__(/*! ./pawn-stats */ "./src/split-logic/pawn-stats.js");
-// const touchEvents = require("./test-scripts/touch-events");
-
-// TODO: move this object into the playerStats object:
-// testing ONLY:
-// pawnIdArray = {
-//     human: [],
-//     zombie: [],
-//     cyborg: []
-// };
-
-
-module.exports = randomPlace = function (userInputNum, howManyToPlace) {
-    console.log("randomPlace function fires");
-    let baseNum = 1000;
-    howManyToPlace = howManyToPlace * 2;
-
-    // TODO: need successfullyPlacedCounter in createPawn?
-
-    for (let i = 0; i <= howManyToPlace; i++) {
-        xAxis = Math.floor(Math.random() * userInputNum + 1);
-        console.log("xAxis");
-        console.log(xAxis);
-
-        yAxis = Math.floor(Math.random() * userInputNum + 1);
-        console.log("yAxis");
-        console.log(yAxis);
-
-        randomContentID = `content-x${baseNum + xAxis}-y${baseNum + yAxis}`;
-        console.log("randomContentID");
-        console.log(randomContentID);
-
-        if (pawnStats.pawnIdArray.human.includes(randomContentID) ||
-            pawnStats.pawnIdArray.zombie.includes(randomContentID) ||
-            pawnStats.pawnIdArray.cyborg.includes(randomContentID)) {
-            console.log("that random number already exists in array. pawn was placed");
-            // need to subtract from loop counter if already exists:
-            i--;
-
-        } else {
-            if (i % 2 === 0) { // even
-                pawnStats.pawnIdArray.human.push(randomContentID);
-                console.log(pawnStats.pawnIdArray.human);
-                createPawn(randomContentID, pawnStats.pawnCounter, "human");
-            
-            } else {
-                randEnemy = Math.floor(Math.random() * 20 + 1);
-                if (randEnemy % 2 === 0) {
-                    pawnStats.pawnIdArray.zombie.push(randomContentID);
-                    console.log(pawnStats.pawnIdArray.zombie);
-                    createPawn(randomContentID, pawnStats.pawnCounter, "zombie");
-                
-                } else {
-                    pawnStats.pawnIdArray.cyborg.push(randomContentID);
-                    console.log(pawnStats.pawnIdArray.cyborg);
-                    createPawn(randomContentID, pawnStats.pawnCounter, "cyborg");
-                };
-            };
-        };
-
-        // TODO: add openSpace evaluator that looks at array of spaces to see if contains beforeattempting to createPawn;
-        // TODO: create pawnHealth evaluator to track and determine status of pawns in danger of becoming neutral and changes color;
-        // TODO: pawn colors need to be changed to primary colors, so that the neutral stauts of pawns' colors can change to secondary colors;
-        // TODO: add blinking strobe effect to neutral pawns? add hover over arrow effect when pawn is picked up?
-    };
-    // touchEvents();
-};
-
-/***/ }),
-
-/***/ "./src/split-logic/show-health.js":
-/*!****************************************!*\
-  !*** ./src/split-logic/show-health.js ***!
-  \****************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-pawnStats = __webpack_require__(/*! ./pawn-stats */ "./src/split-logic/pawn-stats.js");
-
-module.exports = showHealth = function (pawnType, pawnId, healthCircle) {
-    console.log("showHealth function fires");
-
-    var newSpan = document.createElement("span"); // Create span node
-    var pawnSpawn = pawnStats[pawnType].pawnSpawn;
-
-    for (let i = 0; i < pawnSpawn.length; i++) {
-        console.log("pawnSpawn[i]");
-        console.log(pawnSpawn[i]);
-
-        console.log("pawnId");
-        console.log(pawnId);
-        console.log("pawnSpawn[i].id");
-        console.log(pawnSpawn[i].id);
-
-        if (pawnSpawn[i].id == pawnId) {
-            if (textnode != null) {
-                newSpan.removeChild(textnode);
-            };
-
-            healthNum = pawnSpawn[i].health;
-            var textnode = document.createTextNode(healthNum); // Create a text node
-            newSpan.appendChild(textnode);
-            healthCircle.appendChild(newSpan);
-        };
-    };
-};
-
-/***/ }),
-
-/***/ "./src/split-logic/test-scripts/adj-contentID-string-array.js":
-/*!********************************************************************!*\
-  !*** ./src/split-logic/test-scripts/adj-contentID-string-array.js ***!
-  \********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-
-module.exports = adjContentIDStringArr = function (homespace, adjacentSpaceObj, availableMoves) {
-    const firstSquare = {};
-    const adjacentSquares = [];
-
-    firstSquare.x = 1001;
-    firstSquare.y = 1001;
-
-    // if (pawnStats.gameBoard[0].includes())
-    // lastSquare.x = 1001;
-    // lastSquare.y = 1001;
-
-    //     // baseNum = 1000;
-    //     let numberOfSpaces = localStorage.getItem("boardSize");
-    //     console.log("square root of " + numberOfSpaces);
-
-    //     let sqRootNum = Math.sqrt(numberOfSpaces);
-    //     console.log(sqRootNum);
-
-    //     for (let i = 1; i <= sqRootNum; i++) {
-    //         for (let j = 1; j <= sqRootNum; j++) {
-    //         }
-    //     };
-
-
-    let loopSize = availableMoves * 2 + 1;
-
-    for (let i = 0; i < loopSize; i++) {
-        coord_x = adjacentSpaceObj.x[i]; // ???
-
-        for (let j = 0; j < loopSize; j++) {
-            coord_y = adjacentSpaceObj.y[j]; // ???
-            // contentID = [coord_x, coord_y];
-            contentID = `content-x${coord_x}-y${coord_y}`;
-            console.log("contentID");
-            console.log(contentID);
-            console.log("homespace");
-            console.log(homespace);
-            console.log("coord_x");
-            console.log(coord_x);
-            console.log("coord_y");
-            console.log(coord_y);
-            
-            if (coord_x >= firstSquare.x && coord_y >= firstSquare.y) {
-                if (coord_x === homespace[0] && coord_y === homespace[1]) {
-                // if (coord_x === parseInt(homespace[0]) && coord_y === parseInt(homespace[1])) {
-                    // console.log(`homespace_idString: ${contentID}`);
-                } else {
-                    // console.log(`${contentID} != ${homespace_idString}`);
-                    adjacentSquares.push(contentID); // ???
-                };
-            };
-        };
-    };
-
-    console.log("adjacentSquares::");
-    console.log(adjacentSquares);
-    adjacentSpaceObj.comb = adjacentSquares;
-
-    return adjacentSpaceObj;
-};
-
-/***/ }),
-
-/***/ "./src/split-logic/test-scripts/adj-space-finder.js":
-/*!**********************************************************!*\
-  !*** ./src/split-logic/test-scripts/adj-space-finder.js ***!
-  \**********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-// const adjacentSquares = [];
-const adjacentSpacesHolder = [];
-// const firstSquare = {};
-// firstSquare.x = 1;
-// firstSquare.y = 1;
-// const friendOrFoe = require("../friend-or-foe");
-const friendOrFoe = __webpack_require__(/*! ./friend-or-foe-test */ "./src/split-logic/test-scripts/friend-or-foe-test.js");
-
-const adjContentIDStringArr = __webpack_require__(/*! ./adj-contentID-string-array */ "./src/split-logic/test-scripts/adj-contentID-string-array.js");
-const goldilocksChecker = __webpack_require__(/*! ./goldilocks-checker */ "./src/split-logic/test-scripts/goldilocks-checker.js");
-
-
-const movesMade = [];
-
-module.exports = function adjacentSpaces (homespace, availableMoves, destination, pawnType, message) {
-    console.log("adjacentSpaces function fires");
-
-    const adjacentSquares = [];
-
-//////////////////////////////////////////////////////////
-// TODO: export this into a function?
-
-    let homespace_idString = homespace;
-    console.log("homespace_idString");
-    console.log(homespace_idString);
-    homespace = homespace.match(/\d+/g);
-    console.log("homespace after match:");
-    console.log(homespace);
-
-
-    let adjacentSpaceObj = {
-        homespace: homespace,
-        homespace_idString: homespace_idString,
-        x: [],
-        y: [],
-        comb: []
-    };
-
-    x_Loc = homespace[0] = parseInt(homespace[0]);
-    console.log("x_Loc");
-    console.log(x_Loc);
-
-    y_Loc = homespace[1] = parseInt(homespace[1]);
-    console.log("y_Loc");
-    console.log(y_Loc);
-
-//////////////////////////////////////////////////////////
-
-    for (let q = 0; q <= availableMoves; q++) {
-
-        if (q > 0) {
-            adjacentSpaceObj.x.push(
-                x_Loc + q,
-                x_Loc - q);
-
-            adjacentSpaceObj.y.push(
-                y_Loc + q,
-                y_Loc - q);
-        } else {
-            adjacentSpaceObj.x.push(x_Loc + q);
-            adjacentSpaceObj.y.push(y_Loc + q);
-        };
-    };
-
-    console.log("adjacentSpaceObj");
-    console.log(adjacentSpaceObj);
-    
-//////////////////////////////////////////////////////////
-
-adjacentSpaceObj = adjContentIDStringArr(homespace, adjacentSpaceObj, availableMoves);
-
-    console.log("adjacentSpaceObj.comb");
-    console.log(adjacentSpaceObj.comb);
-
-    if (message === "endRound") {
-        return friendOrFoe(homespace_idString, adjacentSpaceObj.comb, pawnType);
-    } else if (message === "compTurn") {
-        console.log("compTurn msg in adjSpacesFinder");
-        return adjacentSpaceObj;
-    } else {
-        return adjacentSpaceObj;
-    }
-    // return friendOrFoe(idString, adjacentSquares, pawnType);
-};
-
-// let homeSpace = [3, 3];
-// let totNumMoves = 2;
-
-// adjacentSpaces(homeSpace, totNumMoves, null, null);
-
-/***/ }),
-
-/***/ "./src/split-logic/test-scripts/best-move.js":
-/*!***************************************************!*\
-  !*** ./src/split-logic/test-scripts/best-move.js ***!
-  \***************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = bestMove = function (goldSpaceArr) {
-    console.log("bestMove function fires");
-    console.log(goldSpaceArr);
-
-    let newGoldSpaceArr = {};
-
-    for (let g = 1; g < goldSpaceArr.length; g++) {
-
-        if (goldSpaceArr[0] != null) {
-            if (goldSpaceArr[g - 1].weight != null) {
-                if (goldSpaceArr[g].weight > goldSpaceArr[g - 1].weight) {
-                    goldSpaceArr.splice((g - 1), 1);
-                    console.log("g is bigger");
-                    console.log(goldSpaceArr);
-
-                } else if (goldSpaceArr[g].weight <= goldSpaceArr[g - 1].weight) {
-                    goldSpaceArr.splice(g, 1);
-                    console.log("g - 1 is bigger");
-                    console.log(goldSpaceArr);
-
-                    // } else if (goldSpaceArr[0] == null) {
-                    //     goldSpaceArr.splice(0, 1);
-                    //     console.log("g - 1 is bigger than [0] == null");
-                    //     console.log(goldSpaceArr);
-
-                };
-            };
-        } else {
-            goldSpaceArr.splice(0, 1);
-            console.log("g - 1 is bigger than [0] == null");
-            console.log(goldSpaceArr);
-        };
-        newGoldSpaceArr = goldSpaceArr;
-    };
-    return newGoldSpaceArr;
-};
-
-/***/ }),
-
-/***/ "./src/split-logic/test-scripts/comp-turn.js":
-/*!***************************************************!*\
-  !*** ./src/split-logic/test-scripts/comp-turn.js ***!
-  \***************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-const pawnStats = __webpack_require__(/*! ../pawn-stats */ "./src/split-logic/pawn-stats.js");
-const bestMove = __webpack_require__(/*! ./best-move */ "./src/split-logic/test-scripts/best-move.js");
-// const adjacentSpaces = require("./adj-space-finder");
-const moveEnemyPawnFunc = __webpack_require__(/*! ./move-enemy-pawn-func */ "./src/split-logic/test-scripts/move-enemy-pawn-func.js");
-const updatePawnStatus = __webpack_require__(/*! ../update-pawn-status */ "./src/split-logic/update-pawn-status.js");
-
-module.exports = compTurn = function (computerBool, pawnType, adjacentSpaces) {
-    ///////////////////////  call function to addWeight (adjSpaces) ///////////////////////
-
-    ///////////////////////  add weight value to each space in adjSpaces connected to pawnID ///////////////////////
-
-    ///////////////////////  replace lower weight value / keep higher weight with spaceID ///////////////////////
-
-    console.log("nextTurn function fires");
-    console.log("computerBool");
-    console.log(computerBool);
-    console.log("pawnType");
-    console.log(pawnType);
-
-    let currentGoldiPawns = [];
-    // let goldilocksObjectHolder = {};
-    // let goldSpaceArr = [];
-    // let moveEnemyPawn = [null];
-
-    if (computerBool === true) {
-        console.log("pawnStats[pawnType].pawnSpawn.length");
-        console.log(pawnStats[pawnType].pawnSpawn.length);
-
-        // TODO: create an if conditional that errors out if the pawnType doesn't exist or equals zero:
-
-        ///////////////////////  loop through pawnIDs ///////////////////////
-        console.log(pawnStats[pawnType].pawnSpawn.length);
-        for (let loop = 0; loop < pawnStats[pawnType].pawnSpawn.length; loop++) {
-            let currentPawnLoc = pawnStats[pawnType].pawnSpawn[loop].loc;
-            let currentPawnID = pawnStats[pawnType].pawnSpawn[loop].id;
-            let goldilocksObjectHolder = {};
-            let goldSpaceArr = [];
-
-            /////////////////////// 1) get pawnIDs ///////////////////////
-            console.log("currentPawnID");
-            console.log(currentPawnID);
-
-            console.log("currentPawnLoc");
-            console.log(currentPawnLoc);
-
-            ///////////////////////  get adjacentSpaces from each pawnID ///////////////////////
-            let currentAdjSpaceArr = adjacentSpaces(currentPawnLoc[0], 1, null, pawnType, "compTurn");
-
-            ///////////////////////  loop through adjacentSpaces ///////////////////////
-            // for (let cur = 0; cur < currentAdjSpaceArr.comb.length; cur++) {
-            //     console.log(goldilocksChecker()); // homeSpace, targetSpace, pawnType
-            // }
-
-            // currentGoldiPawns.pawnID = currentPawnID;
-            // currentGoldiPawns.pawnLoc = currentPawnLoc;
-            // currentGoldiPawns.adjSpaceArray = currentAdjSpaceArr.comb;
-            let moveEnemyPawn = [null];
-
-            for (let adj = 0; adj < currentAdjSpaceArr.comb.length; adj++) {
-                console.log("before goldilocksChecker is called");
-                // moveEnemyPawn[0] = null;
-
-                console.log(`currentAdjSpaceArr.comb.length = ${currentAdjSpaceArr.comb.length}`);
-
-                let targetSpace_idString = currentAdjSpaceArr.comb[adj];
-                let targetSpace = targetSpace_idString;
-
-                console.log("targetSpace_idString");
-                console.log(targetSpace_idString);
-                targetSpace = targetSpace.match(/\d+/g);
-                console.log("targetSpace after match:");
-                console.log(targetSpace);
-                targetSpace = [parseInt(targetSpace[0]), parseInt(targetSpace[1])];
-
-                //////////////////////////////////////////////////////////////////////////
-
-                let currentPawnHomespace_idString = currentPawnLoc[0];
-                let currentTargetElem = document.getElementById(targetSpace_idString);
-                let currentPawnHomespace = currentPawnHomespace_idString;
-
-                if (currentTargetElem != null) {
-                    if (!currentTargetElem.classList.contains("empty-space")) {
-                        console.log("currentTargetElem is NOT an empty space:");
-                        console.log(currentTargetElem);
-                    } else {
-                        console.log("currentTargetElem is an empty space:");
-                        console.log(currentTargetElem);
-
-                        console.log("currentPawnHomespace_idString");
-                        console.log(currentPawnHomespace_idString);
-                        currentPawnHomespace = currentPawnHomespace.match(/\d+/g);
-                        console.log("currentPawnHomespace after match:");
-                        console.log(currentPawnHomespace);
-                        currentPawnHomespace = [parseInt(currentPawnHomespace[0]), parseInt(currentPawnHomespace[1])];
-
-                        // console.log(goldilocksChecker(currentPawnHomespace, targetSpace, pawnType, adjacentSpaces, currentPawnHomespace_idString)); // homeSpace, targetSpace, pawnType
-                        // create a function to compare returned values:
-                        goldilocksObjectHolder = goldilocksChecker(currentPawnHomespace, targetSpace, pawnType, adjacentSpaces, currentPawnHomespace_idString);
-                        goldSpaceArr.push(goldilocksObjectHolder);
-
-                        console.log("goldSpaceArr (before):");
-                        console.log(goldSpaceArr);
-
-                        if (goldSpaceArr.length > 1) { // TODO: check for errors if equal to "1"
-                        // if (goldSpaceArr.length >= 1 && moveEnemyPawn[0] != null) { // TODO: check for errors if equal to "1"
-                            
-                            if (typeof moveEnemyPawn[0] == null || moveEnemyPawn[0] == null && goldSpaceArr.length == 1) {
-                            } else if (goldSpaceArr.length > 1) {
-                                console.log("bestMove(goldSpaceArr):");
-                                moveEnemyPawn = bestMove(goldSpaceArr);
-
-                            // } else if (goldSpaceArr.length === 1) {
-                            } else {
-                                console.log("error?");
-                                // return moveEnemyPawnFunc(moveEnemyPawn); TODO: break apart in next function, not here ^^^
-                            };
-                        } else {
-                            if (typeof moveEnemyPawn[0] == null || moveEnemyPawn[0] == null) {
-                                console.log("moveEnemyPawn[0] == null");
-
-                            } else {
-                                console.log("moveEnemyPawn[0].homespace_idString");
-                                console.log(moveEnemyPawn[0].homespace_idString);
-                                console.log("moveEnemyPawn[0].targetSpace_idString");
-                                console.log(moveEnemyPawn[0].targetSpace_idString);
-
-                                // TODO: check after each "zombie" bestMove
-                            };
-                        };
-                        
-                        console.log("goldSpaceArr (after):");
-                        console.log(goldSpaceArr);
-                    };
-                };
-            };
-            if (moveEnemyPawn[0] != null) {
-                moveEnemyPawnFunc(moveEnemyPawn[0].homespace_idString, moveEnemyPawn[0].targetSpace_idString, updatePawnStatus);
-            };
-            //////////////////////////////////////////////////////////////////////////
-            // if (typeof moveEnemyPawn[0] == null) {
-
-            // } else {
-            //     console.log("moveEnemyPawn[0].homespace_idString");
-            //     console.log(moveEnemyPawn[0].homespace_idString);
-            //     console.log("moveEnemyPawn[0].targetSpace_idString");
-            //     console.log(moveEnemyPawn[0].targetSpace_idString);
-    
-            //     // TODO: check after each "zombie" bestMove
-            //     moveEnemyPawnFunc(moveEnemyPawn[0].homespace_idString, moveEnemyPawn[0].targetSpace_idString, updatePawnStatus);
-    
-            //     // return moveEnemyPawnFunc(moveEnemyPawn); TODO: break apart in next function, not here ^^^
-            // };
-        };
-
-    } else {
-        console.log(`computerBool is ${computerBool}`);
-    };
-};
-
-//////////////////////////////////////////////////////////////////////////
-// need TODO: create a function to change to contentID string and reverse:
-
-// let homespace_idString = homespace;
-// console.log("homespace_idString");
-// console.log(homespace_idString);
-// homespace = homespace.match(/\d+/g);
-// console.log("homespace after match:");
-// console.log("currentGoldiPawns");
-// console.log(currentGoldiPawns);
-// };
-
-/***/ }),
-
-/***/ "./src/split-logic/test-scripts/friend-or-foe-test.js":
-/*!************************************************************!*\
-  !*** ./src/split-logic/test-scripts/friend-or-foe-test.js ***!
-  \************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-pawnStats = __webpack_require__(/*! ../pawn-stats */ "./src/split-logic/pawn-stats.js");
-healthInfo = __webpack_require__(/*! ../health-info */ "./src/split-logic/health-info.js");
+healthInfo = __webpack_require__(/*! ./health-info */ "./src/split-logic/health-info.js");
 
 // this replaces nearbyPawn function:
 module.exports = friendOrFoe = function (homeSquare_ID, adjacentSquaresArr, pawnType) {
@@ -2090,17 +1660,100 @@ module.exports = friendOrFoe = function (homeSquare_ID, adjacentSquaresArr, pawn
 
 /***/ }),
 
-/***/ "./src/split-logic/test-scripts/goldilocks-checker.js":
-/*!************************************************************!*\
-  !*** ./src/split-logic/test-scripts/goldilocks-checker.js ***!
-  \************************************************************/
+/***/ "./src/split-logic/get-pawn-type-total.js":
+/*!************************************************!*\
+  !*** ./src/split-logic/get-pawn-type-total.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// const pawnStats = require("./pawn-stats");
+
+module.exports = getPawnTypeTotal = function (pawnStats) {
+    let pawnTypeTotal = {
+        cyborg: pawnStats.cyborg.pawnSpawn.length,
+        human: pawnStats.human.pawnSpawn.length,
+        zombie: pawnStats.zombie.pawnSpawn.length
+    };
+    return pawnTypeTotal;
+};
+
+/***/ }),
+
+/***/ "./src/split-logic/get-total-pawns.js":
+/*!********************************************!*\
+  !*** ./src/split-logic/get-total-pawns.js ***!
+  \********************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-const enemyMoves = __webpack_require__(/*! ../enemy-moves */ "./src/split-logic/enemy-moves.js");
-const Goldilocks = __webpack_require__(/*! ./goldilocks-constructor */ "./src/split-logic/test-scripts/goldilocks-constructor.js");
-const rateSpace = __webpack_require__(/*! ./rate-space */ "./src/split-logic/test-scripts/rate-space.js");
-const pawnStats = __webpack_require__(/*! ../pawn-stats */ "./src/split-logic/pawn-stats.js");
+const adjacentSpaces = __webpack_require__(/*! ./adj-space-finder */ "./src/split-logic/adj-space-finder.js");
+const checkPawnStatus = __webpack_require__(/*! ./check-pawn-status */ "./src/split-logic/check-pawn-status.js");
+const pawnStats = __webpack_require__(/*! ./pawn-stats */ "./src/split-logic/pawn-stats.js");
+
+module.exports = getTotalPawns = function () {
+    let pawnType = "";
+    let pawnTypeArr = [];
+    let pawnTypeTotal = {};
+    let pawnTypeObj = {};
+
+    for (pawnType in pawnStats) {
+        console.log("pawnType");
+        console.log(pawnType);
+        console.log("pawnStats[pawnType]");
+        console.log(pawnStats[pawnType]);
+        if (
+            pawnType === "cyborg" ||
+            pawnType === "human" ||
+            pawnType === "zombie"
+        ) {
+
+            for (let i = 0; i < pawnStats[pawnType].pawnSpawn.length; i++) {
+                console.log("pawnStats[pawnType]::");
+                console.log(pawnStats[pawnType]);
+                console.log(pawnStats[pawnType].pawnSpawn);
+                console.log(pawnStats[pawnType].pawnSpawn[i]);
+                let pawnLoc = pawnStats[pawnType].pawnSpawn[i].loc[0];
+                console.log("pawnStats[pawnType].pawnSpawn[i].loc");
+                console.log(pawnStats[pawnType].pawnSpawn[i].loc);
+                console.log("pawnLoc");
+                console.log(pawnLoc);
+
+                adjacentSpaces(pawnLoc, 1, null, pawnType, "endRound");
+            };
+
+
+            pawnTypeArr.push(pawnType);
+            pawnTypeTotal[pawnType] = pawnStats[pawnType].pawnSpawn.length;
+        };
+        pawnTypeObj = {
+            pawnTypeArr: pawnTypeArr,
+            pawnTypeTotal: pawnTypeTotal
+        };
+    };
+    return pawnTypeObj;
+
+    // for (let t = 0; t < pawnTypeArr.length; t++) {
+    //     console.log("pawnType before checkPawnStatus:");
+    //     console.log(pawnTypeArr[t]);
+    //     checkPawnStatus(pawnTypeObj.pawnTypeArr[t], pawnTypeObj.pawnTypeTotal);
+    //     // checkPawnStatus(pawnTypeArr[t], pawnTypeTotal);
+    // };
+};
+
+/***/ }),
+
+/***/ "./src/split-logic/goldilocks-checker.js":
+/*!***********************************************!*\
+  !*** ./src/split-logic/goldilocks-checker.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+const enemyMoves = __webpack_require__(/*! ./enemy-moves */ "./src/split-logic/enemy-moves.js");
+const Goldilocks = __webpack_require__(/*! ./goldilocks-constructor */ "./src/split-logic/goldilocks-constructor.js");
+const rateSpace = __webpack_require__(/*! ./rate-space */ "./src/split-logic/rate-space.js"); 
+const pawnStats = __webpack_require__(/*! ./pawn-stats */ "./src/split-logic/pawn-stats.js");
 
 // const adjSpaceFinder = require("./adj-space-finder");
 
@@ -2216,14 +1869,14 @@ module.exports = goldilocksChecker = function (homeSpace, targetSpace, pawnType,
 
 /***/ }),
 
-/***/ "./src/split-logic/test-scripts/goldilocks-constructor.js":
-/*!****************************************************************!*\
-  !*** ./src/split-logic/test-scripts/goldilocks-constructor.js ***!
-  \****************************************************************/
+/***/ "./src/split-logic/goldilocks-constructor.js":
+/*!***************************************************!*\
+  !*** ./src/split-logic/goldilocks-constructor.js ***!
+  \***************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-const rateSpace = __webpack_require__(/*! ./rate-space */ "./src/split-logic/test-scripts/rate-space.js");
+const rateSpace = __webpack_require__(/*! ./rate-space */ "./src/split-logic/rate-space.js");
 
 module.exports = Goldilocks = function (type, move, food, friend, enemy, homeSpace, homespace_idString, targetSpace, targetSpace_idString, rateSpace) {
 
@@ -2246,10 +1899,117 @@ module.exports = Goldilocks = function (type, move, food, friend, enemy, homeSpa
 
 /***/ }),
 
-/***/ "./src/split-logic/test-scripts/move-enemy-pawn-func.js":
-/*!**************************************************************!*\
-  !*** ./src/split-logic/test-scripts/move-enemy-pawn-func.js ***!
-  \**************************************************************/
+/***/ "./src/split-logic/health-info.js":
+/*!****************************************!*\
+  !*** ./src/split-logic/health-info.js ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+pawnStats = __webpack_require__(/*! ./pawn-stats */ "./src/split-logic/pawn-stats.js");
+showHealth = __webpack_require__(/*! ./show-health */ "./src/split-logic/show-health.js");
+dynaFont = __webpack_require__(/*! ./dyna-font */ "./src/split-logic/dyna-font.js");
+
+// function healthInfo(pawnType, pawnId) { 
+module.exports = healthInfo = function (pawnType, pawnId) {
+    console.log("healthInfo function fires");
+
+    pawnParent = document.getElementById(pawnId).parentNode;
+    if (pawnParent.childNodes[1] != null) {
+        pawnParent.removeChild(pawnParent.childNodes[1]);
+    };
+
+    // refreshPawn.removeChild(refreshPawn.childNodes[0]);
+
+    contentCornerHealth = document.createElement("div");
+    contentHealthId = `content-health-${pawnId}`;
+    contentCornerHealth.setAttribute("id", contentHealthId);
+    pawnParent.appendChild(contentCornerHealth);
+    healthCircle = document.getElementById(contentHealthId);
+    healthCircle.classList.add("empty-health");
+    healthCircle.classList.add("health-score");
+    // healthCircle.style.setProperty(`--health-font`, `'${healthFontSize}'`);
+
+    // get userNum and run function to create dynamic pixel size:
+    userNum = localStorage.getItem("boardSize");
+    healthCircle.style.fontSize = `${dynaFont(userNum)}px`;
+    pawnParent.classList.remove("empty-space");
+    console.log("contentCornerHealth");
+    console.log(contentCornerHealth);
+
+    showHealth(pawnType, pawnId, healthCircle);
+
+    ///////////////////////////////////////////////////
+
+    // // console.log(pawnSpawn[pawnType].pawnSpawn.health);
+    // var newSpan = document.createElement("span"); // Create span node
+    // var pawnSpawn = pawnStats[pawnType].pawnSpawn;
+    // for (let i = 0; i < pawnSpawn.length; i++) {
+    //     console.log("pawnSpawn[i]");
+    //     console.log(pawnSpawn[i]);
+
+    //     console.log("pawnId");
+    //     console.log(pawnId);
+    //     console.log("pawnSpawn[i].id");
+    //     console.log(pawnSpawn[i].id);        
+
+    //     if (pawnSpawn[i].id == pawnId) {
+    //         healthNum = pawnSpawn[i].health;
+    //         var textnode = document.createTextNode(healthNum); // Create a text node
+    //         newSpan.appendChild(textnode); // Append the text to <li>
+    //         healthCircle.appendChild(newSpan);
+    //     };
+    // };
+};
+// exports.healthInfo = healthInfo;
+
+/***/ }),
+
+/***/ "./src/split-logic/isSquare.js":
+/*!*************************************!*\
+  !*** ./src/split-logic/isSquare.js ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = isSquare = function (num) {
+        return num > 4 && Math.sqrt(num) % 1 === 0;
+    };
+
+/***/ }),
+
+/***/ "./src/split-logic/modal.js":
+/*!**********************************!*\
+  !*** ./src/split-logic/modal.js ***!
+  \**********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = function () {
+    const outerModal = document.getElementById("modal-outer");
+    const snoozeBtn = document.getElementById("snooze-btn");
+    const gameIntroMsg = document.getElementById("game-cont");
+
+    snoozeBtn.addEventListener("click", function () {
+        console.log("listener fires");
+        if (outerModal.classList.contains("hide-modal")) {
+            outerModal.classList.remove("hide-modal");
+            outerModal.classList.add("show-modal");
+        } else {
+            outerModal.classList.remove("show-modal");
+            outerModal.classList.add("hide-modal");
+        };
+
+        gameIntroMsg.style = "display: none;";
+    });
+};
+
+/***/ }),
+
+/***/ "./src/split-logic/move-enemy-pawn-func.js":
+/*!*************************************************!*\
+  !*** ./src/split-logic/move-enemy-pawn-func.js ***!
+  \*************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -2310,10 +2070,211 @@ module.exports = moveEnemyPawnFunc = function (oldSpaceID, newSpaceID, updatePaw
 
 /***/ }),
 
-/***/ "./src/split-logic/test-scripts/rate-space.js":
-/*!****************************************************!*\
-  !*** ./src/split-logic/test-scripts/rate-space.js ***!
-  \****************************************************/
+/***/ "./src/split-logic/pawn-stats.js":
+/*!***************************************!*\
+  !*** ./src/split-logic/pawn-stats.js ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = pawnStats = {
+    human: {
+        // pawnCounter: 0, // to be used with length in array of ids below
+        pawnSpawn: [
+            // {
+            //     dynaID: id
+            // }, // use constructor to assign values to each uniquely created and played pawn
+        ] // push objects into array of new pawns
+    },
+    zombie: {
+        // pawnCounter: 0, // to be used with length in array of ids below
+        pawnSpawn: []
+    },
+    cyborg: {
+        // pawnCounter: 0, // to be used with length in array of ids below
+        pawnSpawn: []
+    },
+
+    pawnCounter: 0,
+    // testing ONLY TODO: move into above^^^
+    pawnIdArray: {
+        human: [],
+        zombie: [],
+        cyborg: []
+    },
+    gameBoard: []
+};
+
+/***/ }),
+
+/***/ "./src/split-logic/pawn-switch.js":
+/*!****************************************!*\
+  !*** ./src/split-logic/pawn-switch.js ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+const updatePawnStatus = __webpack_require__(/*! ./update-pawn-status */ "./src/split-logic/update-pawn-status.js");
+const getPawnTypeTotal = __webpack_require__(/*! ./get-pawn-type-total */ "./src/split-logic/get-pawn-type-total.js");
+
+module.exports = pawnSwitch = function (pawnToSwitch, pawnType, pawnTypeTotal) {
+    console.log("pawnSwitch function fires");
+    console.log("pawnType in pawnSwitch:");
+    console.log(pawnType);
+
+    // pawnIdArray = pawnStats.pawnIdArray[`${pawnType}`];
+
+    newPawn = document.getElementById(pawnToSwitch);
+    newPawn.src = `/assets/images/${pawnType}-pawn.png`;
+    // newPawn.classList.remove("empty-space"); check for current class TODO: if contains
+    if (newPawn.classList.contains("human-pawn")) {
+        newPawn.classList.remove("human-pawn");
+        newPawn.classList.add(`${pawnType}-pawn`);
+
+        let pawnTypeSwitch = ["human", pawnType];
+
+        // remove location id from array of human and add to ${pawnType}:
+        // for (let i = 0; i < pawnStats.pawnIdArray.human.length; i++) {
+        //     console.log(newPawn.parentNode.id);
+        //     if (i === newPawn.parentNode.id) {
+        //         console.log("pawnStats.pawnIdArray.human");
+        //         console.log(pawnStats.pawnIdArray.human);
+        //     }
+        // };
+        // for (let i = 0; i < pawnIdArray.length; i++) {
+        //     console.log(newPawn.parentNode.id);
+        //     if (i === newPawn.parentNode.id) {
+        //     console.log("pawnIdArray");
+        //     console.log(pawnIdArray);
+        //     }
+        // }; 
+        updatePawnStatus("switch", pawnToSwitch, pawnTypeSwitch, getPawnTypeTotal);
+
+    } else if (newPawn.classList.contains("zombie-pawn")) {
+        newPawn.classList.remove("zombie-pawn");
+        newPawn.classList.add(`${pawnType}-pawn`);
+
+        let pawnTypeSwitch = ["zombie", pawnType];
+        updatePawnStatus("switch", pawnToSwitch, pawnTypeSwitch, getPawnTypeTotal);
+
+
+        // TODO: update stats (remove from type array/object and add to other array/object)
+        
+
+
+    } else if (newPawn.classList.contains("cyborg-pawn")) {
+        newPawn.classList.remove("cyborg-pawn");
+        newPawn.classList.add(`${pawnType}-pawn`);
+
+        let pawnTypeSwitch = ["cyborg", pawnType];
+        updatePawnStatus("switch", pawnToSwitch, pawnTypeSwitch, getPawnTypeTotal);
+
+    } else if (newPawn.classList.contains("sleepy-zombie-pawn")) {
+        newPawn.classList.remove("sleepy-zombie-pawn");
+        newPawn.classList.add(`${pawnType}-pawn`);
+
+        let pawnTypeSwitch = ["sleepy-zombie-pawn", pawnType];
+        updatePawnStatus("switch", pawnToSwitch, pawnTypeSwitch, getPawnTypeTotal);
+
+    } else if (newPawn.classList.contains("sleepy-cyborg-pawn")) {
+        newPawn.classList.remove("sleepy-cyborg-pawn");
+        newPawn.classList.add(`${pawnType}-pawn`);
+
+        let pawnTypeSwitch = ["sleepy-cyborg-pawn", pawnType];
+        updatePawnStatus("switch", pawnToSwitch, pawnTypeSwitch, getPawnTypeTotal);
+    };
+
+    // updatePercent(pawnTypeTotal);
+
+};
+
+// TODO: need to make pawns more generic. 
+// change dynamic ids to counter, based on order of creation ONLY, not pawnType
+// the track all pawnTypes by either data- or class
+
+/***/ }),
+
+/***/ "./src/split-logic/random-place.js":
+/*!*****************************************!*\
+  !*** ./src/split-logic/random-place.js ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+pawnStats = __webpack_require__(/*! ./pawn-stats */ "./src/split-logic/pawn-stats.js");
+// const touchEvents = require("./test-scripts/touch-events");
+
+// TODO: move this object into the playerStats object:
+// testing ONLY:
+// pawnIdArray = {
+//     human: [],
+//     zombie: [],
+//     cyborg: []
+// };
+
+
+module.exports = randomPlace = function (userInputNum, howManyToPlace) {
+    console.log("randomPlace function fires");
+    let baseNum = 1000;
+    howManyToPlace = howManyToPlace * 2;
+
+    // TODO: need successfullyPlacedCounter in createPawn?
+
+    for (let i = 0; i <= howManyToPlace; i++) {
+        xAxis = Math.floor(Math.random() * userInputNum + 1);
+        console.log("xAxis");
+        console.log(xAxis);
+
+        yAxis = Math.floor(Math.random() * userInputNum + 1);
+        console.log("yAxis");
+        console.log(yAxis);
+
+        randomContentID = `content-x${baseNum + xAxis}-y${baseNum + yAxis}`;
+        console.log("randomContentID");
+        console.log(randomContentID);
+
+        if (pawnStats.pawnIdArray.human.includes(randomContentID) ||
+            pawnStats.pawnIdArray.zombie.includes(randomContentID) ||
+            pawnStats.pawnIdArray.cyborg.includes(randomContentID)) {
+            console.log("that random number already exists in array. pawn was placed");
+            // need to subtract from loop counter if already exists:
+            i--;
+
+        } else {
+            if (i % 2 === 0) { // even
+                pawnStats.pawnIdArray.human.push(randomContentID);
+                console.log(pawnStats.pawnIdArray.human);
+                createPawn(randomContentID, pawnStats.pawnCounter, "human");
+            
+            } else {
+                randEnemy = Math.floor(Math.random() * 20 + 1);
+                if (randEnemy % 2 === 0) {
+                    pawnStats.pawnIdArray.zombie.push(randomContentID);
+                    console.log(pawnStats.pawnIdArray.zombie);
+                    createPawn(randomContentID, pawnStats.pawnCounter, "zombie");
+                
+                } else {
+                    pawnStats.pawnIdArray.cyborg.push(randomContentID);
+                    console.log(pawnStats.pawnIdArray.cyborg);
+                    createPawn(randomContentID, pawnStats.pawnCounter, "cyborg");
+                };
+            };
+        };
+
+        // TODO: add openSpace evaluator that looks at array of spaces to see if contains beforeattempting to createPawn;
+        // TODO: create pawnHealth evaluator to track and determine status of pawns in danger of becoming neutral and changes color;
+        // TODO: pawn colors need to be changed to primary colors, so that the neutral stauts of pawns' colors can change to secondary colors;
+        // TODO: add blinking strobe effect to neutral pawns? add hover over arrow effect when pawn is picked up?
+    };
+    // touchEvents();
+};
+
+/***/ }),
+
+/***/ "./src/split-logic/rate-space.js":
+/*!***************************************!*\
+  !*** ./src/split-logic/rate-space.js ***!
+  \***************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -2330,10 +2291,49 @@ module.exports = rateSpace = function (move, food, friend, enemy) {
 
 /***/ }),
 
-/***/ "./src/split-logic/test-scripts/touch-events.js":
-/*!******************************************************!*\
-  !*** ./src/split-logic/test-scripts/touch-events.js ***!
-  \******************************************************/
+/***/ "./src/split-logic/show-health.js":
+/*!****************************************!*\
+  !*** ./src/split-logic/show-health.js ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+pawnStats = __webpack_require__(/*! ./pawn-stats */ "./src/split-logic/pawn-stats.js");
+
+module.exports = showHealth = function (pawnType, pawnId, healthCircle) {
+    console.log("showHealth function fires");
+
+    var newSpan = document.createElement("span"); // Create span node
+    var pawnSpawn = pawnStats[pawnType].pawnSpawn;
+
+    for (let i = 0; i < pawnSpawn.length; i++) {
+        console.log("pawnSpawn[i]");
+        console.log(pawnSpawn[i]);
+
+        console.log("pawnId");
+        console.log(pawnId);
+        console.log("pawnSpawn[i].id");
+        console.log(pawnSpawn[i].id);
+
+        if (pawnSpawn[i].id == pawnId) {
+            if (textnode != null) {
+                newSpan.removeChild(textnode);
+            };
+
+            healthNum = pawnSpawn[i].health;
+            var textnode = document.createTextNode(healthNum); // Create a text node
+            newSpan.appendChild(textnode);
+            healthCircle.appendChild(newSpan);
+        };
+    };
+};
+
+/***/ }),
+
+/***/ "./src/split-logic/touch-events.js":
+/*!*****************************************!*\
+  !*** ./src/split-logic/touch-events.js ***!
+  \*****************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -2438,50 +2438,6 @@ module.exports = touchEvents = function () {
 
 /***/ }),
 
-/***/ "./src/split-logic/test-scripts/update-percent.js":
-/*!********************************************************!*\
-  !*** ./src/split-logic/test-scripts/update-percent.js ***!
-  \********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = updatePercent = function (pawnTypeTotal) {
-    console.log("updatePercent function fires:");
-    
-    console.log(pawnTypeTotal);
-    let pawnTypeTotalCount = pawnTypeTotal.cyborg + pawnTypeTotal.human + pawnTypeTotal.zombie;
-
-    let cyborgBar = document.getElementById("cyborg-bar");
-    let humanBar = document.getElementById("human-bar");
-    let zombieBar = document.getElementById("zombie-bar");
-
-    let cybPerText = document.getElementById("cyborg-percentage");
-    let humPerText = document.getElementById("human-percentage");
-    let zomPerText = document.getElementById("zombie-percentage");
-
-    // set CSS property for percentages:
-    cyborgBar.style.setProperty("--cyborg-health", (pawnTypeTotal.cyborg / pawnTypeTotalCount) * 100 + "%");
-    humanBar.style.setProperty("--human-health", (pawnTypeTotal.human / pawnTypeTotalCount) * 100 + "%");
-    zombieBar.style.setProperty("--zombie-health", (pawnTypeTotal.zombie / pawnTypeTotalCount) * 100 + "%");
-
-    // set inner text for percentages:
-    cybPerText.innerHTML = ((pawnTypeTotal.cyborg / pawnTypeTotalCount) * 100).toFixed();
-    humPerText.innerHTML = ((pawnTypeTotal.human / pawnTypeTotalCount) * 100).toFixed();
-    zomPerText.innerHTML = ((pawnTypeTotal.zombie / pawnTypeTotalCount) * 100).toFixed();
-
-    // create a function for communicating messages to player:
-    if (pawnTypeTotal.human / pawnTypeTotalCount == 1 && pawnTypeTotalCount > 3) {
-        alert("Congratulations 'Captain', you've done the impossible! But don't celebrate too much, you've got a helluva way to go. Now on to the next one.");
-    } else if ((pawnTypeTotal.cyborg + pawnTypeTotal.zombie) / pawnTypeTotalCount == 1 && pawnTypeTotalCount > 3) {
-        alert("Fantastic! You've lost. Now the human race is one step closer to total extinction.");
-    } else {
-        // TODO: create timer to check status of game play:
-        console.log("check timer for timeout");
-    };
-};
-
-/***/ }),
-
 /***/ "./src/split-logic/update-pawn-status.js":
 /*!***********************************************!*\
   !*** ./src/split-logic/update-pawn-status.js ***!
@@ -2491,7 +2447,7 @@ module.exports = updatePercent = function (pawnTypeTotal) {
 
 const getPawnTypeTotal = __webpack_require__(/*! ./get-pawn-type-total */ "./src/split-logic/get-pawn-type-total.js");
 const pawnStats = __webpack_require__(/*! ./pawn-stats */ "./src/split-logic/pawn-stats.js");
-const updatePercent = __webpack_require__(/*! ./test-scripts/update-percent */ "./src/split-logic/test-scripts/update-percent.js");
+const updatePercent = __webpack_require__(/*! ./update-percent */ "./src/split-logic/update-percent.js");
 
 module.exports = updatePawnStatus = function (string, pawnID, newParentID) {
     console.log(`updatePawnStatus function fires with string = ${string}`);
@@ -2601,6 +2557,50 @@ module.exports = updatePawnStatus = function (string, pawnID, newParentID) {
     setTimeout(function () {
         updatePercent(getPawnTypeTotal(pawnStats));
     }, 200);
+};
+
+/***/ }),
+
+/***/ "./src/split-logic/update-percent.js":
+/*!*******************************************!*\
+  !*** ./src/split-logic/update-percent.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = updatePercent = function (pawnTypeTotal) {
+    console.log("updatePercent function fires:");
+    
+    console.log(pawnTypeTotal);
+    let pawnTypeTotalCount = pawnTypeTotal.cyborg + pawnTypeTotal.human + pawnTypeTotal.zombie;
+
+    let cyborgBar = document.getElementById("cyborg-bar");
+    let humanBar = document.getElementById("human-bar");
+    let zombieBar = document.getElementById("zombie-bar");
+
+    let cybPerText = document.getElementById("cyborg-percentage");
+    let humPerText = document.getElementById("human-percentage");
+    let zomPerText = document.getElementById("zombie-percentage");
+
+    // set CSS property for percentages:
+    cyborgBar.style.setProperty("--cyborg-health", (pawnTypeTotal.cyborg / pawnTypeTotalCount) * 100 + "%");
+    humanBar.style.setProperty("--human-health", (pawnTypeTotal.human / pawnTypeTotalCount) * 100 + "%");
+    zombieBar.style.setProperty("--zombie-health", (pawnTypeTotal.zombie / pawnTypeTotalCount) * 100 + "%");
+
+    // set inner text for percentages:
+    cybPerText.innerHTML = ((pawnTypeTotal.cyborg / pawnTypeTotalCount) * 100).toFixed();
+    humPerText.innerHTML = ((pawnTypeTotal.human / pawnTypeTotalCount) * 100).toFixed();
+    zomPerText.innerHTML = ((pawnTypeTotal.zombie / pawnTypeTotalCount) * 100).toFixed();
+
+    // create a function for communicating messages to player:
+    if (pawnTypeTotal.human / pawnTypeTotalCount == 1 && pawnTypeTotalCount > 3) {
+        alert("Congratulations 'Captain', you've done the impossible! But don't celebrate too much, you've got a helluva way to go. Now on to the next one.");
+    } else if ((pawnTypeTotal.cyborg + pawnTypeTotal.zombie) / pawnTypeTotalCount == 1 && pawnTypeTotalCount > 3) {
+        alert("Fantastic! You've lost. Now the human race is one step closer to total extinction.");
+    } else {
+        // TODO: create timer to check status of game play:
+        console.log("check timer for timeout");
+    };
 };
 
 /***/ })

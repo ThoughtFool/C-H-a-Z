@@ -1,8 +1,8 @@
-const pawnStats = require("../pawn-stats");
+const pawnStats = require("./pawn-stats");
 const bestMove = require("./best-move");
 // const adjacentSpaces = require("./adj-space-finder");
 const moveEnemyPawnFunc = require("./move-enemy-pawn-func");
-const updatePawnStatus = require("../update-pawn-status");
+const updatePawnStatus = require("./update-pawn-status");
 
 module.exports = compTurn = function (computerBool, pawnType, adjacentSpaces) {
     ///////////////////////  call function to addWeight (adjSpaces) ///////////////////////

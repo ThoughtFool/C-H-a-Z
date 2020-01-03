@@ -1,6 +1,6 @@
 const pawnStats = require("./pawn-stats");
 const pawnSwitch = require("./pawn-switch");
-const updatePercent = require("./test-scripts/update-percent");
+const updatePercent = require("./update-percent");
 
 module.exports = checkPawnStatus = function (pawnType, pawnTypeTotal) {
     console.log("checkPawnStatus function fires");

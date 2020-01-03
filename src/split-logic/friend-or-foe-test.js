@@ -1,5 +1,5 @@
-pawnStats = require("../pawn-stats");
-healthInfo = require("../health-info");
+pawnStats = require("./pawn-stats");
+healthInfo = require("./health-info");
 
 // this replaces nearbyPawn function:
 module.exports = friendOrFoe = function (homeSquare_ID, adjacentSquaresArr, pawnType) {

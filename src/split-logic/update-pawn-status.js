@@ -1,6 +1,6 @@
 const getPawnTypeTotal = require("./get-pawn-type-total");
 const pawnStats = require("./pawn-stats");
-const updatePercent = require("./test-scripts/update-percent");
+const updatePercent = require("./update-percent");
 
 module.exports = updatePawnStatus = function (string, pawnID, newParentID) {
     console.log(`updatePawnStatus function fires with string = ${string}`);

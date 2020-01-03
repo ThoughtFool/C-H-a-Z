@@ -1,6 +1,6 @@
 const healthInfo = require("./health-info");
 const pawnStats = require("./pawn-stats");
-const updatePercent = require("./test-scripts/update-percent");
+const updatePercent = require("./update-percent");
 
 module.exports = createPawn = function (destinationID, pawnCounter, pawnType) {
     console.log("createPawn function fires");
