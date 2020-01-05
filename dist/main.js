@@ -117,6 +117,8 @@ var accordMenu = document.getElementsByClassName("accordion");
 // disable all console messages:
 console.log = function () {};
 
+
+
 startModal();
 
 // playGameBtn.addEventListener("click", function name(params) {
