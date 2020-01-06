@@ -27,7 +27,7 @@ router.post("/enlist", async (req, res) => {
         // const hashedPassKey = req.body.password;
         const hashedPassKey = await bcrypt.hash(req.body.password, 10);
         users.push({
-            id: Date.now.toString(),
+            id: Date.now().toString(),
             name: req.body.name,
             email: req.body.email,
             password: hashedPassKey
