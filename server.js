@@ -35,7 +35,8 @@ app.use(flash());
 
 // keeps secret key in .env
 app.use(session({
-    secret: process.env.SESSION_SECRET,
+    // secret: process.env.SESSION_SECRET,
+    secret: "zombeehive",
     resave: false,
     saveUninitialized: false
 }));
