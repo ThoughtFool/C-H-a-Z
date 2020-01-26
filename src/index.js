@@ -1,6 +1,11 @@
 // isAdjacent = require("./split-logic/isAdjacent");
 createBoard = require("./split-logic/createBoard");
 counter = 0;
+userScore = {
+    wins: 0,
+    losses: 0
+};
+
 const randomPlace = require("./split-logic/random-place");
 const dragAndDrop = require("./split-logic/drag-and-drop");
 const touchEvents = require("./split-logic/touch-events");
@@ -20,9 +25,8 @@ var startBtn = document.getElementById("submit-test-num");
 var accordMenu = document.getElementsByClassName("accordion");
 
 // disable all console messages:
+myConsole = console.log;
 console.log = function () {};
-
-
 
 startModal();
 

@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 const passport = require("passport");
 
 // TODO: for testing auth ONLY:
-const users = require("../database-test").data; // remove local varibale and link to database
+const users = require("../../database-test").data; // remove local varibale and link to database
 
 // Login Page:
 router.get("/login", (req, res) => {

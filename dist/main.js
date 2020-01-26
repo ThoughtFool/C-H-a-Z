@@ -96,6 +96,11 @@
 // isAdjacent = require("./split-logic/isAdjacent");
 createBoard = __webpack_require__(/*! ./split-logic/createBoard */ "./src/split-logic/createBoard.js");
 counter = 0;
+userScore = {
+    wins: 0,
+    losses: 0
+};
+
 const randomPlace = __webpack_require__(/*! ./split-logic/random-place */ "./src/split-logic/random-place.js");
 const dragAndDrop = __webpack_require__(/*! ./split-logic/drag-and-drop */ "./src/split-logic/drag-and-drop.js");
 const touchEvents = __webpack_require__(/*! ./split-logic/touch-events */ "./src/split-logic/touch-events.js");
@@ -115,9 +120,8 @@ var startBtn = document.getElementById("submit-test-num");
 var accordMenu = document.getElementsByClassName("accordion");
 
 // disable all console messages:
+myConsole = console.log;
 console.log = function () {};
-
-
 
 startModal();
 
@@ -435,6 +439,121 @@ adjacentSpaceObj = adjContentIDStringArr(homespace, adjacentSpaceObj, availableM
 
 /***/ }),
 
+/***/ "./src/split-logic/animate-deltas.js":
+/*!*******************************************!*\
+  !*** ./src/split-logic/animate-deltas.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+const moveInterval = __webpack_require__(/*! ./move-interval */ "./src/split-logic/move-interval.js");
+const updatePawnStatus = __webpack_require__(/*! ./update-pawn-status */ "./src/split-logic/update-pawn-status.js");
+module.exports = animateDeltas = function (pawnID, beforeMoveRect, afterMoveRect, newEnemySpace, resolve) {
+    myConsole("animateDeltas function fires");
+    pawns = document.querySelector(".pawn");
+
+    let domNode = document.getElementById(pawnID);
+    let moveLeft = 0;
+    let moveTop = 0;
+    let posLeft = 0;
+    let posTop = 0;
+
+    // domNode.style.transform = `translate(${beforeMoveRect.left}px, ${beforeMoveRect.top}px)`;
+
+    /////////////////////// health score div ///////////////////////
+
+    let contentCircle = document.getElementById(`content-health-${pawnID}`);
+    newEnemySpace.appendChild(contentCircle);
+
+    ///////////////////////////////////////////////////////////////
+
+    domNode.style.left = beforeMoveRect.left;
+    domNode.style.top = beforeMoveRect.top;
+    domNode.style.zIndex = 1;
+    domNode.style.transition = 'transform 0ms';
+    let stepCounter = 0;
+    let limit = 5000;
+    let start = null;
+
+    const animatePawn = async function (resolve) {
+
+        // if (start === null) {
+        //     start = timestamp;
+        // };
+        // var progress = timestamp - start;
+        // if (progress < limit) {
+        //     await requestAnimationFrame(animatePawn);
+        // };
+
+        // a - b = d:
+        const deltaLeft = afterMoveRect.left - beforeMoveRect.left;
+        const deltaTop = afterMoveRect.top - beforeMoveRect.top;
+
+        // deltaLeft_Multi = deltaLeft * 100;
+        // deltaTop_Multi = deltaTop * 100;
+
+        let leftStep = deltaLeft / 100;
+        let topStep = deltaTop / 100;
+
+        
+        // alert("deltaLeft:" + deltaLeft);
+        // alert("leftStep:" + leftStep);
+        // alert("posLeft:" + posLeft);
+
+        if (stepCounter < 100) {
+        // stepCounter += leftStep;
+
+        // if (beforeMoveRect.left + posLeft != afterMoveRect.left) {
+        // if (posLeft != deltaLeft) {
+            // if (posLeft != afterMoveRect.left || posTop != afterMoveRect.top) {
+
+            posLeft = posLeft + leftStep;
+            posTop = posTop + topStep;
+
+            // posLeft = posLeft + leftStep;
+            // posTop = posTop + topStep;
+
+            myConsole("posLeft");
+            myConsole(posLeft);
+            myConsole("posTop");
+            myConsole(posTop);
+
+            // domNode.style.transform = `translate(${posLeft}px, ${posTop}px)`;
+            domNode.style.left = beforeMoveRect.left + posLeft;
+            domNode.style.top = beforeMoveRect.top + posTop;
+
+            domNode.style.zIndex = 1;
+            // domNode.style.transition = 'transform 500ms';
+            // alert("moveInterval now");
+            // domNode.style.transform = '';
+            // domNode.style.zIndex = 1;
+
+
+            
+            // await setTimeout(() => {
+                stepCounter++;
+                await animatePawn(resolve);
+            // }, 500);
+            
+            // } else {
+                //     cancelAnimationFrame(animatePawn);
+                //     // alert("Done!");
+                
+
+        } else {
+
+            return resolve();
+        };
+    };
+
+    animatePawn(resolve);
+
+
+    /////////////////////////////////////////////////////////////////////////////
+};
+
+/***/ }),
+
 /***/ "./src/split-logic/best-move.js":
 /*!**************************************!*\
   !*** ./src/split-logic/best-move.js ***!
@@ -564,8 +683,10 @@ const bestMove = __webpack_require__(/*! ./best-move */ "./src/split-logic/best-
 // const adjacentSpaces = require("./adj-space-finder");
 const moveEnemyPawnFunc = __webpack_require__(/*! ./move-enemy-pawn-func */ "./src/split-logic/move-enemy-pawn-func.js");
 const updatePawnStatus = __webpack_require__(/*! ./update-pawn-status */ "./src/split-logic/update-pawn-status.js");
+const animateDeltas = __webpack_require__(/*! ./animate-deltas */ "./src/split-logic/animate-deltas.js");
+const moveInterval = __webpack_require__(/*! ./move-interval */ "./src/split-logic/move-interval.js");
 
-module.exports = compTurn = function (computerBool, pawnType, adjacentSpaces) {
+module.exports = compTurn = async function (computerBool, pawnType, adjacentSpaces, moveEnemyPawnFunc) {
     ///////////////////////  call function to addWeight (adjSpaces) ///////////////////////
 
     ///////////////////////  add weight value to each space in adjSpaces connected to pawnID ///////////////////////
@@ -579,19 +700,16 @@ module.exports = compTurn = function (computerBool, pawnType, adjacentSpaces) {
     console.log(pawnType);
 
     let currentGoldiPawns = [];
-    // let goldilocksObjectHolder = {};
-    // let goldSpaceArr = [];
-    // let moveEnemyPawn = [null];
 
     if (computerBool === true) {
         console.log("pawnStats[pawnType].pawnSpawn.length");
         console.log(pawnStats[pawnType].pawnSpawn.length);
 
-        // TODO: create an if conditional that errors out if the pawnType doesn't exist or equals zero:
-
         ///////////////////////  loop through pawnIDs ///////////////////////
         console.log(pawnStats[pawnType].pawnSpawn.length);
-        for (let loop = 0; loop < pawnStats[pawnType].pawnSpawn.length; loop++) {
+        let loop = 0;
+        for await (pawnSpawn of pawnStats[pawnType].pawnSpawn) {
+            // for (let loop = 0; loop < pawnStats[pawnType].pawnSpawn.length; loop++) {
             let currentPawnLoc = pawnStats[pawnType].pawnSpawn[loop].loc;
             let currentPawnID = pawnStats[pawnType].pawnSpawn[loop].id;
             let goldilocksObjectHolder = {};
@@ -606,21 +724,10 @@ module.exports = compTurn = function (computerBool, pawnType, adjacentSpaces) {
 
             ///////////////////////  get adjacentSpaces from each pawnID ///////////////////////
             let currentAdjSpaceArr = adjacentSpaces(currentPawnLoc[0], 1, null, pawnType, "compTurn");
-
-            ///////////////////////  loop through adjacentSpaces ///////////////////////
-            // for (let cur = 0; cur < currentAdjSpaceArr.comb.length; cur++) {
-            //     console.log(goldilocksChecker()); // homeSpace, targetSpace, pawnType
-            // }
-
-            // currentGoldiPawns.pawnID = currentPawnID;
-            // currentGoldiPawns.pawnLoc = currentPawnLoc;
-            // currentGoldiPawns.adjSpaceArray = currentAdjSpaceArr.comb;
             let moveEnemyPawn = [null];
 
             for (let adj = 0; adj < currentAdjSpaceArr.comb.length; adj++) {
                 console.log("before goldilocksChecker is called");
-                // moveEnemyPawn[0] = null;
-
                 console.log(`currentAdjSpaceArr.comb.length = ${currentAdjSpaceArr.comb.length}`);
 
                 let targetSpace_idString = currentAdjSpaceArr.comb[adj];
@@ -654,7 +761,6 @@ module.exports = compTurn = function (computerBool, pawnType, adjacentSpaces) {
                         console.log(currentPawnHomespace);
                         currentPawnHomespace = [parseInt(currentPawnHomespace[0]), parseInt(currentPawnHomespace[1])];
 
-                        // console.log(goldilocksChecker(currentPawnHomespace, targetSpace, pawnType, adjacentSpaces, currentPawnHomespace_idString)); // homeSpace, targetSpace, pawnType
                         // create a function to compare returned values:
                         goldilocksObjectHolder = goldilocksChecker(currentPawnHomespace, targetSpace, pawnType, adjacentSpaces, currentPawnHomespace_idString);
                         goldSpaceArr.push(goldilocksObjectHolder);
@@ -663,14 +769,11 @@ module.exports = compTurn = function (computerBool, pawnType, adjacentSpaces) {
                         console.log(goldSpaceArr);
 
                         if (goldSpaceArr.length > 1) { // TODO: check for errors if equal to "1"
-                        // if (goldSpaceArr.length >= 1 && moveEnemyPawn[0] != null) { // TODO: check for errors if equal to "1"
-                            
-                            if (typeof moveEnemyPawn[0] == null || moveEnemyPawn[0] == null && goldSpaceArr.length == 1) {
-                            } else if (goldSpaceArr.length > 1) {
+
+                            if (typeof moveEnemyPawn[0] == null || moveEnemyPawn[0] == null && goldSpaceArr.length == 1) {} else if (goldSpaceArr.length > 1) {
                                 console.log("bestMove(goldSpaceArr):");
                                 moveEnemyPawn = bestMove(goldSpaceArr);
 
-                            // } else if (goldSpaceArr.length === 1) {
                             } else {
                                 console.log("error?");
                                 // return moveEnemyPawnFunc(moveEnemyPawn); TODO: break apart in next function, not here ^^^
@@ -685,50 +788,47 @@ module.exports = compTurn = function (computerBool, pawnType, adjacentSpaces) {
                                 console.log("moveEnemyPawn[0].targetSpace_idString");
                                 console.log(moveEnemyPawn[0].targetSpace_idString);
 
-                                // TODO: check after each "zombie" bestMove
                             };
                         };
-                        
+
                         console.log("goldSpaceArr (after):");
                         console.log(goldSpaceArr);
                     };
                 };
             };
             if (moveEnemyPawn[0] != null) {
-                moveEnemyPawnFunc(moveEnemyPawn[0].homespace_idString, moveEnemyPawn[0].targetSpace_idString, updatePawnStatus);
+
+                // await setTimeout(() => {
+                    let passItem = await moveEnemyPawnFunc(moveEnemyPawn[0].homespace_idString, moveEnemyPawn[0].targetSpace_idString, updatePawnStatus, animateDeltas, moveInterval);
+                    loop++;
+
+                    let thisFunc = async function (passItem) {
+                        // alert("thisFunc fires");
+                        //test func:
+                        myConsole(passItem);
+                    };
+
+                    await thisFunc(passItem);
+                    
+                // }, 700);
+
+                // await setTimeout(() => {
+                // requestAnimationFrame(
+                    // trigger the animation
+                // );
             };
             //////////////////////////////////////////////////////////////////////////
-            // if (typeof moveEnemyPawn[0] == null) {
 
-            // } else {
-            //     console.log("moveEnemyPawn[0].homespace_idString");
-            //     console.log(moveEnemyPawn[0].homespace_idString);
-            //     console.log("moveEnemyPawn[0].targetSpace_idString");
-            //     console.log(moveEnemyPawn[0].targetSpace_idString);
-    
             //     // TODO: check after each "zombie" bestMove
-            //     moveEnemyPawnFunc(moveEnemyPawn[0].homespace_idString, moveEnemyPawn[0].targetSpace_idString, updatePawnStatus);
-    
             //     // return moveEnemyPawnFunc(moveEnemyPawn); TODO: break apart in next function, not here ^^^
-            // };
         };
 
     } else {
         console.log(`computerBool is ${computerBool}`);
     };
 };
-
 //////////////////////////////////////////////////////////////////////////
 // need TODO: create a function to change to contentID string and reverse:
-
-// let homespace_idString = homespace;
-// console.log("homespace_idString");
-// console.log(homespace_idString);
-// homespace = homespace.match(/\d+/g);
-// console.log("homespace after match:");
-// console.log("currentGoldiPawns");
-// console.log(currentGoldiPawns);
-// };
 
 /***/ }),
 
@@ -1229,70 +1329,28 @@ module.exports = dynaFont = function (inputVal) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-const pawnStats = __webpack_require__(/*! ./pawn-stats */ "./src/split-logic/pawn-stats.js");
 const adjacentSpaces = __webpack_require__(/*! ./adj-space-finder */ "./src/split-logic/adj-space-finder.js");
 const checkPawnStatus = __webpack_require__(/*! ./check-pawn-status */ "./src/split-logic/check-pawn-status.js");
-const goldilocksChecker = __webpack_require__(/*! ./goldilocks-checker */ "./src/split-logic/goldilocks-checker.js");
-const nextTurn = __webpack_require__(/*! ./comp-turn */ "./src/split-logic/comp-turn.js");
-const getTotalPawns = __webpack_require__ (/*! ./get-total-pawns */ "./src/split-logic/get-total-pawns.js");
+const compTurn = __webpack_require__(/*! ./comp-turn */ "./src/split-logic/comp-turn.js");
+const getTotalPawns = __webpack_require__(/*! ./get-total-pawns */ "./src/split-logic/get-total-pawns.js");
+const moveEnemyPawnFunc = __webpack_require__(/*! ./move-enemy-pawn-func */ "./src/split-logic/move-enemy-pawn-func.js");
 
-module.exports = endRound = function () {
-    // let pawnType = "";
-    // let pawnTypeArr = [];
-    // let pawnTypeTotal = {};
-
-    // for (pawnType in pawnStats) {
-    //     console.log("pawnType");
-    //     console.log(pawnType);
-    //     console.log("pawnStats[pawnType]");
-    //     console.log(pawnStats[pawnType]);
-    //     if (
-    //         pawnType === "cyborg" ||
-    //         pawnType === "human" ||
-    //         pawnType === "zombie"
-    //     ) {
-
-    //         for (let i = 0; i < pawnStats[pawnType].pawnSpawn.length; i++) {
-    //             console.log("pawnStats[pawnType]::");
-    //             console.log(pawnStats[pawnType]);
-    //             console.log(pawnStats[pawnType].pawnSpawn);
-    //             console.log(pawnStats[pawnType].pawnSpawn[i]);
-    //             let pawnLoc = pawnStats[pawnType].pawnSpawn[i].loc[0];
-    //             console.log("pawnStats[pawnType].pawnSpawn[i].loc");
-    //             console.log(pawnStats[pawnType].pawnSpawn[i].loc);
-    //             console.log("pawnLoc");
-    //             console.log(pawnLoc);
-
-    //             adjacentSpaces(pawnLoc, 1, null, pawnType, "endRound");
-    //         };
-
-    //         pawnTypeArr.push(pawnType);
-    //         pawnTypeTotal[pawnType] = pawnStats[pawnType].pawnSpawn.length;
-    //     };
-    // };
-
-    // for (let t = 0; t < pawnTypeArr.length; t++) {
-    //     console.log("pawnType before checkPawnStatus:");
-    //     console.log(pawnTypeArr[t]);
-    //     checkPawnStatus(pawnTypeArr[t], pawnTypeTotal);
-    // };
-
-    setTimeout(function () {
-        requestAnimationFrame(function () {
-            // trigger the animation
-            nextTurn(true, "cyborg", adjacentSpaces);
-        });
-    }, 800);
+module.exports = endRound = async function () {
 
     // let turnOrder = TODO: get info from browser? local storage?
-    nextTurn(true, "zombie", adjacentSpaces);
+    await compTurn(true, "zombie", adjacentSpaces, moveEnemyPawnFunc);
     
+    await setTimeout(function () {
+            compTurn(true, "cyborg", adjacentSpaces, moveEnemyPawnFunc);
+
+    }, 2000);
+
+
     let pawnTypeObj = getTotalPawns();
     for (let t = 0; t < pawnTypeObj.pawnTypeArr.length; t++) {
         console.log("pawnType before checkPawnStatus:");
         console.log(pawnTypeObj.pawnTypeArr[t]);
         checkPawnStatus(pawnTypeObj.pawnTypeArr[t], pawnTypeObj.pawnTypeTotal);
-        // checkPawnStatus(pawnTypeArr[t], pawnTypeTotal);
     };
 };
 
@@ -2013,62 +2071,215 @@ module.exports = function () {
   !*** ./src/split-logic/move-enemy-pawn-func.js ***!
   \*************************************************/
 /*! no static exports found */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-module.exports = moveEnemyPawnFunc = function (oldSpaceID, newSpaceID, updatePawnStatus) {
-    console.log("moveEnemyPawnFunc function fires"); 
-    
-    let parentDiv = document.getElementById(oldSpaceID); 
+const animateDeltas = __webpack_require__(/*! ./animate-deltas */ "./src/split-logic/animate-deltas.js");
+
+module.exports = moveEnemyPawnFunc = async function (oldSpaceID, newSpaceID, updatePawnStatus, animateDeltas, moveInterval) {
+    console.log("moveEnemyPawnFunc function fires");
+
+    let parentDiv = document.getElementById(oldSpaceID);
     console.log(parentDiv);
     parentDiv.classList.add("parent-holding-pawn");
     console.log(parentDiv.childNodes);
     let currentPawnHeld = parentDiv.childNodes[0].id;
     let holdingClass = document.getElementById(currentPawnHeld);
     holdingClass.classList.add("holding");
-    // holdingClass.getBoundingClientRect();
-    // window.getComputedStyle(holdingClass);
 
-    // setTimeout(function () {
-    //     requestAnimationFrame(function () {
-    //         // trigger the animation
-    //     });
-    // }, 20);
+    // get viewport location of pawn before move:
+    let beforeMove = holdingClass.getBoundingClientRect();
+    myConsole(`${currentPawnHeld} position beforeMove`);
+    myConsole(beforeMove);
 
-    // var div = document.createElement("div");
-    // document.body.appendChild(div);
-
-    // requestAnimationFrame(function () {
-    //     div.className = "fade";
-    // });
-    
     /////////////////////////////////////////////////////////////////////
 
     let newEnemySpace = document.getElementById(newSpaceID);
-    newEnemySpace.style.transition = "all 2s";
+    // newEnemySpace.style.transition = "all 2s";
     newEnemySpace.appendChild(holdingClass);
+
+    /////////////////////////////////////////////////////////////////////
+
+    // get viewport location of pawn after move:
+    let afterMove = holdingClass.getBoundingClientRect();
+    myConsole(`${currentPawnHeld} position afterMove`);
+    myConsole(afterMove);
+
     // holdingClass.style.animationDelay = "200ms";
     holdingClass.classList.remove("holding");
     newEnemySpace.classList.remove("empty-space");
     parentDiv.classList.remove("parent-holding-pawn");
     parentDiv.classList.add("empty-space");
     holdingPawn = false;
-
-
-    /////////////////////////////////////////////////////////////////////
-
-    let contentCircle = document.getElementById(`content-health-${currentPawnHeld}`);
-    newEnemySpace.appendChild(contentCircle);
-
-    /////////////////////////////////////////////////////////////////////
-
+    let pawnID = currentPawnHeld;
     let newParentDiv_ID = newSpaceID;
 
-    console.log("newParentDiv_ID");
-    console.log(newParentDiv_ID);
+    // find deltas/changes for boundingRect:
+    // Δx = afterMove.left - beforeMove.left;
+    // Δy = afterMove.top - beforeMove.top;
+    // myConsole(`${currentPawnHeld} position deltas:`);
+    // myConsole(Δx);
+    // myConsole(Δy);
 
-    updatePawnStatus("location", currentPawnHeld, newParentDiv_ID);
-    currentPawnHeld = null;
+    // myConsole("window.innerWidth");
+    // myConsole(window.innerWidth);
+    // myConsole("window.innerHeight");
+    // myConsole(window.innerHeight);
+
+    // var makeParabolaStep = function (el, from, to) {
+    //     return new Promise(function (resolve) {
+    //         raf(_parabolaStep(el, from, to, resolve));
+    //     });
+    // };
+
+
+    return new Promise(async function (resolve) {
+        await setTimeout(() => {
+            animateDeltas(currentPawnHeld, beforeMove, afterMove, newEnemySpace, resolve);
+            // await requestAnimationFrame(await animateDeltas(currentPawnHeld, beforeMove, afterMove, newEnemySpace, resolve));
+
+            currentPawnHeld = null;
+            
+        }, 750);
+
+            // updatePawnStatus("location", pawnID, newParentDiv_ID);
+        })
+        .then(function () {
+            // Will not run until after `sunElement` has gone from `10%` to `90%`
+            return moveInterval(pawnID, beforeMove, afterMove, newEnemySpace);
+            // return moveInterval(pawnID, beforeMoveRect, afterMoveRect, newEnemySpace);
+        })
+        .then(function () {
+            // Will not run until after `sunElement` has gone from `10%` to `90%`
+            return updatePawnStatus("location", pawnID, newParentDiv_ID);
+        });
+
+    //pawnID, beforeMoveRect, afterMoveRect, newParentDiv_ID, newEnemySpace
+    // /////////////////////////////////////////////////////////////////////
+
+    // let contentCircle = document.getElementById(`content-health-${currentPawnHeld}`);
+    // newEnemySpace.appendChild(contentCircle);
+
+    // /////////////////////////////////////////////////////////////////////
+
+
+    // console.log("newParentDiv_ID");
+    // console.log(newParentDiv_ID);
+
+    // updatePawnStatus("location", currentPawnHeld, newParentDiv_ID);
 };
+
+/***/ }),
+
+/***/ "./src/split-logic/move-interval.js":
+/*!******************************************!*\
+  !*** ./src/split-logic/move-interval.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = moveInterval = function (pawnID, beforeMoveRect, afterMoveRect, newEnemySpace) {
+    // let w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+    // let h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+
+    // set number of intervals:
+    let numInterval = 60;
+
+    // get total viewport size:
+    let viewportHeight = 785;
+    let viewportWidth = 1028;
+
+    // get beforeMove top/left: 0/0: getClientBoundingRect().top
+    // get afterMove top/left: 10/10
+
+    myConsole("moveInterval function fires");
+
+    // let beforeMove_Left = beforeMoveRect.left;
+    // let beforeMove_Top = beforeMoveRect.top;
+
+    // let afterMove_Left = afterMoveRect.left;
+    // let afterMove_Top = afterMoveRect.top;
+
+    // // get deltas top/left: add 10 / add 10
+    // let delta_Left = afterMove_Left - beforeMove_Left;
+    // let delta_Top = afterMove_Top - beforeMove_Top;
+
+    // myConsole("delta_Left");
+    // myConsole(delta_Left);
+    // myConsole("delta_Top");
+    // myConsole(delta_Top);
+
+    // let domNode = document.getElementById(pawnID);
+
+    // myConsole("domNode");
+    // myConsole(domNode);
+
+    // // numInterval = num of intervals: 10?
+    // let percentIncrementer_Left = delta_Left / numInterval;
+    // let percentIncrementer_Top = delta_Top / numInterval;
+
+    // // get computed style???
+    // var left = 0;
+    // var top = 0;
+
+    // async function animateFrame() {
+
+    //     left = left + percentIncrementer_Left;
+    //     top = top + percentIncrementer_Top;
+
+    //     console.log("left");
+    //     console.log(left);
+    //     console.log("top");
+    //     console.log(top);
+
+    //     console.log("delta_Top");
+    //     console.log(delta_Top);
+
+    //     deltaX = left;
+    //     deltaY = top;
+
+    //     ///////////////////////////////
+    //     await requestAnimationFrame(() => {
+    //         domNode.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+    //         domNode.style.zIndex = 1;
+    //         domNode.style.transition = 'transform 1000ms';
+
+    //         // requestAnimationFrame(() => {
+    //         // In order to get the animation to play, we'll need to wait for
+    //         // the 'invert' animation frame to finish, so that its inverted
+    //         // position has propagated to the DOM.
+    //         //
+    //         // Then, we just remove the transform, reverting it to its natural
+    //         // state, and apply a transition so it does so smoothly.
+    //         // domNode.style.transform = '';
+    //         // domNode.style.zIndex = 1;
+    //         // domNode.style.transition = 'transform 2000ms';
+
+    //         /////////////////////// health score div ///////////////////////
+
+    //         let contentCircle = document.getElementById(`content-health-${pawnID}`);
+    //         newEnemySpace.appendChild(contentCircle);
+
+    //         ///////////////////////////////////////////////////////////////
+
+    //         console.log("newParentDiv_ID");
+    //         console.log(newParentDiv_ID);
+
+    //         // });
+    //     });
+
+    //     // await updatePawnStatus("location", pawnID, newParentDiv_ID);
+
+    //     if (top >= delta_Top) {
+    //         console.log("clear?");
+    //         clearInterval(thisInt);
+    //     };
+    // };
+
+    // // set interval counter:
+    // const thisInt = setInterval(animateFrame, 1000);
+
+};
+// moveInterval();
 
 /***/ }),
 
@@ -2451,7 +2662,7 @@ const getPawnTypeTotal = __webpack_require__(/*! ./get-pawn-type-total */ "./src
 const pawnStats = __webpack_require__(/*! ./pawn-stats */ "./src/split-logic/pawn-stats.js");
 const updatePercent = __webpack_require__(/*! ./update-percent */ "./src/split-logic/update-percent.js");
 
-module.exports = updatePawnStatus = function (string, pawnID, newParentID) {
+module.exports = updatePawnStatus = async function (string, pawnID, newParentID) {
     console.log(`updatePawnStatus function fires with string = ${string}`);
     console.log("pawnID:");
     console.log(pawnID);
@@ -2556,8 +2767,8 @@ module.exports = updatePawnStatus = function (string, pawnID, newParentID) {
                     };
                 };
 
-    setTimeout(function () {
-        updatePercent(getPawnTypeTotal(pawnStats));
+    await setTimeout(function () {
+        return new Promise (resolve => updatePercent(getPawnTypeTotal(pawnStats)));
     }, 200);
 };
 
@@ -2596,8 +2807,12 @@ module.exports = updatePercent = function (pawnTypeTotal) {
 
     // create a function for communicating messages to player:
     if (pawnTypeTotal.human / pawnTypeTotalCount == 1 && pawnTypeTotalCount > 3) {
+        userScore.wins = userScore.wins + 1;
+        document.getElementById("wins").innerHTML = userScore.wins;
         alert("Congratulations 'Captain', you've done the impossible! But don't celebrate too much, you've got a helluva way to go. Now on to the next one.");
     } else if ((pawnTypeTotal.cyborg + pawnTypeTotal.zombie) / pawnTypeTotalCount == 1 && pawnTypeTotalCount > 3) {
+        userScore.losses = userScore.losses + 1;
+        document.getElementById("losses").innerHTML = userScore.losses;
         alert("Fantastic! You've lost. Now the human race is one step closer to total extinction.");
     } else {
         // TODO: create timer to check status of game play:

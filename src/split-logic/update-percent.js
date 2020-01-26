@@ -24,8 +24,12 @@ module.exports = updatePercent = function (pawnTypeTotal) {
 
     // create a function for communicating messages to player:
     if (pawnTypeTotal.human / pawnTypeTotalCount == 1 && pawnTypeTotalCount > 3) {
+        userScore.wins = userScore.wins + 1;
+        document.getElementById("wins").innerHTML = userScore.wins;
         alert("Congratulations 'Captain', you've done the impossible! But don't celebrate too much, you've got a helluva way to go. Now on to the next one.");
     } else if ((pawnTypeTotal.cyborg + pawnTypeTotal.zombie) / pawnTypeTotalCount == 1 && pawnTypeTotalCount > 3) {
+        userScore.losses = userScore.losses + 1;
+        document.getElementById("losses").innerHTML = userScore.losses;
         alert("Fantastic! You've lost. Now the human race is one step closer to total extinction.");
     } else {
         // TODO: create timer to check status of game play:

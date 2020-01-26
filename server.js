@@ -10,6 +10,7 @@ const bcrypt = require("bcrypt");
 const passport = require("passport");
 const flash = require("express-flash");
 const session = require("express-session");
+const mongoose = require('mongoose');
 
 // TODO: for testing auth ONLY:
 const users = require("./database-test").data; // remove local varibale and link to database
@@ -28,7 +29,7 @@ app.use(ejsLayouts);
 app.set("view engine", "ejs");
 app.use(express.urlencoded({
     extended: false
-}))
+}));
 
 //
 app.use(flash());
@@ -45,10 +46,23 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+// DB Config
+// const db = require('./server/config/keys').mongoURI;
+
+// // Connect to MongoDB
+// mongoose
+//     .connect(
+//         db, {
+//             useNewUrlParser: true
+//         }
+//     )
+//     .then(() => console.log('MongoDB Connected'))
+//     .catch(err => console.log(err));
+
 // Routes:
-app.use("/", require("./routes/index"));
-app.use("/users", require("./routes/users"));
-app.use("/game", require("./routes/game"));
+app.use("/", require("./server/routes/index"));
+app.use("/users", require("./server/routes/users"));
+app.use("/game", require("./server/routes/game"));
 
 app.use(express.static(path.join(__dirname, 'dist')));
 app.use(express.static(path.join(__dirname, "public")));

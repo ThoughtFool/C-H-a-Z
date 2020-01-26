@@ -2,7 +2,7 @@ const getPawnTypeTotal = require("./get-pawn-type-total");
 const pawnStats = require("./pawn-stats");
 const updatePercent = require("./update-percent");
 
-module.exports = updatePawnStatus = function (string, pawnID, newParentID) {
+module.exports = updatePawnStatus = async function (string, pawnID, newParentID) {
     console.log(`updatePawnStatus function fires with string = ${string}`);
     console.log("pawnID:");
     console.log(pawnID);
@@ -107,7 +107,7 @@ module.exports = updatePawnStatus = function (string, pawnID, newParentID) {
                     };
                 };
 
-    setTimeout(function () {
-        updatePercent(getPawnTypeTotal(pawnStats));
+    await setTimeout(function () {
+        return new Promise (resolve => updatePercent(getPawnTypeTotal(pawnStats)));
     }, 200);
 };

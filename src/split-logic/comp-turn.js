@@ -3,8 +3,10 @@ const bestMove = require("./best-move");
 // const adjacentSpaces = require("./adj-space-finder");
 const moveEnemyPawnFunc = require("./move-enemy-pawn-func");
 const updatePawnStatus = require("./update-pawn-status");
+const animateDeltas = require("./animate-deltas");
+const moveInterval = require("./move-interval");
 
-module.exports = compTurn = function (computerBool, pawnType, adjacentSpaces) {
+module.exports = compTurn = async function (computerBool, pawnType, adjacentSpaces, moveEnemyPawnFunc) {
     ///////////////////////  call function to addWeight (adjSpaces) ///////////////////////
 
     ///////////////////////  add weight value to each space in adjSpaces connected to pawnID ///////////////////////
@@ -18,19 +20,16 @@ module.exports = compTurn = function (computerBool, pawnType, adjacentSpaces) {
     console.log(pawnType);
 
     let currentGoldiPawns = [];
-    // let goldilocksObjectHolder = {};
-    // let goldSpaceArr = [];
-    // let moveEnemyPawn = [null];
 
     if (computerBool === true) {
         console.log("pawnStats[pawnType].pawnSpawn.length");
         console.log(pawnStats[pawnType].pawnSpawn.length);
 
-        // TODO: create an if conditional that errors out if the pawnType doesn't exist or equals zero:
-
         ///////////////////////  loop through pawnIDs ///////////////////////
         console.log(pawnStats[pawnType].pawnSpawn.length);
-        for (let loop = 0; loop < pawnStats[pawnType].pawnSpawn.length; loop++) {
+        let loop = 0;
+        for await (pawnSpawn of pawnStats[pawnType].pawnSpawn) {
+            // for (let loop = 0; loop < pawnStats[pawnType].pawnSpawn.length; loop++) {
             let currentPawnLoc = pawnStats[pawnType].pawnSpawn[loop].loc;
             let currentPawnID = pawnStats[pawnType].pawnSpawn[loop].id;
             let goldilocksObjectHolder = {};
@@ -45,21 +44,10 @@ module.exports = compTurn = function (computerBool, pawnType, adjacentSpaces) {
 
             ///////////////////////  get adjacentSpaces from each pawnID ///////////////////////
             let currentAdjSpaceArr = adjacentSpaces(currentPawnLoc[0], 1, null, pawnType, "compTurn");
-
-            ///////////////////////  loop through adjacentSpaces ///////////////////////
-            // for (let cur = 0; cur < currentAdjSpaceArr.comb.length; cur++) {
-            //     console.log(goldilocksChecker()); // homeSpace, targetSpace, pawnType
-            // }
-
-            // currentGoldiPawns.pawnID = currentPawnID;
-            // currentGoldiPawns.pawnLoc = currentPawnLoc;
-            // currentGoldiPawns.adjSpaceArray = currentAdjSpaceArr.comb;
             let moveEnemyPawn = [null];
 
             for (let adj = 0; adj < currentAdjSpaceArr.comb.length; adj++) {
                 console.log("before goldilocksChecker is called");
-                // moveEnemyPawn[0] = null;
-
                 console.log(`currentAdjSpaceArr.comb.length = ${currentAdjSpaceArr.comb.length}`);
 
                 let targetSpace_idString = currentAdjSpaceArr.comb[adj];
@@ -93,7 +81,6 @@ module.exports = compTurn = function (computerBool, pawnType, adjacentSpaces) {
                         console.log(currentPawnHomespace);
                         currentPawnHomespace = [parseInt(currentPawnHomespace[0]), parseInt(currentPawnHomespace[1])];
 
-                        // console.log(goldilocksChecker(currentPawnHomespace, targetSpace, pawnType, adjacentSpaces, currentPawnHomespace_idString)); // homeSpace, targetSpace, pawnType
                         // create a function to compare returned values:
                         goldilocksObjectHolder = goldilocksChecker(currentPawnHomespace, targetSpace, pawnType, adjacentSpaces, currentPawnHomespace_idString);
                         goldSpaceArr.push(goldilocksObjectHolder);
@@ -102,14 +89,11 @@ module.exports = compTurn = function (computerBool, pawnType, adjacentSpaces) {
                         console.log(goldSpaceArr);
 
                         if (goldSpaceArr.length > 1) { // TODO: check for errors if equal to "1"
-                        // if (goldSpaceArr.length >= 1 && moveEnemyPawn[0] != null) { // TODO: check for errors if equal to "1"
-                            
-                            if (typeof moveEnemyPawn[0] == null || moveEnemyPawn[0] == null && goldSpaceArr.length == 1) {
-                            } else if (goldSpaceArr.length > 1) {
+
+                            if (typeof moveEnemyPawn[0] == null || moveEnemyPawn[0] == null && goldSpaceArr.length == 1) {} else if (goldSpaceArr.length > 1) {
                                 console.log("bestMove(goldSpaceArr):");
                                 moveEnemyPawn = bestMove(goldSpaceArr);
 
-                            // } else if (goldSpaceArr.length === 1) {
                             } else {
                                 console.log("error?");
                                 // return moveEnemyPawnFunc(moveEnemyPawn); TODO: break apart in next function, not here ^^^
@@ -124,47 +108,44 @@ module.exports = compTurn = function (computerBool, pawnType, adjacentSpaces) {
                                 console.log("moveEnemyPawn[0].targetSpace_idString");
                                 console.log(moveEnemyPawn[0].targetSpace_idString);
 
-                                // TODO: check after each "zombie" bestMove
                             };
                         };
-                        
+
                         console.log("goldSpaceArr (after):");
                         console.log(goldSpaceArr);
                     };
                 };
             };
             if (moveEnemyPawn[0] != null) {
-                moveEnemyPawnFunc(moveEnemyPawn[0].homespace_idString, moveEnemyPawn[0].targetSpace_idString, updatePawnStatus);
+
+                // await setTimeout(() => {
+                    let passItem = await moveEnemyPawnFunc(moveEnemyPawn[0].homespace_idString, moveEnemyPawn[0].targetSpace_idString, updatePawnStatus, animateDeltas, moveInterval);
+                    loop++;
+
+                    let thisFunc = async function (passItem) {
+                        // alert("thisFunc fires");
+                        //test func:
+                        myConsole(passItem);
+                    };
+
+                    await thisFunc(passItem);
+                    
+                // }, 700);
+
+                // await setTimeout(() => {
+                // requestAnimationFrame(
+                    // trigger the animation
+                // );
             };
             //////////////////////////////////////////////////////////////////////////
-            // if (typeof moveEnemyPawn[0] == null) {
 
-            // } else {
-            //     console.log("moveEnemyPawn[0].homespace_idString");
-            //     console.log(moveEnemyPawn[0].homespace_idString);
-            //     console.log("moveEnemyPawn[0].targetSpace_idString");
-            //     console.log(moveEnemyPawn[0].targetSpace_idString);
-    
             //     // TODO: check after each "zombie" bestMove
-            //     moveEnemyPawnFunc(moveEnemyPawn[0].homespace_idString, moveEnemyPawn[0].targetSpace_idString, updatePawnStatus);
-    
             //     // return moveEnemyPawnFunc(moveEnemyPawn); TODO: break apart in next function, not here ^^^
-            // };
         };
 
     } else {
         console.log(`computerBool is ${computerBool}`);
     };
 };
-
 //////////////////////////////////////////////////////////////////////////
 // need TODO: create a function to change to contentID string and reverse:
-
-// let homespace_idString = homespace;
-// console.log("homespace_idString");
-// console.log(homespace_idString);
-// homespace = homespace.match(/\d+/g);
-// console.log("homespace after match:");
-// console.log("currentGoldiPawns");
-// console.log(currentGoldiPawns);
-// };
