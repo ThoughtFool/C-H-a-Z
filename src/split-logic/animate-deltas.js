@@ -1,7 +1,7 @@
 const moveInterval = require("./move-interval");
 const updatePawnStatus = require("./update-pawn-status");
 module.exports = animateDeltas = function (pawnID, beforeMoveRect, afterMoveRect, newEnemySpace, resolve) {
-    myConsole("animateDeltas function fires");
+    // myConsole("animateDeltas function fires");
     pawns = document.querySelector(".pawn");
 
     let domNode = document.getElementById(pawnID);
@@ -65,17 +65,17 @@ module.exports = animateDeltas = function (pawnID, beforeMoveRect, afterMoveRect
             // posLeft = posLeft + leftStep;
             // posTop = posTop + topStep;
 
-            myConsole("posLeft");
-            myConsole(posLeft);
-            myConsole("posTop");
-            myConsole(posTop);
+            // myConsole("posLeft");
+            // myConsole(posLeft);
+            // myConsole("posTop");
+            // myConsole(posTop);
 
             // domNode.style.transform = `translate(${posLeft}px, ${posTop}px)`;
             domNode.style.left = beforeMoveRect.left + posLeft;
             domNode.style.top = beforeMoveRect.top + posTop;
 
             domNode.style.zIndex = 1;
-            // domNode.style.transition = 'transform 500ms';
+            domNode.style.transition = 'transform 500ms';
             // alert("moveInterval now");
             // domNode.style.transform = '';
             // domNode.style.zIndex = 1;
@@ -99,7 +99,5 @@ module.exports = animateDeltas = function (pawnID, beforeMoveRect, afterMoveRect
     };
 
     animatePawn(resolve);
-
-
     /////////////////////////////////////////////////////////////////////////////
 };

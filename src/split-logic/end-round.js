@@ -8,12 +8,10 @@ module.exports = endRound = async function () {
 
     // let turnOrder = TODO: get info from browser? local storage?
     await compTurn(true, "zombie", adjacentSpaces, moveEnemyPawnFunc);
-    
-    await setTimeout(function () {
-            compTurn(true, "cyborg", adjacentSpaces, moveEnemyPawnFunc);
 
-    }, 2000);
-
+    // await setTimeout(function () {
+    await compTurn(true, "cyborg", adjacentSpaces, moveEnemyPawnFunc);
+    // }, 750);
 
     let pawnTypeObj = getTotalPawns();
     for (let t = 0; t < pawnTypeObj.pawnTypeArr.length; t++) {
