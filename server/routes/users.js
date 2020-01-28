@@ -2,9 +2,14 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
 const passport = require("passport");
+const userSchema = require("../model/user");
+// const User = mongoose.model("user", userSchema, "user");
 
 // TODO: for testing auth ONLY:
-const users = require("../../database-test").data; // remove local varibale and link to database
+const usersTestDatabase = require("../../database-test").data; // remove local varibale and link to database
+// const users = require("../model/user"); // remove local varibale and link to database
+
+
 
 // Login Page:
 router.get("/login", (req, res) => {
@@ -22,17 +27,39 @@ router.get("/enlist", (req, res) => {
     res.render("enlist");
 });
 
+
 router.post("/enlist", async (req, res) => {
     try {
+        // async function createUser(req) {
+            const hashedPassKey = await bcrypt.hash(req.body.password, 10);
+            return new userSchema({
+                id: Date.now().toString(),
+                name: req.body.name,
+                email: req.body.email,
+                password: hashedPassKey
+            }).save()
+            .then(
+                res.redirect("login")
+            );
         // const hashedPassKey = req.body.password;
-        const hashedPassKey = await bcrypt.hash(req.body.password, 10);
-        users.push({
-            id: Date.now().toString(),
-            name: req.body.name,
-            email: req.body.email,
-            password: hashedPassKey
-        });
-        res.redirect("login");
+        // usersTestDatabase.push({
+        //     id: Date.now().toString(),
+        //     name: req.body.name,
+        //     email: req.body.email,
+        //     password: hashedPassKey
+        // });
+        // let newUser = new User ({
+        //     id: Date.now().toString(),
+        //     name: req.body.name,
+        //     email: req.body.email,
+        //     password: hashedPassKey
+        // });
+
+        // newUser.save(function (err, newUser) {
+        //     if (err) return console.error(err);
+        //     alert(newUser.name);
+        // });
+
     } catch (err) {
         res.render("error", {
             message: err.message, 

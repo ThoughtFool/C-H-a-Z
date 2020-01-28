@@ -1,6 +1,6 @@
-if (process.env.NODE_ENV !== "production") {
-    require("dotenv").config();
-};
+// if (process.env.NODE_ENV !== "production") {
+//     require("dotenv").config();
+// };
 
 const express = require("express");
 const ejsLayouts = require("express-ejs-layouts");
@@ -47,17 +47,23 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // DB Config
-// const db = require('./server/config/keys').mongoURI;
+const db = require('./server/config/keys');
 
-// // Connect to MongoDB
-// mongoose
-//     .connect(
-//         db, {
-//             useNewUrlParser: true
-//         }
-//     )
-//     .then(() => console.log('MongoDB Connected'))
-//     .catch(err => console.log(err));
+// Connect to MongoDB
+mongoose
+    .connect(
+        db, {
+            useNewUrlParser: true
+        }
+    )
+    .then(() => console.log('MongoDB Connected'))
+    .catch(err => console.log(err));
+
+    // client.connect(err => {
+    //     const collection = client.db("test").collection("devices");
+    //     // perform actions on the collection object
+    //     client.close();
+    // });
 
 // Routes:
 app.use("/", require("./server/routes/index"));
