@@ -1,4 +1,6 @@
+require("dotenv");
 module.exports = {
-    mongoURI: "mongodb+srv://Heyou:eGjrkJScwXcFuUOv@thoughtfool-tyxzs.mongodb.net/test?retryWrites=true&w=majority",
-    secretOrKey: "SECRET"
+    mongoURI: "mongodb://localhost:27017",
+    // mongoURI: process.env.MONGO_URI,
+    secretOrKey: process.env.SECRET_OR_KEY
 };
