@@ -1,4 +1,4 @@
-// require("dotenv").config();
+require("dotenv");
 
 if (process.env.NODE_ENV === "production") {
     module.exports = require("./keys_prod").mongoURI;
