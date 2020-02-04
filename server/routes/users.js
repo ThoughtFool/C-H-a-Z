@@ -13,7 +13,7 @@ const usersTestDatabase = require("../../database-test").data; // remove local v
 
 // Login Page:
 router.get("/login", (req, res) => {
-    res.render("login");
+    res.render("users/login");
 });
 
 router.post("/login", passport.authenticate("local", {
@@ -23,8 +23,10 @@ router.post("/login", passport.authenticate("local", {
 }));
 
 // Register Page:
-router.get("/enlist", (req, res) => {
-    res.render("enlist");
+router.get("/enlist", async (req, res) => {
+    res.render("users/enlist");
+    let userList = db.users.find({});
+    console.log(userList);
 });
 
 
