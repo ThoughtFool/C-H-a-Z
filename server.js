@@ -27,6 +27,8 @@ initializePassport( //  initialize(passport, getUserByEmail, getUserById)
 // View Engine (ejs):
 app.use(ejsLayouts);
 app.set("view engine", "ejs");
+app.set("views", __dirname + "/views/");
+app.set("layouts", )
 app.use(express.urlencoded({
     extended: false
 }));

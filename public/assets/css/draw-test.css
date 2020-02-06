@@ -1,5 +1,7 @@
 :root {
-    --ctrl-panel: calc(100vw - 100vh);
+    --height-minus-nav: calc(100vh - 32px);
+    /* --ctrl-panel: calc(100vw - 100vh); */
+    --ctrl-panel: calc(100vw - var(--height-minus-nav));
     --accordion-padding: 18px;
     --side-panel-height: calc(100vh - calc(3 * var(--accordion-padding)));
     --drone-square: calc(100vh / 5);
@@ -21,13 +23,42 @@
 .main-wrapper {
     display: flex;
     align-items: center;
-    height: 100vh;
+    height: var(--height-minus-nav);
+    /* height: 100vh; */
     width: 100vw;
 }
 
 .pawn {
     /* transition: transform 300ms ease-in-out; */
     animation: pawn-moves 0.4s ease;
+}
+
+.header > li {
+    /* display: inline; */
+    /* color: antiquewhite; */
+    float: left;
+}
+
+.header {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover {
+    background-color: rgb(174, 25, 211);
+    color: white;
+    text-decoration: none;
 }
 
 /* .pawn::after {
@@ -51,8 +82,10 @@
 .game-panel {
     display: flex;
     align-items: center;
-    height: 100vh;
-    width: 100vh;
+    height: var(--height-minus-nav);
+    width: var(--height-minus-nav);
+    /* height: 100vh; */
+    /* width: 100vh; */
     box-shadow: inset 0 0 10px #000000;
 }
 
@@ -73,7 +106,8 @@
 .control-panel {
     display: flex;
     align-items: center;
-    height: 100vh;
+    height: var(--height-minus-nav);
+    /* height: 100vh; */
     width: var(--ctrl-panel);
 }
 
@@ -605,6 +639,13 @@ p {
     display: flex;
 }
 
+.enlist-wrapper {
+    width: 100vw;
+    height: var(--height-minus-nav);
+    position: relative;
+    justify-content: center;
+}
+
 .bg-modal {
     position: absolute;
     top: 0px;
@@ -612,6 +653,7 @@ p {
     width: 100vw;
     height: 100vh;
     justify-content: center;
+    padding-top: 15vh;
     background-image: repeating-linear-gradient(rgba(48, 9, 66, 0.678), rgba(20, 15, 19, 0.575));
     align-items: center;
 }
@@ -629,6 +671,9 @@ p {
     justify-content: center;
     transition: ease-in-out;
     transition-duration: 1s;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .show-modal {
