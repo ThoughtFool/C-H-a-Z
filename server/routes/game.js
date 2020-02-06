@@ -16,5 +16,10 @@ router.get("/game-screen", (req, res) => {
     res.render("game/game-screen");
 });
 
+// Select game to play (before game):
+router.get("/select-game", (req, res) => {
+    res.render("game/select-game");
+});
+
 
 module.exports = router;

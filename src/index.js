@@ -87,7 +87,7 @@ startBtn.addEventListener("click", function () {
     } else {
         startBtn.style.display = "block";
     };
-    
+
     // modal toggle:
     if (getTestNum.style.display === "block") {
         getTestNum.style.display = "none";
@@ -117,7 +117,7 @@ startBtn.addEventListener("click", function () {
         outerModal_2.classList.add("hide-modal");
     };
 
-    
+
 
     createBoard(userNum);
 });
@@ -171,3 +171,17 @@ endRoundBtn.addEventListener("click", function () {
 });
 
 // dragAndDrop();
+
+
+const passwordInput = document.getElementById("password");
+passwordInput.addEventListener("keyup", function (event) {
+    // Number 13 is the "Enter" key on the keyboard
+    if (event.keyCode === 13) {
+        event.preventDefault();
+        if (document.getElementById("register-btn") != null) {
+            document.getElementById("register-btn").click();
+        } else {
+            document.getElementById("login-btn").click();
+        };
+    };
+});
