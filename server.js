@@ -10,31 +10,25 @@ const bcrypt = require("bcrypt");
 const passport = require("passport");
 const flash = require("express-flash");
 const session = require("express-session");
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
+const morgan = require("morgan");
 
 // TODO: for testing auth ONLY:
-const users = require("./database-test").data; // remove local varibale and link to database
-
+// const users = require("./database-test").data; // remove local varibale and link to database
+// const Users = require("./server/model/user"); // remove local varibale and link to database
+    // require("./passport-config")(passport);
 const initializePassport = require("./passport-config");
-initializePassport( //  initialize(passport, getUserByEmail, getUserById)
-    passport,
-    email => {
-        return users.find(user => user.email === email);
-    },
-    id => users.find(user => user.id === id)
-    );
-
+initializePassport(passport);
+    
 // View Engine (ejs):
-app.use(ejsLayouts);
 app.set("view engine", "ejs");
-app.set("views", __dirname + "/views/");
-app.set("layouts", )
+// app.set("views", __dirname + "/views");
+// app.set("layout", "views");
+app.use(ejsLayouts);
+
 app.use(express.urlencoded({
     extended: false
 }));
-
-//
-app.use(flash());
 
 // keeps secret key in .env
 app.use(session({
@@ -44,9 +38,12 @@ app.use(session({
     saveUninitialized: false
 }));
 
-// Passport:
+// Passport middleware:
 app.use(passport.initialize());
 app.use(passport.session());
+
+// connect flash:
+app.use(flash());
 
 // DB Config
 const db = require('./server/config/keys');
@@ -68,14 +65,16 @@ mongoose
     // });
 
 // Routes:
+app.use(morgan("dev")); // log requests to the console
 app.use("/", require("./server/routes/index"));
 app.use("/users", require("./server/routes/users"));
 app.use("/game", require("./server/routes/game"));
+app.use("/admin", require("./server/routes/admin"));
 
 app.use(express.static(path.join(__dirname, 'dist')));
 app.use(express.static(path.join(__dirname, "public")));
 
-// app.use('/public', express.static('public'));
+// app.use(express.static('public'));
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, console.log(`Server is listening on port: ${PORT}`));
