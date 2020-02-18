@@ -33,8 +33,10 @@ function initialize(passport) {
         })
     );
 
-    passport.serializeUser(function (user, done) { 
+    passport.serializeUser(function (user, done) {
+        if (user.id.match(/^[0-9a-fA-F]{24}$/)) {
         done(null, user.id);
+        };
     });
 
     passport.deserializeUser(function (id, done) {
@@ -45,7 +47,7 @@ function initialize(passport) {
             Users.findById(id, function (err, user) {
                 done(err, user);
             });
-        }
+        };
     });
 };
 module.exports = initialize;

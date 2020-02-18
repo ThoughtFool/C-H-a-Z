@@ -32,8 +32,8 @@ app.use(express.urlencoded({
 
 // keeps secret key in .env
 app.use(session({
-    // secret: process.env.SESSION_SECRET,
-    secret: "zombeehive",
+    secret: process.env.SESSION_SECRET,
+    // secret: "zombeehive",
     resave: false,
     saveUninitialized: false
 }));
