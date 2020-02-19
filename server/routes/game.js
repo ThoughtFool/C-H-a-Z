@@ -2,12 +2,18 @@ const express = require("express");
 const router = express.Router();
 
 function requireLogin(req, res, next) {
-    if (req.session.loggedIn) {
+    if (req.session.passport) {
+        // if (req.session.loggedIn) {
         next(); // allow the next route to run
     } else {
         // require the user to log in
+        console.log("else login");
+        console.log(req.session);
+        console.log("req.session.Session");
+        console.log(req.session.passport);
+        
         res.redirect("../users/login"); // or render a form, etc.
-    }
+    };
 };
 
 // Automatically apply the `requireLogin` middleware to all

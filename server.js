@@ -33,10 +33,26 @@ app.use(express.urlencoded({
 // keeps secret key in .env
 app.use(session({
     secret: process.env.SESSION_SECRET,
-    // secret: "zombeehive",
+    cookieName: 'session',
+    // duration: 30 * 60 * 1000,
+    // activeDuration: 5 * 60 * 1000,
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    cookie: {
+        maxAge: 60000 * 15
+    }
 }));
+// var sess = {
+//   secret: 'keyboard cat',
+//   cookie: {}
+// }
+ 
+// if (app.get('env') === 'production') {
+//   app.set('trust proxy', 1) // trust first proxy
+//   sess.cookie.secure = true // serve secure cookies
+// }
+ 
+// app.use(session(sess))
 
 // Passport middleware:
 app.use(passport.initialize());
@@ -52,7 +68,8 @@ const db = require('./server/config/keys');
 mongoose
     .connect(
         db, {
-            useNewUrlParser: true
+            useNewUrlParser: true,
+            useUnifiedTopology: true
         }
     )
     .then(() => console.log('MongoDB Connected'))

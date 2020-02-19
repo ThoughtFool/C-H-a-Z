@@ -2,9 +2,9 @@
   "name": "z-h-c",
   "version": "1.0.0",
   "description": "Simple game that pits zombies against cyborgs in an epic struggle to claim their human-held prize... BRAINS!  Food for thought: Fresh brains are what both of these monsters need to survive in this post-apocolyptic world. Players have a front row seat is this battle of the brains.  Unfortunately, as a player, your brain is on the menu.  We may have cured every disease and even eradicated death itself, but who knew that we'd lose our humanity in the process.  There are worse things than dying, and living happens to be one of them.  Good Luck, Back-up to our Back-up!  You're gonna need it!",
-  "engines": { 
-      "node": "10.15.0"
-   },
+  "engines": {
+    "node": "10.15.0"
+  },
   "main": "server.js",
   "scripts": {
     "start": "npm run build && node server.js",

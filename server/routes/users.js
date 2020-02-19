@@ -24,8 +24,10 @@ router.post("/login", passport.authenticate("local", {
     async function (req, res) {
         req.flash('success_message', 'You are now Logged in!!');
         // res.redirect('/');
-        res.redirect("../game/game-screen");
+        // res.redirect("../game/game-screen");
 
+        console.log("req.session");
+        console.log(req.session);
 
         await userSchema.findOne({
             where: {
@@ -38,6 +40,7 @@ router.post("/login", passport.authenticate("local", {
                 bcrypt.compare(req.body.password, user.password, function (err, result) {
                     if (result == true) {
                         res.redirect('game-screen');
+                        req.session.loggedIn = true;
                     } else {
                         res.send('Incorrect password');
                         res.redirect('login');
@@ -62,12 +65,20 @@ router.post('/user', async function (req, res) {
             res.redirect('login');
         } else {
             bcrypt.compare(req.body.password, user.password, function (err, result) {
-                if (result == true) {
-                    res.redirect('game-screen');
+                if (err) {
+                    console.log(err);
                 } else {
-                    res.send('Incorrect password');
-                    res.redirect('login');
-                }
+                    if (result == true) {
+                        res.redirect('game-screen');
+                        console.log('game-screen');
+
+                    } else {
+                        res.send('Incorrect password');
+                        res.redirect('login');
+                        console.log('login');
+
+                    };
+                };
             });
         }
     });

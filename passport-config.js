@@ -35,19 +35,23 @@ function initialize(passport) {
 
     passport.serializeUser(function (user, done) {
         if (user.id.match(/^[0-9a-fA-F]{24}$/)) {
-        done(null, user.id);
+        // done(null, user.id);
+        done(null, {
+            _id: user["id"],
+            email: user["email"]
+        });
         };
     });
 
     passport.deserializeUser(function (id, done) {
 
-        if (id.match(/^[0-9a-fA-F]{24}$/)) {
+        // if (id.match(/^[0-9a-fA-F]{24}$/)) {
             // Yes, it's a valid ObjectId, proceed with `findById` call.
             
             Users.findById(id, function (err, user) {
                 done(err, user);
             });
-        };
+        // };
     });
 };
 module.exports = initialize;
