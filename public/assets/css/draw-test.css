@@ -648,6 +648,10 @@ p {
     display: flex;
 }
 
+/* .form-content {
+    display: inline-block;
+} */
+
 .enlist-wrapper {
     width: 100vw;
     height: var(--height-minus-nav);
