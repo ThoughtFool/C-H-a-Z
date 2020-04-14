@@ -1,6 +1,7 @@
 const healthInfo = require("./health-info");
 const pawnStats = require("./pawn-stats");
 const updatePercent = require("./update-percent");
+const PawnData = require("../../server/model/pawn-stats-model");
 
 module.exports = createPawn = function (destinationID, pawnCounter, pawnType) {
     console.log("createPawn function fires");
@@ -45,6 +46,13 @@ module.exports = createPawn = function (destinationID, pawnCounter, pawnType) {
              // TODO: need to add dynamic value to set enemy pawns
             // }
         });
+
+        // push to database:
+        // PawnData.pre('save', function (next) {
+        //     // email(this.email, 'Your record has changed');
+        //     myConsole(PawnData.find());
+        //     next();
+        // });
 
         healthInfo(pawnType, pawnId);
 

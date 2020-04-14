@@ -668,20 +668,20 @@ p {
     height: var(--height-minus-nav);
     justify-content: center;
     padding-top: 10vh;
-    background-image: repeating-linear-gradient(rgba(48, 9, 66, 0.514), rgba(20, 15, 19, 0.575));
+    background-image: repeating-linear-gradient(rgba(48, 9, 66, 0.705), rgba(20, 15, 19, 0.575));
     align-items: center;
 }
 
 .modal-content {
-    font-size: 1rem;
+    /* font-size: 1rem; */
     width: 60vw;
     height: 60vh;
     padding: var(--health-font);
     padding-top: 2rem;
     border-radius: 1rem;
     background-color: rgba(122, 14, 141, 0.555);
-    /* font-size: var(--health-font); */
-    font-size: x-large;
+    font-size: var(--health-font);
+    /* font-size: x-large; */
     text-align: right;
     justify-content: stretch;
     transition: ease-in-out;

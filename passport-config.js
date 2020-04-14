@@ -2,8 +2,8 @@ const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt');
 const Users = require("./server/model/user"); // remove local varibale and link to database
 
-
 function initialize(passport) {
+
     passport.use(
         new LocalStrategy({
             usernameField: "email"
