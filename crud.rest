@@ -1,5 +1,5 @@
-GET http://localhost:3001/users/enlist
-GET http://localhost:3001/users/login
+# GET http://localhost:3001/users/enlist
+# GET http://localhost:3001/users/login
 
-POST http://localhost:3001/users/enlist
-POST http://localhost:3001/users/login
+# POST http://localhost:3001/users/enlist
+# POST http://localhost:3001/users/login
