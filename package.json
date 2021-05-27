@@ -7,9 +7,9 @@
   },
   "main": "server.js",
   "scripts": {
-    "start": "npm run build && node server.js",
     "build": "webpack",
-    "dev": "npm run build && nodemon server.js"
+    "dev": "webpack-dev-server",
+    "start": "node server"
   },
   "repository": {
     "type": "git",
