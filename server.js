@@ -42,17 +42,20 @@ app.use(session({
         maxAge: 60000 * 15
     }
 }));
-// var sess = {
-//   secret: 'keyboard cat',
-//   cookie: {}
-// }
+////////////////////////////////////////////
+var sess = {
+    secret: 'keyboard cat',
+    cookie: {}
+}
 
-// if (app.get('env') === 'production') {
-//   app.set('trust proxy', 1) // trust first proxy
-//   sess.cookie.secure = true // serve secure cookies
-// }
+if (app.get('env') === 'production') {
+    app.set('trust proxy', 1) // trust first proxy
+    sess.cookie.secure = true // serve secure cookies
+}
 
-// app.use(session(sess))
+app.use(session(sess));
+
+////////////////////////////////////////////
 
 // Passport middleware:
 app.use(passport.initialize());
