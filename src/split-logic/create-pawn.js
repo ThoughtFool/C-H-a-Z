@@ -43,7 +43,7 @@ module.exports = createPawn = function (destinationID, pawnCounter, pawnType) {
             loc: [destinationID]
 
 
-             // TODO: need to add dynamic value to set enemy pawns
+            // TODO: need to add dynamic value to set enemy pawns
             // }
         });
 

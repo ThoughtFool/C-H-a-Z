@@ -2309,7 +2309,7 @@ module.exports = createPawn = function (destinationID, pawnCounter, pawnType) {
             loc: [destinationID]
 
 
-             // TODO: need to add dynamic value to set enemy pawns
+            // TODO: need to add dynamic value to set enemy pawns
             // }
         });
 
@@ -2740,9 +2740,10 @@ const getPawnStats = __webpack_require__(/*! ./pawn-stats-data */ "./src/split-l
 const PawnData = __webpack_require__(/*! ../../server/model/pawn-stats-model */ "./server/model/pawn-stats-model.js"); // remove local varibale and link to database
 
 module.exports = endRound = async function () {
-    myConsole("PawnData");
+    myConsole("PawnData:");
+    myConsole(PawnData);
 
-    await getPawnStats(PawnData);
+    // await getPawnStats(PawnData);
 
     // let turnOrder = TODO: get info from browser? local storage?
     await compTurn(true, "zombie", adjacentSpaces, moveEnemyPawnFunc);
@@ -3684,12 +3685,14 @@ module.exports = moveInterval = function (pawnID, beforeMoveRect, afterMoveRect,
 /***/ ((module) => {
 
 
-    module.exports = getPawnStats = function (PawnData) {
-        myConsole("PawnData");
-        pawnStats = PawnData.find();
-        myConsole(pawnStats.schema.obj);
-        return pawnStats; // returns data obj
-    };
+module.exports = getPawnStats = function (PawnData) {
+    myConsole("PawnData");
+    myConsole(PawnData.getPawnStats);
+
+    pawnStats = PawnData.findOne();
+    myConsole(pawnStats.schema.obj);
+    return pawnStats; // returns data obj
+};
 
 /***/ }),
 

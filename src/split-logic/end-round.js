@@ -7,9 +7,10 @@ const getPawnStats = require("./pawn-stats-data");
 const PawnData = require("../../server/model/pawn-stats-model"); // remove local varibale and link to database
 
 module.exports = endRound = async function () {
-    myConsole("PawnData");
+    myConsole("PawnData:");
+    myConsole(PawnData);
 
-    await getPawnStats(PawnData);
+    // await getPawnStats(PawnData);
 
     // let turnOrder = TODO: get info from browser? local storage?
     await compTurn(true, "zombie", adjacentSpaces, moveEnemyPawnFunc);
