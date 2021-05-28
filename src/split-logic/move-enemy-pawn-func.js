@@ -90,8 +90,8 @@ module.exports = moveEnemyPawnFunc = async function (oldSpaceID, newSpaceID, upd
         .then(promiseKeeper(removeFX, [currentPawnHeld, "halo-glow"]))
         .then((response) => {
             myConsole(`response:: ${response}`);
-            return new Promise(async function (resolve) {
-                await setTimeout(() => {
+            return new Promise(function (resolve) {
+                setTimeout(() => {
                     // await requestAnimationFrame(await animateDeltas(currentPawnHeld, beforeMove, afterMove, newEnemySpace, resolve));
                     // pawnNode.classList.remove("halo-glow");
 
@@ -99,9 +99,12 @@ module.exports = moveEnemyPawnFunc = async function (oldSpaceID, newSpaceID, upd
 
                     resolve(response);
 
-                }, 1850);
+                }, 850);
             });
-        });
+        })
+    // .then((response) => {
+    //     myConsole(`final .then: ${response}`);
+    // });
 
     let doneMoving = false;
 

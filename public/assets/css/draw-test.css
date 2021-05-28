@@ -106,7 +106,7 @@ li a:hover {
 }
 
 .gameboard {
-  padding-left: 2em;
+  /* padding-left: 2em; */
   height: 100%;
   width: 100%;
   background-color: rgba(108, 58, 245, 0.904);
@@ -141,6 +141,7 @@ li a:hover {
 }
 
 .game-menu {
+  padding-top: 1rem;
   height: 100%;
   width: 80%;
   background-color: rgba(64, 58, 97, 0.904);
@@ -191,6 +192,10 @@ li a:hover {
   position: relative;
   padding-top: 0.5em;
   margin: 1em;
+}
+
+.row {
+  margin: auto;
 }
 
 .progress-bar-row {
@@ -438,8 +443,8 @@ p {
 }
 
 #board-holder {
-  margin: 0;
-  padding-top: 3%;
+  margin: auto;
+  padding-top: 4em;
   width: 90%;
   border-radius: 5px;
   position: relative;
@@ -473,18 +478,20 @@ p {
 }
 
 .dyna-square-content {
+  margin: auto;
   position: absolute;
-  width: 100%;
+  width: auto;
   height: 100%;
   text-align: center;
   transition: background 0.2s ease-in-out;
 }
 
-.circle-shape {
+.pawn-shape {
   display: block;
   margin-left: auto;
   margin-right: auto;
-  width: 95%;
+  height: 100%;
+  width: auto;
   position: relative;
 }
 
@@ -509,6 +516,11 @@ p {
 
 .holding::before {
   box-shadow: inset #a522f181;
+}
+
+.score {
+  margin-left: 50px;
+  text-align: justify;
 }
 
 .health-score {

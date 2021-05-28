@@ -2284,7 +2284,7 @@ module.exports = createPawn = function (destinationID, pawnCounter, pawnType) {
     squarePlace = document.getElementById(destinationID);
 
     if (squarePlace.classList.contains("empty-space")) {
-        // squarePlace.classList.add("circle-shape");
+        // squarePlace.classList.add("pawn-shape");
 
         // create game piece div:
         gamePawn = document.createElement("img");
@@ -2292,7 +2292,7 @@ module.exports = createPawn = function (destinationID, pawnCounter, pawnType) {
         gamePawn.setAttribute("id", pawnId);
         squarePlace.appendChild(gamePawn);
         newPawn = document.getElementById(pawnId);
-        newPawn.classList.add("circle-shape");
+        newPawn.classList.add("pawn-shape");
         newPawn.classList.add(`${pawnType}-pawn`);
         newPawn.classList.add(`pawn`);
         newPawn.setAttribute("src", `/assets/images/${pawnType}-pawn.png`);
@@ -2378,6 +2378,7 @@ module.exports = createBoard = function (numberOfSpaces) {
             boardHolder.appendChild(newRow);
             boardRow = document.getElementById(rowID);
             boardRow.setAttribute("class", "row");
+            boardRow.classList.add("gamespace-row");
             // newRow.setAttribute("class", "row").setAttribute("id", rowID);
             // TODO: reduce line below by adding setAttribute on same line as above?
 
@@ -2396,7 +2397,7 @@ module.exports = createBoard = function (numberOfSpaces) {
                 // pawnStats.gameBoard.push(squareId);`
 
                 // divide the size of squares evenly:
-                percentageSize = 1/sqRootNum * 100;
+                percentageSize = 1 / sqRootNum * 100;
                 console.log(percentageSize);
                 newSquare.style.width = `${percentageSize}%`;
                 /////////////////////////////////////////////
@@ -3569,8 +3570,8 @@ module.exports = moveEnemyPawnFunc = async function (oldSpaceID, newSpaceID, upd
         .then(promiseKeeper(removeFX, [currentPawnHeld, "halo-glow"]))
         .then((response) => {
             myConsole(`response:: ${response}`);
-            return new Promise(async function (resolve) {
-                await setTimeout(() => {
+            return new Promise(function (resolve) {
+                setTimeout(() => {
                     // await requestAnimationFrame(await animateDeltas(currentPawnHeld, beforeMove, afterMove, newEnemySpace, resolve));
                     // pawnNode.classList.remove("halo-glow");
 
@@ -3578,9 +3579,12 @@ module.exports = moveEnemyPawnFunc = async function (oldSpaceID, newSpaceID, upd
 
                     resolve(response);
 
-                }, 1850);
+                }, 850);
             });
-        });
+        })
+    // .then((response) => {
+    //     myConsole(`final .then: ${response}`);
+    // });
 
     let doneMoving = false;
 

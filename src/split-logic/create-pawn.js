@@ -10,7 +10,7 @@ module.exports = createPawn = function (destinationID, pawnCounter, pawnType) {
     squarePlace = document.getElementById(destinationID);
 
     if (squarePlace.classList.contains("empty-space")) {
-        // squarePlace.classList.add("circle-shape");
+        // squarePlace.classList.add("pawn-shape");
 
         // create game piece div:
         gamePawn = document.createElement("img");
@@ -18,7 +18,7 @@ module.exports = createPawn = function (destinationID, pawnCounter, pawnType) {
         gamePawn.setAttribute("id", pawnId);
         squarePlace.appendChild(gamePawn);
         newPawn = document.getElementById(pawnId);
-        newPawn.classList.add("circle-shape");
+        newPawn.classList.add("pawn-shape");
         newPawn.classList.add(`${pawnType}-pawn`);
         newPawn.classList.add(`pawn`);
         newPawn.setAttribute("src", `/assets/images/${pawnType}-pawn.png`);

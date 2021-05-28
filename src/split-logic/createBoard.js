@@ -25,6 +25,7 @@ module.exports = createBoard = function (numberOfSpaces) {
             boardHolder.appendChild(newRow);
             boardRow = document.getElementById(rowID);
             boardRow.setAttribute("class", "row");
+            boardRow.classList.add("gamespace-row");
             // newRow.setAttribute("class", "row").setAttribute("id", rowID);
             // TODO: reduce line below by adding setAttribute on same line as above?
 
@@ -43,7 +44,7 @@ module.exports = createBoard = function (numberOfSpaces) {
                 // pawnStats.gameBoard.push(squareId);`
 
                 // divide the size of squares evenly:
-                percentageSize = 1/sqRootNum * 100;
+                percentageSize = 1 / sqRootNum * 100;
                 console.log(percentageSize);
                 newSquare.style.width = `${percentageSize}%`;
                 /////////////////////////////////////////////
