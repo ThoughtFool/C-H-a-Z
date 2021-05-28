@@ -19,6 +19,9 @@ module.exports = moveEnemyPawnFunc = async function (oldSpaceID, newSpaceID, upd
     /////////////////////////////////////////////////////////////////////
 
     let newEnemySpace = document.getElementById(newSpaceID);
+
+    myConsole(`newSpaceID: ${newSpaceID}`);
+    myConsole(`newEnemySpace: ${newEnemySpace}`);
     // newEnemySpace.style.transition = "all 2s";
     newEnemySpace.appendChild(holdingClass);
 
@@ -37,6 +40,7 @@ module.exports = moveEnemyPawnFunc = async function (oldSpaceID, newSpaceID, upd
     holdingPawn = false;
     let pawnID = currentPawnHeld;
     let newParentDiv_ID = newSpaceID;
+    let location = "location";
 
     // find deltas/changes for boundingRect:
     // Δx = afterMove.left - beforeMove.left;
@@ -56,27 +60,97 @@ module.exports = moveEnemyPawnFunc = async function (oldSpaceID, newSpaceID, upd
     //     });
     // };
 
-
-    return new Promise(async function (resolve) {
-        await setTimeout(() => {
-            animateDeltas(currentPawnHeld, beforeMove, afterMove, newEnemySpace, resolve);
-            // await requestAnimationFrame(await animateDeltas(currentPawnHeld, beforeMove, afterMove, newEnemySpace, resolve));
-
-            currentPawnHeld = null;
-            
-        }, 750);
-
-            // updatePawnStatus("location", pawnID, newParentDiv_ID);
-        })
-        .then(function () {
-            // Will not run until after `sunElement` has gone from `10%` to `90%`
-            return moveInterval(pawnID, beforeMove, afterMove, newEnemySpace);
-            // return moveInterval(pawnID, beforeMoveRect, afterMoveRect, newEnemySpace);
-        })
-        .then(function () {
-            // Will not run until after `sunElement` has gone from `10%` to `90%`
-            return updatePawnStatus("location", pawnID, newParentDiv_ID);
+    function promiseKeeper(namedFunc, argsArr) {
+        return new Promise((resolve, reject) => {
+            myConsole("working");
+            return resolve(namedFunc(...argsArr));
         });
+    };
+
+    function addFX(currentPawnHeld, fx) {
+        let pawnNode = document.getElementById(currentPawnHeld);
+        pawnNode.classList.add(fx);
+        return "success!";
+
+    };
+
+    function removeFX(currentPawnHeld, fx) {
+        let pawnNode = document.getElementById(currentPawnHeld);
+        pawnNode.classList.remove(fx);
+
+        // currentPawnHeld = null;
+        return "done!";
+
+    };
+
+    promiseKeeper(addFX, [currentPawnHeld, "halo-glow"])
+        .then(promiseKeeper(animateDeltas, [pawnID, beforeMove, afterMove, newEnemySpace]))
+        .then(promiseKeeper(moveInterval, [currentPawnHeld, beforeMove, newEnemySpace]))
+        .then(promiseKeeper(updatePawnStatus, [location, pawnID, newParentDiv_ID]))
+        .then(promiseKeeper(removeFX, [currentPawnHeld, "halo-glow"]))
+        .then((response) => {
+            myConsole(`response:: ${response}`);
+            return new Promise(async function (resolve) {
+                await setTimeout(() => {
+                    // await requestAnimationFrame(await animateDeltas(currentPawnHeld, beforeMove, afterMove, newEnemySpace, resolve));
+                    // pawnNode.classList.remove("halo-glow");
+
+                    currentPawnHeld = null;
+
+                    resolve(response);
+
+                }, 1850);
+            });
+        });
+
+    let doneMoving = false;
+
+    function requestMove(doneMoving) {
+        return new Promise((resolve, reject) => {
+            if (doneMoving === true) {
+                resolve("Done!");
+            } else {
+                reject("error!");
+            };
+        });
+    };
+
+    function processMove(response) {
+        return new Promise((resolve, reject) => {
+            myConsole("response: " + response);
+            resolve(alert(response));
+        });
+    };
+
+    // requestMove()
+    //     .then((response) => { return processMove() })
+
+    /////////////////////////////////////////////////////////////////////////
+
+    // return new Promise(async function (resolve) {
+    //     await setTimeout(() => {
+    //         animateDeltas(currentPawnHeld, beforeMove, afterMove, newEnemySpace, resolve);
+    //         // await requestAnimationFrame(await animateDeltas(currentPawnHeld, beforeMove, afterMove, newEnemySpace, resolve));
+    //         pawnNode.classList.remove("halo-glow");
+
+    //         currentPawnHeld = null;
+
+    //     }, 1850);
+
+    //     let pawnNode = document.getElementById(currentPawnHeld);
+    //     pawnNode.classList.add("halo-glow");
+
+    //     // updatePawnStatus("location", pawnID, newParentDiv_ID);
+    // })
+    //     .then(function () {
+    //         // Will not run until after `sunElement` has gone from `10%` to `90%`
+    //         return moveInterval(pawnID, beforeMove, afterMove, newEnemySpace);
+    //         // return moveInterval(pawnID, beforeMoveRect, afterMoveRect, newEnemySpace);
+    //     })
+    //     .then(function () {
+    //         // Will not run until after `sunElement` has gone from `10%` to `90%`
+    //         return updatePawnStatus("location", pawnID, newParentDiv_ID);
+    //     });
 
     //pawnID, beforeMoveRect, afterMoveRect, newParentDiv_ID, newEnemySpace
     // /////////////////////////////////////////////////////////////////////

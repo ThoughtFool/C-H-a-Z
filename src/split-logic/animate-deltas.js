@@ -1,6 +1,7 @@
 const moveInterval = require("./move-interval");
 const updatePawnStatus = require("./update-pawn-status");
-module.exports = animateDeltas = function (pawnID, beforeMoveRect, afterMoveRect, newEnemySpace, resolve) {
+module.exports = animateDeltas = function (pawnID, beforeMoveRect, afterMoveRect, newEnemySpace) {
+    // module.exports = animateDeltas = function (pawnID, beforeMoveRect, afterMoveRect, newEnemySpace, resolve) {
     // myConsole("animateDeltas function fires");
     pawns = document.querySelector(".pawn");
 
@@ -13,6 +14,9 @@ module.exports = animateDeltas = function (pawnID, beforeMoveRect, afterMoveRect
     // domNode.style.transform = `translate(${beforeMoveRect.left}px, ${beforeMoveRect.top}px)`;
 
     /////////////////////// health score div ///////////////////////
+
+    myConsole(`pawnID: ${pawnID}`);
+    myConsole(`newEnemySpace: ${newEnemySpace}`);
 
     let contentCircle = document.getElementById(`content-health-${pawnID}`);
     newEnemySpace.appendChild(contentCircle);
@@ -27,7 +31,8 @@ module.exports = animateDeltas = function (pawnID, beforeMoveRect, afterMoveRect
     let limit = 5000;
     let start = null;
 
-    const animatePawn = async function (resolve) {
+    const animatePawn = async function () {
+        // const animatePawn = async function (resolve) {
 
         // if (start === null) {
         //     start = timestamp;
@@ -47,16 +52,16 @@ module.exports = animateDeltas = function (pawnID, beforeMoveRect, afterMoveRect
         let leftStep = deltaLeft / 100;
         let topStep = deltaTop / 100;
 
-        
+
         // alert("deltaLeft:" + deltaLeft);
         // alert("leftStep:" + leftStep);
         // alert("posLeft:" + posLeft);
 
         if (stepCounter < 100) {
-        // stepCounter += leftStep;
+            // stepCounter += leftStep;
 
-        // if (beforeMoveRect.left + posLeft != afterMoveRect.left) {
-        // if (posLeft != deltaLeft) {
+            // if (beforeMoveRect.left + posLeft != afterMoveRect.left) {
+            // if (posLeft != deltaLeft) {
             // if (posLeft != afterMoveRect.left || posTop != afterMoveRect.top) {
 
             posLeft = posLeft + leftStep;
@@ -81,23 +86,26 @@ module.exports = animateDeltas = function (pawnID, beforeMoveRect, afterMoveRect
             // domNode.style.zIndex = 1;
 
 
-            
+
             // await setTimeout(() => {
-                stepCounter++;
-                await animatePawn(resolve);
+            stepCounter++;
+            await animatePawn();
+            // await animatePawn(resolve);
             // }, 500);
-            
+
             // } else {
-                //     cancelAnimationFrame(animatePawn);
-                //     // alert("Done!");
-                
+            //     cancelAnimationFrame(animatePawn);
+            //     // alert("Done!");
+
 
         } else {
 
-            return resolve();
+            return "Done!!!";
+            // return resolve();
         };
     };
 
-    animatePawn(resolve);
+    animatePawn();
+    // animatePawn(resolve);
     /////////////////////////////////////////////////////////////////////////////
 };

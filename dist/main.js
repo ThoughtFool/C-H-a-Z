@@ -1854,7 +1854,8 @@ adjacentSpaceObj = adjContentIDStringArr(homespace, adjacentSpaceObj, availableM
 
 const moveInterval = __webpack_require__(/*! ./move-interval */ "./src/split-logic/move-interval.js");
 const updatePawnStatus = __webpack_require__(/*! ./update-pawn-status */ "./src/split-logic/update-pawn-status.js");
-module.exports = animateDeltas = function (pawnID, beforeMoveRect, afterMoveRect, newEnemySpace, resolve) {
+module.exports = animateDeltas = function (pawnID, beforeMoveRect, afterMoveRect, newEnemySpace) {
+    // module.exports = animateDeltas = function (pawnID, beforeMoveRect, afterMoveRect, newEnemySpace, resolve) {
     // myConsole("animateDeltas function fires");
     pawns = document.querySelector(".pawn");
 
@@ -1867,6 +1868,9 @@ module.exports = animateDeltas = function (pawnID, beforeMoveRect, afterMoveRect
     // domNode.style.transform = `translate(${beforeMoveRect.left}px, ${beforeMoveRect.top}px)`;
 
     /////////////////////// health score div ///////////////////////
+
+    myConsole(`pawnID: ${pawnID}`);
+    myConsole(`newEnemySpace: ${newEnemySpace}`);
 
     let contentCircle = document.getElementById(`content-health-${pawnID}`);
     newEnemySpace.appendChild(contentCircle);
@@ -1881,7 +1885,8 @@ module.exports = animateDeltas = function (pawnID, beforeMoveRect, afterMoveRect
     let limit = 5000;
     let start = null;
 
-    const animatePawn = async function (resolve) {
+    const animatePawn = async function () {
+        // const animatePawn = async function (resolve) {
 
         // if (start === null) {
         //     start = timestamp;
@@ -1901,16 +1906,16 @@ module.exports = animateDeltas = function (pawnID, beforeMoveRect, afterMoveRect
         let leftStep = deltaLeft / 100;
         let topStep = deltaTop / 100;
 
-        
+
         // alert("deltaLeft:" + deltaLeft);
         // alert("leftStep:" + leftStep);
         // alert("posLeft:" + posLeft);
 
         if (stepCounter < 100) {
-        // stepCounter += leftStep;
+            // stepCounter += leftStep;
 
-        // if (beforeMoveRect.left + posLeft != afterMoveRect.left) {
-        // if (posLeft != deltaLeft) {
+            // if (beforeMoveRect.left + posLeft != afterMoveRect.left) {
+            // if (posLeft != deltaLeft) {
             // if (posLeft != afterMoveRect.left || posTop != afterMoveRect.top) {
 
             posLeft = posLeft + leftStep;
@@ -1935,24 +1940,27 @@ module.exports = animateDeltas = function (pawnID, beforeMoveRect, afterMoveRect
             // domNode.style.zIndex = 1;
 
 
-            
+
             // await setTimeout(() => {
-                stepCounter++;
-                await animatePawn(resolve);
+            stepCounter++;
+            await animatePawn();
+            // await animatePawn(resolve);
             // }, 500);
-            
+
             // } else {
-                //     cancelAnimationFrame(animatePawn);
-                //     // alert("Done!");
-                
+            //     cancelAnimationFrame(animatePawn);
+            //     // alert("Done!");
+
 
         } else {
 
-            return resolve();
+            return "Done!!!";
+            // return resolve();
         };
     };
 
-    animatePawn(resolve);
+    animatePawn();
+    // animatePawn(resolve);
     /////////////////////////////////////////////////////////////////////////////
 };
 
@@ -3490,6 +3498,9 @@ module.exports = moveEnemyPawnFunc = async function (oldSpaceID, newSpaceID, upd
     /////////////////////////////////////////////////////////////////////
 
     let newEnemySpace = document.getElementById(newSpaceID);
+
+    myConsole(`newSpaceID: ${newSpaceID}`);
+    myConsole(`newEnemySpace: ${newEnemySpace}`);
     // newEnemySpace.style.transition = "all 2s";
     newEnemySpace.appendChild(holdingClass);
 
@@ -3508,6 +3519,7 @@ module.exports = moveEnemyPawnFunc = async function (oldSpaceID, newSpaceID, upd
     holdingPawn = false;
     let pawnID = currentPawnHeld;
     let newParentDiv_ID = newSpaceID;
+    let location = "location";
 
     // find deltas/changes for boundingRect:
     // Δx = afterMove.left - beforeMove.left;
@@ -3527,27 +3539,97 @@ module.exports = moveEnemyPawnFunc = async function (oldSpaceID, newSpaceID, upd
     //     });
     // };
 
-
-    return new Promise(async function (resolve) {
-        await setTimeout(() => {
-            animateDeltas(currentPawnHeld, beforeMove, afterMove, newEnemySpace, resolve);
-            // await requestAnimationFrame(await animateDeltas(currentPawnHeld, beforeMove, afterMove, newEnemySpace, resolve));
-
-            currentPawnHeld = null;
-            
-        }, 750);
-
-            // updatePawnStatus("location", pawnID, newParentDiv_ID);
-        })
-        .then(function () {
-            // Will not run until after `sunElement` has gone from `10%` to `90%`
-            return moveInterval(pawnID, beforeMove, afterMove, newEnemySpace);
-            // return moveInterval(pawnID, beforeMoveRect, afterMoveRect, newEnemySpace);
-        })
-        .then(function () {
-            // Will not run until after `sunElement` has gone from `10%` to `90%`
-            return updatePawnStatus("location", pawnID, newParentDiv_ID);
+    function promiseKeeper(namedFunc, argsArr) {
+        return new Promise((resolve, reject) => {
+            myConsole("working");
+            return resolve(namedFunc(...argsArr));
         });
+    };
+
+    function addFX(currentPawnHeld, fx) {
+        let pawnNode = document.getElementById(currentPawnHeld);
+        pawnNode.classList.add(fx);
+        return "success!";
+
+    };
+
+    function removeFX(currentPawnHeld, fx) {
+        let pawnNode = document.getElementById(currentPawnHeld);
+        pawnNode.classList.remove(fx);
+
+        // currentPawnHeld = null;
+        return "done!";
+
+    };
+
+    promiseKeeper(addFX, [currentPawnHeld, "halo-glow"])
+        .then(promiseKeeper(animateDeltas, [pawnID, beforeMove, afterMove, newEnemySpace]))
+        .then(promiseKeeper(moveInterval, [currentPawnHeld, beforeMove, newEnemySpace]))
+        .then(promiseKeeper(updatePawnStatus, [location, pawnID, newParentDiv_ID]))
+        .then(promiseKeeper(removeFX, [currentPawnHeld, "halo-glow"]))
+        .then((response) => {
+            myConsole(`response:: ${response}`);
+            return new Promise(async function (resolve) {
+                await setTimeout(() => {
+                    // await requestAnimationFrame(await animateDeltas(currentPawnHeld, beforeMove, afterMove, newEnemySpace, resolve));
+                    // pawnNode.classList.remove("halo-glow");
+
+                    currentPawnHeld = null;
+
+                    resolve(response);
+
+                }, 1850);
+            });
+        });
+
+    let doneMoving = false;
+
+    function requestMove(doneMoving) {
+        return new Promise((resolve, reject) => {
+            if (doneMoving === true) {
+                resolve("Done!");
+            } else {
+                reject("error!");
+            };
+        });
+    };
+
+    function processMove(response) {
+        return new Promise((resolve, reject) => {
+            myConsole("response: " + response);
+            resolve(alert(response));
+        });
+    };
+
+    // requestMove()
+    //     .then((response) => { return processMove() })
+
+    /////////////////////////////////////////////////////////////////////////
+
+    // return new Promise(async function (resolve) {
+    //     await setTimeout(() => {
+    //         animateDeltas(currentPawnHeld, beforeMove, afterMove, newEnemySpace, resolve);
+    //         // await requestAnimationFrame(await animateDeltas(currentPawnHeld, beforeMove, afterMove, newEnemySpace, resolve));
+    //         pawnNode.classList.remove("halo-glow");
+
+    //         currentPawnHeld = null;
+
+    //     }, 1850);
+
+    //     let pawnNode = document.getElementById(currentPawnHeld);
+    //     pawnNode.classList.add("halo-glow");
+
+    //     // updatePawnStatus("location", pawnID, newParentDiv_ID);
+    // })
+    //     .then(function () {
+    //         // Will not run until after `sunElement` has gone from `10%` to `90%`
+    //         return moveInterval(pawnID, beforeMove, afterMove, newEnemySpace);
+    //         // return moveInterval(pawnID, beforeMoveRect, afterMoveRect, newEnemySpace);
+    //     })
+    //     .then(function () {
+    //         // Will not run until after `sunElement` has gone from `10%` to `90%`
+    //         return updatePawnStatus("location", pawnID, newParentDiv_ID);
+    //     });
 
     //pawnID, beforeMoveRect, afterMoveRect, newParentDiv_ID, newEnemySpace
     // /////////////////////////////////////////////////////////////////////
