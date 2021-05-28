@@ -1943,7 +1943,7 @@ module.exports = animateDeltas = function (pawnID, beforeMoveRect, afterMoveRect
 
             // await setTimeout(() => {
             stepCounter++;
-            await animatePawn();
+            return await animatePawn();
             // await animatePawn(resolve);
             // }, 500);
 
@@ -1954,12 +1954,12 @@ module.exports = animateDeltas = function (pawnID, beforeMoveRect, afterMoveRect
 
         } else {
 
-            return "Done!!!";
+            return "animateDeltas>animatePawn: success!";
             // return resolve();
         };
     };
 
-    animatePawn();
+    return animatePawn();
     // animatePawn(resolve);
     /////////////////////////////////////////////////////////////////////////////
 };
@@ -2179,7 +2179,7 @@ module.exports = compTurn = async function (computerBool, pawnType, adjacentSpac
 
                         if (goldSpaceArr.length > 1) { // TODO: check for errors if equal to "1"
 
-                            if (typeof moveEnemyPawn[0] == null || moveEnemyPawn[0] == null && goldSpaceArr.length == 1) {} else if (goldSpaceArr.length > 1) {
+                            if (typeof moveEnemyPawn[0] == null || moveEnemyPawn[0] == null && goldSpaceArr.length == 1) { } else if (goldSpaceArr.length > 1) {
                                 console.log("bestMove(goldSpaceArr):");
                                 moveEnemyPawn = bestMove(goldSpaceArr);
 
@@ -2208,22 +2208,22 @@ module.exports = compTurn = async function (computerBool, pawnType, adjacentSpac
             if (moveEnemyPawn[0] != null) {
 
                 // await setTimeout(() => {
-                    let passItem = await moveEnemyPawnFunc(moveEnemyPawn[0].homespace_idString, moveEnemyPawn[0].targetSpace_idString, updatePawnStatus, animateDeltas, moveInterval);
-                    loop++;
+                let passItem = await moveEnemyPawnFunc(moveEnemyPawn[0].homespace_idString, moveEnemyPawn[0].targetSpace_idString, updatePawnStatus, animateDeltas, moveInterval);
+                loop++;
 
-                    let thisFunc = async function (passItem) {
-                        // alert("thisFunc fires");
-                        //test func:
-                        myConsole(passItem);
-                    };
+                let thisFunc = async function (passItem) {
+                    // alert("thisFunc fires");
+                    //test func:
+                    myConsole(`passItem: ${passItem}`);
+                };
 
-                    await thisFunc(passItem);
-                    
+                await thisFunc(passItem);
+
                 // }, 700);
 
                 // await setTimeout(() => {
                 // requestAnimationFrame(
-                    // trigger the animation
+                // trigger the animation
                 // );
             };
             //////////////////////////////////////////////////////////////////////////
@@ -2636,12 +2636,15 @@ module.exports = dragAndDrop = function () {
     document.addEventListener("drop", function (event) {
         event.preventDefault();
 
-        console.log("currentPawnHeld");
-        console.log(currentPawnHeld);
+        myConsole("currentPawnHeld");
+        myConsole(currentPawnHeld);
 
         if (currentPawnHeld != null) {
+            myConsole(`currentPawnHeld: ${currentPawnHeld}`);
+
             if (document.getElementById(currentPawnHeld).classList.contains("human-pawn")) {
-                console.log("currentPawnHeld = human-pawn");
+                myConsole(`event.target: ${event.target.id}`);
+                myConsole(`event.target: ${event.target.classList}`);
 
                 if (event.target.classList.contains("empty-space")) {
                     // var data = event.dataTransfer.setData("Text");
@@ -3503,24 +3506,32 @@ module.exports = moveEnemyPawnFunc = async function (oldSpaceID, newSpaceID, upd
     myConsole(`newSpaceID: ${newSpaceID}`);
     myConsole(`newEnemySpace: ${newEnemySpace}`);
     // newEnemySpace.style.transition = "all 2s";
-    newEnemySpace.appendChild(holdingClass);
 
     /////////////////////////////////////////////////////////////////////
 
     // get viewport location of pawn after move:
     let afterMove = holdingClass.getBoundingClientRect();
-    myConsole(`${currentPawnHeld} position afterMove`);
-    myConsole(afterMove);
-
-    // holdingClass.style.animationDelay = "200ms";
-    holdingClass.classList.remove("holding");
-    newEnemySpace.classList.remove("empty-space");
-    parentDiv.classList.remove("parent-holding-pawn");
-    parentDiv.classList.add("empty-space");
-    holdingPawn = false;
     let pawnID = currentPawnHeld;
     let newParentDiv_ID = newSpaceID;
     let location = "location";
+
+    function moveEnemyPawnElem(returnMsg) {
+
+        newEnemySpace.appendChild(holdingClass);
+
+        myConsole(`${currentPawnHeld} position afterMove`);
+        myConsole(afterMove);
+        myConsole(`returnMsg: ${returnMsg}`);
+
+        // holdingClass.style.animationDelay = "200ms";
+        holdingClass.classList.remove("holding");
+        newEnemySpace.classList.remove("empty-space");
+        parentDiv.classList.remove("parent-holding-pawn");
+        parentDiv.classList.add("empty-space");
+        holdingPawn = false;
+
+        return "moveEnemyPawnElem: success!";
+    };
 
     // find deltas/changes for boundingRect:
     // Δx = afterMove.left - beforeMove.left;
@@ -3540,17 +3551,43 @@ module.exports = moveEnemyPawnFunc = async function (oldSpaceID, newSpaceID, upd
     //     });
     // };
 
+    function forEachPromise(arrayToLoop, chainedFuncStart) {
+        arrayToLoop.forEach((itemToLoop) => {
+            return new Promise((resolve, reject) => {
+                return resolve(chainedFuncStart);
+            });
+        });
+    };
+
     function promiseKeeper(namedFunc, argsArr) {
+        // get back 'success message' from end of array of arguments:
+        let returnMessage = argsArr[argsArr.length - 1];
+
         return new Promise((resolve, reject) => {
-            myConsole("working");
+            myConsole(`working... ${returnMessage}`);
             return resolve(namedFunc(...argsArr));
         });
     };
 
+    function delayPromise(t, v) {
+
+        return new Promise((resolve) => {
+            setTimeout(resolve.bind(null, v), t)
+        });
+    };
+
+
+    // promiseKeeper.prototype.delayPromise = (t) => {
+    //     return this.then((v) => {
+    //         myConsole("v: " + v)
+    //         return delayPromise(t, v);
+    //     });
+    // };
+
     function addFX(currentPawnHeld, fx) {
         let pawnNode = document.getElementById(currentPawnHeld);
         pawnNode.classList.add(fx);
-        return "success!";
+        return "addFX: success!";
 
     };
 
@@ -3558,30 +3595,51 @@ module.exports = moveEnemyPawnFunc = async function (oldSpaceID, newSpaceID, upd
         let pawnNode = document.getElementById(currentPawnHeld);
         pawnNode.classList.remove(fx);
 
-        // currentPawnHeld = null;
-        return "done!";
+        currentPawnHeld = null;
+        return "removeFX: success!";
 
     };
 
-    promiseKeeper(addFX, [currentPawnHeld, "halo-glow"])
-        .then(promiseKeeper(animateDeltas, [pawnID, beforeMove, afterMove, newEnemySpace]))
-        .then(promiseKeeper(moveInterval, [currentPawnHeld, beforeMove, newEnemySpace]))
-        .then(promiseKeeper(updatePawnStatus, [location, pawnID, newParentDiv_ID]))
-        .then(promiseKeeper(removeFX, [currentPawnHeld, "halo-glow"]))
-        .then((response) => {
-            myConsole(`response:: ${response}`);
-            return new Promise(function (resolve) {
-                setTimeout(() => {
-                    // await requestAnimationFrame(await animateDeltas(currentPawnHeld, beforeMove, afterMove, newEnemySpace, resolve));
-                    // pawnNode.classList.remove("halo-glow");
-
-                    currentPawnHeld = null;
-
-                    resolve(response);
-
-                }, 850);
-            });
+    function delay(time, msg) {
+        return new Promise((resolve) => {
+            setTimeout(resolve, time);
         })
+            .then(() => {
+                myConsole(`this msg: ${msg}`);
+                return "delay: success!";
+            })
+
+            .then((successMessage) => promiseKeeper(moveEnemyPawnElem, [successMessage]))
+            .then((successMessage) => promiseKeeper(animateDeltas, [pawnID, beforeMove, afterMove, newEnemySpace, successMessage]))
+            .then((successMessage) => promiseKeeper(updatePawnStatus, [location, pawnID, newParentDiv_ID, successMessage]))
+            .then((successMessage) => promiseKeeper(addFX, [newParentDiv_ID, "halo-drop", successMessage]))
+            .then((successMessage) => promiseKeeper(removeFX, [currentPawnHeld, "halo-glow", successMessage]))
+            .then((successMessage) => promiseKeeper(removeFX, [newParentDiv_ID, "halo-drop", successMessage]))
+    };
+
+    return promiseKeeper(addFX, [currentPawnHeld, "halo-glow", "promise-chain"])
+
+        .then((successMessage) => {
+            myConsole(`successMessage before delay: ${successMessage}`);
+            return delay(1250, successMessage);
+            // return delayPromise(1250, successMessage);
+        });
+
+    // .then((response) => {
+    //     myConsole(`response:: ${response}`);
+    //     return new Promise(function (resolve) {
+    //         setTimeout(() => {
+    //             // await requestAnimationFrame(await animateDeltas(currentPawnHeld, beforeMove, afterMove, newEnemySpace, resolve));
+    //             // pawnNode.classList.remove("halo-glow");
+
+    //             // currentPawnHeld = null;
+
+    //             resolve(response)
+
+    //         }, 1250);
+    //     });
+    // })
+    // .then(promiseKeeper(removeFX, [currentPawnHeld, "halo-glow"]));
     // .then((response) => {
     //     myConsole(`final .then: ${response}`);
     // });
@@ -3954,14 +4012,14 @@ module.exports = randomPlace = function (userInputNum, howManyToPlace) {
                 pawnStats.pawnIdArray.human.push(randomContentID);
                 console.log(pawnStats.pawnIdArray.human);
                 createPawn(randomContentID, pawnStats.pawnCounter, "human");
-            
+
             } else {
                 randEnemy = Math.floor(Math.random() * 20 + 1);
                 if (randEnemy % 2 === 0) {
                     pawnStats.pawnIdArray.zombie.push(randomContentID);
                     console.log(pawnStats.pawnIdArray.zombie);
                     createPawn(randomContentID, pawnStats.pawnCounter, "zombie");
-                
+
                 } else {
                     pawnStats.pawnIdArray.cyborg.push(randomContentID);
                     console.log(pawnStats.pawnIdArray.cyborg);
@@ -4204,11 +4262,11 @@ module.exports = updatePawnStatus = async function (string, pawnID, newParentID)
                 console.log(`after?`);
                 console.log(pawnStats[typeAfter]);
 
-
             };
         };
-        await setTimeout(function () {
-            return new Promise(resolve => updatePercent(getPawnTypeTotal(pawnStats)));
+
+        return await setTimeout(function () {
+            return new Promise(resolve => resolve(updatePercent(getPawnTypeTotal(pawnStats))));
         }, 200);
         // "location" swap (drag-and-drop):
 
@@ -4260,6 +4318,7 @@ module.exports = updatePawnStatus = async function (string, pawnID, newParentID)
                 };
             };
         };
+        return "updatePawnStatus: success!";
     };
 
     // await setTimeout(function () {

@@ -90,7 +90,7 @@ module.exports = compTurn = async function (computerBool, pawnType, adjacentSpac
 
                         if (goldSpaceArr.length > 1) { // TODO: check for errors if equal to "1"
 
-                            if (typeof moveEnemyPawn[0] == null || moveEnemyPawn[0] == null && goldSpaceArr.length == 1) {} else if (goldSpaceArr.length > 1) {
+                            if (typeof moveEnemyPawn[0] == null || moveEnemyPawn[0] == null && goldSpaceArr.length == 1) { } else if (goldSpaceArr.length > 1) {
                                 console.log("bestMove(goldSpaceArr):");
                                 moveEnemyPawn = bestMove(goldSpaceArr);
 
@@ -119,22 +119,22 @@ module.exports = compTurn = async function (computerBool, pawnType, adjacentSpac
             if (moveEnemyPawn[0] != null) {
 
                 // await setTimeout(() => {
-                    let passItem = await moveEnemyPawnFunc(moveEnemyPawn[0].homespace_idString, moveEnemyPawn[0].targetSpace_idString, updatePawnStatus, animateDeltas, moveInterval);
-                    loop++;
+                let passItem = await moveEnemyPawnFunc(moveEnemyPawn[0].homespace_idString, moveEnemyPawn[0].targetSpace_idString, updatePawnStatus, animateDeltas, moveInterval);
+                loop++;
 
-                    let thisFunc = async function (passItem) {
-                        // alert("thisFunc fires");
-                        //test func:
-                        myConsole(passItem);
-                    };
+                let thisFunc = async function (passItem) {
+                    // alert("thisFunc fires");
+                    //test func:
+                    myConsole(`passItem: ${passItem}`);
+                };
 
-                    await thisFunc(passItem);
-                    
+                await thisFunc(passItem);
+
                 // }, 700);
 
                 // await setTimeout(() => {
                 // requestAnimationFrame(
-                    // trigger the animation
+                // trigger the animation
                 // );
             };
             //////////////////////////////////////////////////////////////////////////

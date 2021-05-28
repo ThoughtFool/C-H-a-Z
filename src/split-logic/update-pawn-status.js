@@ -52,11 +52,11 @@ module.exports = updatePawnStatus = async function (string, pawnID, newParentID)
                 console.log(`after?`);
                 console.log(pawnStats[typeAfter]);
 
-
             };
         };
-        await setTimeout(function () {
-            return new Promise(resolve => updatePercent(getPawnTypeTotal(pawnStats)));
+
+        return await setTimeout(function () {
+            return new Promise(resolve => resolve(updatePercent(getPawnTypeTotal(pawnStats))));
         }, 200);
         // "location" swap (drag-and-drop):
 
@@ -108,6 +108,7 @@ module.exports = updatePawnStatus = async function (string, pawnID, newParentID)
                 };
             };
         };
+        return "updatePawnStatus: success!";
     };
 
     // await setTimeout(function () {

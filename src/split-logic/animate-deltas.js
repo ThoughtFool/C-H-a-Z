@@ -89,7 +89,7 @@ module.exports = animateDeltas = function (pawnID, beforeMoveRect, afterMoveRect
 
             // await setTimeout(() => {
             stepCounter++;
-            await animatePawn();
+            return await animatePawn();
             // await animatePawn(resolve);
             // }, 500);
 
@@ -100,12 +100,12 @@ module.exports = animateDeltas = function (pawnID, beforeMoveRect, afterMoveRect
 
         } else {
 
-            return "Done!!!";
+            return "animateDeltas>animatePawn: success!";
             // return resolve();
         };
     };
 
-    animatePawn();
+    return animatePawn();
     // animatePawn(resolve);
     /////////////////////////////////////////////////////////////////////////////
 };

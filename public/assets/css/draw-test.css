@@ -28,11 +28,6 @@
   width: 100vw;
 }
 
-.pawn {
-  /* transition: transform 300ms ease-in-out; */
-  animation: pawn-moves 0.4s ease;
-}
-
 .header > li {
   /* display: inline; */
   /* color: antiquewhite; */
@@ -68,22 +63,53 @@ li a:hover {
 } */
 
 .halo-glow {
-  /* width: 100%;
-  height: 100%; */
   animation: pulse 0.25s infinite;
 }
 
+.halo-drop {
+  background-color: rgba(174, 25, 211, 0.295);
+  animation: flash 0.25s infinite;
+  border-radius: 50%;
+}
+
+@keyframes flash {
+  from {
+    background: yellow;
+    box-shadow: 0 0 0 20px rgba(255, 0, 0, 0);
+  }
+  to {
+    background: default;
+    box-shadow: 0 0 0 0 rgba(229, 42, 253, 0.4);
+  }
+}
+
 @keyframes pulse {
-  0% {
+  /* 0% {
     background-color: #001f3f8e;
   }
   100% {
     background-color: #ff4136;
     transform: scale(1);
+  } */
+
+  0% {
+    box-shadow: 0 0 0 0 rgba(229, 42, 253, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 20px rgba(255, 0, 0, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 0, 0, 0);
+  }
+  70% {
+    box-shadow: 0 0 0 40px rgba(255, 0, 0, 0);
+  }
+  0% {
+    box-shadow: 0 0 0 0 rgba(229, 42, 253, 0.4);
   }
 }
 
-@keyframes pawnMoves {
+/* @keyframes pawnMoves {
   0% {
     opacity: 0;
     transform: translateY(20px);
@@ -93,7 +119,7 @@ li a:hover {
     opacity: 1;
     transform: translateY(0);
   }
-}
+} */
 
 .game-panel {
   display: flex;
@@ -480,10 +506,11 @@ p {
 .dyna-square-content {
   margin: auto;
   position: absolute;
-  width: auto;
+  width: 80%;
   height: 100%;
   text-align: center;
-  transition: background 0.2s ease-in-out;
+  transition: all 0.5s ease-in-out;
+  /* transition: background 0.5s ease-in-out; */
 }
 
 .pawn-shape {
@@ -496,18 +523,20 @@ p {
 }
 
 .holding {
-  background-color: #e6e2ff8f;
+  background-color: #6d58f82a;
   border: 3px solid #a522f181;
-  border-radius: 15px;
+  border-radius: 50%;
+  /* border-radius: 15px; */
   /* border-radius: calc(calc(var(--drone-btn) / 15) * 1%); */
-  height: 100.9%;
-  width: 100.9%;
+  height: 95%;
+  width: auto;
   /* transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1); */
   transition: 350ms ease-in-out;
 }
 
 .holding:active {
   transform: scale(80%);
+  margin: auto;
 }
 
 .available {
@@ -561,7 +590,7 @@ p {
 }
 
 .drone-icon:hover {
-  background-color: rgba(194, 194, 248, 0.863);
+  background-color: rgba(194, 194, 248, 0.719);
   box-shadow:
         /* middle */ 0 0 10px 2px #f0f,
     /* outer */ 0 0 14px 4px #0ff;

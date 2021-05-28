@@ -42,14 +42,14 @@ module.exports = randomPlace = function (userInputNum, howManyToPlace) {
                 pawnStats.pawnIdArray.human.push(randomContentID);
                 console.log(pawnStats.pawnIdArray.human);
                 createPawn(randomContentID, pawnStats.pawnCounter, "human");
-            
+
             } else {
                 randEnemy = Math.floor(Math.random() * 20 + 1);
                 if (randEnemy % 2 === 0) {
                     pawnStats.pawnIdArray.zombie.push(randomContentID);
                     console.log(pawnStats.pawnIdArray.zombie);
                     createPawn(randomContentID, pawnStats.pawnCounter, "zombie");
-                
+
                 } else {
                     pawnStats.pawnIdArray.cyborg.push(randomContentID);
                     console.log(pawnStats.pawnIdArray.cyborg);

@@ -56,12 +56,15 @@ module.exports = dragAndDrop = function () {
     document.addEventListener("drop", function (event) {
         event.preventDefault();
 
-        console.log("currentPawnHeld");
-        console.log(currentPawnHeld);
+        myConsole("currentPawnHeld");
+        myConsole(currentPawnHeld);
 
         if (currentPawnHeld != null) {
+            myConsole(`currentPawnHeld: ${currentPawnHeld}`);
+
             if (document.getElementById(currentPawnHeld).classList.contains("human-pawn")) {
-                console.log("currentPawnHeld = human-pawn");
+                myConsole(`event.target: ${event.target.id}`);
+                myConsole(`event.target: ${event.target.classList}`);
 
                 if (event.target.classList.contains("empty-space")) {
                     // var data = event.dataTransfer.setData("Text");
