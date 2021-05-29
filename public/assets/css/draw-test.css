@@ -63,19 +63,22 @@ li a:hover {
 } */
 
 .halo-glow {
-  animation: pulse 0.25s infinite;
+  animation: pulse 0.75s infinite;
 }
 
 .halo-drop {
   background-color: rgba(174, 25, 211, 0.295);
-  animation: flash 0.25s infinite;
-  border-radius: 50%;
+  animation: flash 1s infinite;
+  height: 100%;
+  width: 100%;
+  margin: auto;
+  border-radius: 15px;
 }
 
 @keyframes flash {
   from {
-    background: yellow;
-    box-shadow: 0 0 0 20px rgba(255, 0, 0, 0);
+    background: rgba(253, 86, 245, 0.527);
+    box-shadow: 0 0 0 20px rgba(174, 0, 255, 0.377);
   }
   to {
     background: default;
@@ -129,6 +132,7 @@ li a:hover {
   /* height: 100vh; */
   /* width: 100vh; */
   box-shadow: inset 0 0 10px #000000;
+  transition: ease-in-out;
 }
 
 .gameboard {
@@ -190,7 +194,7 @@ li a:hover {
   border: none;
   text-align: left;
   outline: none;
-  font-size: 1.5em;
+  font-size: 1vw;
   box-shadow: 5 5 5 #ddd;
   transition: 0.4s;
 }
@@ -211,7 +215,7 @@ li a:hover {
 }
 
 .percentage-panel {
-  height: 1em;
+  height: 2.5vw;
   width: 80%;
   display: flex;
   align-items: center;
@@ -225,7 +229,7 @@ li a:hover {
 }
 
 .progress-bar-row {
-  font-size: 1em;
+  font-size: 1vw;
   height: 80%;
   width: 100%;
   display: flex;
@@ -423,7 +427,7 @@ body {
 }
 
 p {
-  font-size: 1.5rem;
+  font-size: 1.25vw;
 }
 
 .btn {
@@ -470,7 +474,7 @@ p {
 
 #board-holder {
   margin: auto;
-  padding-top: 4em;
+  padding-top: 3vh;
   width: 90%;
   border-radius: 5px;
   position: relative;
@@ -484,8 +488,10 @@ p {
     rgb(121, 76, 243),
     rgb(64, 219, 240)
   );
-  border: 1.5px solid #000;
+  /* border: 1.5px solid #000; */
   border-radius: 15%;
+  padding: 1.5px;
+  transition: ease-in-out;
 }
 
 .dyna-square:after {
@@ -506,7 +512,7 @@ p {
 .dyna-square-content {
   margin: auto;
   position: absolute;
-  width: 80%;
+  width: 100%;
   height: 100%;
   text-align: center;
   transition: all 0.5s ease-in-out;
@@ -575,7 +581,7 @@ p {
   vertical-align: middle;
   line-height: 150%;
   padding-left: 15%;
-  font-size: 200%;
+  font-size: 0.75rem;
 }
 
 .drone-icon {
@@ -747,16 +753,19 @@ p {
   align-items: center;
 }
 
+input {
+  width: 80%;
+}
+
 .modal-content {
   /* font-size: 1rem; */
   width: 60vw;
   height: 60vh;
   padding: var(--health-font);
-  padding-top: 2rem;
+  padding-top: 1em;
   border-radius: 1rem;
   background-color: rgba(122, 14, 141, 0.555);
-  font-size: var(--health-font);
-  /* font-size: x-large; */
+  font-size: 2.5vw;
   text-align: right;
   justify-content: stretch;
   transition: ease-in-out;

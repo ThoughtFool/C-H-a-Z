@@ -1,161 +1,161 @@
-    <div class="main-wrapper">
-        <!-- modal pop-up: -->
-        <div class="bg-modal hide-modal" id="modal-outer">
-            <div class="modal-content" id="modal-inner">
-                <div>
-                    <p>
-                        Sorry! No snooze buttons here. You've got one job... save as many humans as you can from a fate
-                        worse
-                        than death. To begin your brief career as captain, select a room size.
-                    </p>
+<div class="main-wrapper">
+    <!-- modal pop-up: -->
+    <div class="bg-modal hide-modal" id="modal-outer">
+        <div class="modal-content" id="modal-inner">
+            <div>
+                <p>
+                    Sorry! No snooze buttons here. You've got one job... save as many humans as you can from a fate
+                    worse
+                    than death. To begin your brief career as captain, select a room size.
+                </p>
+            </div>
+            <!-- TODO: add btn here with id: submit-test-num -->
+            <!-- <div class="btn btn-success close-modal" id="close-btn">BEGIN...</div> -->
+            <div id="cryo-lab-screen">
+                <div id="btn-block">
+                    <!-- <input type="text" class="test-input" id="test-nums" style="display: block;"> -->
+                    <select id="test-nums" style="display: block;">
+                        <option value="0">Select a room size:</option>
+                        <option value="9">3 x 3</option>
+                        <option value="16">4 x 4</option>
+                        <option value="25">5 x 5</option>
+                        <option value="36">6 x 6</option>
+                        <option value="49">7 x 7</option>
+                        <option value="64">8 x 8</option>
+                        <option value="81">9 x 9</option>
+                        <option value="100">10 x 10</option>
+                        <option value="121">11 x 11</option>
+                        <option value="144">12 x 12</option>
+                        <option value="225">15 x 15</option>
+                        <option value="625">25 x 25</option>
+                    </select>
+                    <div class="btn btn-primary" id="submit-test-num" style="display: none;">START</div>
                 </div>
-                <!-- TODO: add btn here with id: submit-test-num -->
-                <!-- <div class="btn btn-success close-modal" id="close-btn">BEGIN...</div> -->
-                <div id="cryo-lab-screen">
-                    <div id="btn-block">
-                        <!-- <input type="text" class="test-input" id="test-nums" style="display: block;"> -->
-                        <select id="test-nums" style="display: block;">
-                            <option value="0">Select a room size:</option>
-                            <option value="9">3 x 3</option>
-                            <option value="16">4 x 4</option>
-                            <option value="25">5 x 5</option>
-                            <option value="36">6 x 6</option>
-                            <option value="49">7 x 7</option>
-                            <option value="64">8 x 8</option>
-                            <option value="81">9 x 9</option>
-                            <option value="100">10 x 10</option>
-                            <option value="121">11 x 11</option>
-                            <option value="144">12 x 12</option>
-                            <option value="225">15 x 15</option>
-                            <option value="625">25 x 25</option>
-                        </select>
-                        <div class="btn btn-primary" id="submit-test-num" style="display: none;">START</div>
-                    </div>
-                </div>
+            </div>
 
-                <!-- </div> -->
+            <!-- </div> -->
+        </div>
+    </div>
+
+    <div class="bg-modal hide-modal" id="modal-outer-2">
+        <div class="modal-content" id="modal-inner-2">
+            <div>
+                <p>
+                    I don't know how much you know or if you're even qualified to understand. So here goes
+                    nothing.
+                    Science has finally cured every disease that has ever plagued man. Yes, even death
+                    itself. But as you'll come to learn, there are worse things than death. We paid a huge price for
+                    our immortality. We gave up our very humanity.
+                    <br>
+                    <br>
+                    The cutting-edge technology that gave us nanites to heal our bodies from the inside out, also
+                    birthed to
+                    two new 'human-hybrids'. Those humans whose brains pushed the limits and those that were
+                    essentially
+                    brain-dead. You heard right, three kinda humans... Cyborgs, Humans, and Zombies, oh my!
+                    <br>
+                    Humanity is for humans!
+                </p>
+                <div class="btn btn-success" id="create-pawn" style="display: none;">Reclaim Humanity!</div>
             </div>
         </div>
+    </div>
 
-        <div class="bg-modal hide-modal" id="modal-outer-2">
-            <div class="modal-content" id="modal-inner-2">
-                <div>
-                    <p>
-                        I don't know how much you know or if you're even qualified to understand. So here goes
-                        nothing.
-                        Science has finally cured every disease that has ever plagued man. Yes, even death
-                        itself. But as you'll come to learn, there are worse things than death. We paid a huge price for
-                        our immortality. We gave up our very humanity.
-                        <br>
-                        <br>
-                        The cutting-edge technology that gave us nanites to heal our bodies from the inside out, also
-                        birthed to
-                        two new 'human-hybrids'. Those humans whose brains pushed the limits and those that were
-                        essentially
-                        brain-dead. You heard right, three kinda humans... Cyborgs, Humans, and Zombies, oh my!
-                        <br>
-                        Humanity is for humans!
-                    </p>
-                    <div class="btn btn-success" id="create-pawn" style="display: none;">Reclaim Humanity!</div>
-                </div>
-            </div>
-        </div>
+    <!-- player game display -->
+    <div class="game-panel">
+        <div class="gameboard">
+            <!-- insert dynamically-generated spaces -->
+            <div id="board-holder">
 
-        <!-- player game display -->
-        <div class="game-panel">
-            <div class="gameboard">
-                <!-- insert dynamically-generated spaces -->
-                <div id="board-holder">
+                <!-- game info / call to action: -->
+                <div class="container" id="game-cont" style="display: block;">
+                    <div id="game-info">
+                        <p class="comm-screen">
+                            Welcome to the land of the living. Your cryo-sleep has ended prematurely, due to the
+                            untimely departure of a more qualified crew. Congratulations! If you're
+                            reading this, I hate to mix metaphors but things have really hit the fan and the human
+                            race has set sail down sh*t's
+                            creek and it looks like I'm dead, along with the rest of my senior officers. So, back-up
+                            to my back-up, I guess you're the captain now. Good luck!
+                            <br>
+                        </p>
 
-                    <!-- game info / call to action: -->
-                    <div class="container" id="game-cont" style="display: block;">
-                        <div id="game-info">
-                            <p class="comm-screen">
-                                Welcome to the land of the living. Your cryo-sleep has ended prematurely, due to the
-                                untimely departure of a more qualified crew. Congratulations! If you're
-                                reading this, I hate to mix metaphors but things have really hit the fan and the human
-                                race has set sail down sh*t's
-                                creek and it looks like I'm dead, along with the rest of my senior officers. So, back-up
-                                to my back-up, I guess you're the captain now. Good luck!
-                                <br>
-                            </p>
-
-                            <div class="btn close-modal" id="snooze-btn">or sleep in?</div>
-                        </div>
+                        <div class="btn close-modal" id="snooze-btn">or sleep in?</div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- player control panel -->
-        <div class="control-panel">
-            <div class="drone-drops">
-                <!-- insert draggable drone drop icons/buttons -->
-                <div class="drone-icon" id="bio-nanite-drone">
-                    <div class="drone" id="bio-nanite-drone-btn" data-status="drone"></div>
-                </div>
-
-                <div class="drone-icon" id="bio-hazard-drone">
-                    <div class="drone" id="bio-hazard-drone-btn" data-status="drone"></div>
-                </div>
-
-                <div class="drone-icon" id="bio-flare-drone">
-                    <div class="drone" id="bio-flare-drone-btn" data-status="drone"></div>
-                </div>
-
-                <!-- <div class="btn btn-danger" id="end-round" style="display: none;">endRound func</div> -->
-                <div class="drone-icon" id="end-round" style="display: none;">
-                    <div class="drone" id="end-round-btn" data-status="end-turn"></div>
-                </div>
+    <!-- player control panel -->
+    <div class="control-panel">
+        <div class="drone-drops">
+            <!-- insert draggable drone drop icons/buttons -->
+            <div class="drone-icon" id="bio-nanite-drone">
+                <div class="drone" id="bio-nanite-drone-btn" data-status="drone"></div>
             </div>
-            <div class="game-menu">
-                <!-- insert collapsible menu -->
-                <!-- <button class="accordion"><i class="fas fa-thermometer-half"></i> LIFEFORM STATS <i -->
-                <!-- class="fas fa-battery-quarter"></i></button> -->
-                <div class="score">
-                    Wins: <span id="wins">0</span>
-                    Losses: <span id="losses">0</span>
+
+            <div class="drone-icon" id="bio-hazard-drone">
+                <div class="drone" id="bio-hazard-drone-btn" data-status="drone"></div>
+            </div>
+
+            <div class="drone-icon" id="bio-flare-drone">
+                <div class="drone" id="bio-flare-drone-btn" data-status="drone"></div>
+            </div>
+
+            <!-- <div class="btn btn-danger" id="end-round" style="display: none;">endRound func</div> -->
+            <div class="drone-icon" id="end-round" style="display: none;">
+                <div class="drone" id="end-round-btn" data-status="end-turn"></div>
+            </div>
+        </div>
+        <div class="game-menu">
+            <!-- insert collapsible menu -->
+            <!-- <button class="accordion"><i class="fas fa-thermometer-half"></i> LIFEFORM STATS <i -->
+            <!-- class="fas fa-battery-quarter"></i></button> -->
+            <div class="score">
+                Wins: <span id="wins">0</span>
+                Losses: <span id="losses">0</span>
+            </div>
+            <div class="panel-null" id="stats-panel">
+                <!-- percentage of each lifeform (progress bars) -->
+                <div class="percentage-panel">
+                    <div class="progress-bar-row">
+                        <div class="icon" id="cyb-icon">C</div>
+                        <div class="progress-container">
+                            <div class="percent-background">
+                                <div class="progress-bar" id="cyborg-bar">CYBORGS</div>
+                            </div>
+                        </div>
+                        <div class="percent"><span id="cyborg-percentage"></span>%</div>
+                    </div>
                 </div>
-                <div class="panel-null" id="stats-panel">
-                    <!-- percentage of each lifeform (progress bars) -->
-                    <div class="percentage-panel">
-                        <div class="progress-bar-row">
-                            <div class="icon" id="cyb-icon">C</div>
-                            <div class="progress-container">
-                                <div class="percent-background">
-                                    <div class="progress-bar" id="cyborg-bar">CYBORGS</div>
-                                </div>
-                            </div>
-                            <div class="percent"><span id="cyborg-percentage"></span>%</div>
-                        </div>
-                    </div>
 
-                    <div class="percentage-panel">
-                        <div class="progress-bar-row">
-                            <div class="icon" id="hum-icon">H</div>
-                            <div class="progress-container">
-                                <div class="percent-background">
-                                    <div class="progress-bar" id="human-bar">HUMANS</div>
-                                </div>
+                <div class="percentage-panel">
+                    <div class="progress-bar-row">
+                        <div class="icon" id="hum-icon">H</div>
+                        <div class="progress-container">
+                            <div class="percent-background">
+                                <div class="progress-bar" id="human-bar">HUMANS</div>
                             </div>
-                            <div class="percent"><span id="human-percentage"></span>%</div>
                         </div>
+                        <div class="percent"><span id="human-percentage"></span>%</div>
                     </div>
+                </div>
 
-                    <div class="percentage-panel">
-                        <div class="progress-bar-row">
-                            <div class="icon" id="zom-icon">Z</div>
-                            <div class="progress-container">
-                                <div class="percent-background">
-                                    <div class="progress-bar" id="zombie-bar">ZOMBIES</div>
-                                </div>
+                <div class="percentage-panel">
+                    <div class="progress-bar-row">
+                        <div class="icon" id="zom-icon">Z</div>
+                        <div class="progress-container">
+                            <div class="percent-background">
+                                <div class="progress-bar" id="zombie-bar">ZOMBIES</div>
                             </div>
-                            <div class="percent"><span id="zombie-percentage"></span>%</div>
                         </div>
+                        <div class="percent"><span id="zombie-percentage"></span>%</div>
                     </div>
+                </div>
 
-                    <!-- personal bio stats (card?) -->
-                    <!-- <div class="user-stats-panel">
+                <!-- personal bio stats (card?) -->
+                <!-- <div class="user-stats-panel">
                         <div class="user-avatar-background">
                             <div class="user-avatar">AGENT 00003</div>
                         </div>
@@ -165,53 +165,53 @@
                         et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
                         ut
                         aliquip ex ea commodo consequat.</p> -->
-                </div>
+            </div>
 
-                <button class="accordion"><i class="fas fa-toolbox"></i> JUST-IN-CASE</button>
-                <div class="panel" id="option-panel">
-                    <p>
-                        <em>INSTRUCTION MANUAL</em>
-                        <hr>
-                        <ul class="icon-info">
-                            <li>
-                                <img src="../assets/images/cyborg-pawn.png" alt="cyborg pawn">
-                                <p>Cyborgs' health range from 80 - 110</p>
+            <button class="accordion"><i class="fas fa-toolbox"></i> JUST-IN-CASE</button>
+            <div class="panel" id="option-panel">
+                <p>
+                    <em>INSTRUCTION MANUAL</em>
+                    <hr>
+                <ul class="icon-info">
+                    <li>
+                        <img src="../assets/images/cyborg-pawn.png" alt="cyborg pawn">
+                        <p>Cyborgs' health range from 80 - 110</p>
 
-                            </li>
-                            <li>
-                                <img src="../assets/images/human-pawn.png" alt="human pawn">
-                                <p>Humans' health range from 20 - 80</p>
+                    </li>
+                    <li>
+                        <img src="../assets/images/human-pawn.png" alt="human pawn">
+                        <p>Humans' health range from 20 - 80</p>
 
-                            </li>
-                            <li>
-                                <img src="../assets/images/zombie-pawn.png" alt="zombie pawn">
-                                <p>Zombies' health range: -110 - 20</p>
+                    </li>
+                    <li>
+                        <img src="../assets/images/zombie-pawn.png" alt="zombie pawn">
+                        <p>Zombies' health range: -110 - 20</p>
 
-                            </li>
-                        </ul>
+                    </li>
+                </ul>
 
-                    </p>
-                </div>
+                </p>
+            </div>
 
-                <button class="accordion"><i class="far fa-comment-dots"></i> MESSAGE
-                    BOARD</button>
-                <div class="panel" id="message-panel">
-                    <!-- <div class="btn btn-default" id="update-status" style="display: block;">GET STATUS</div> -->
-                    <!-- <div class="btn btn-primary" id="submit-test-num" style="display: block;">START</div> -->
-                    <!-- <input type="text" class="test-input" id="test-nums" style="display: block;"> -->
-                    <!-- <div class="btn btn-danger" id="end-round" style="display: none;">endRound func</div> -->
-                    <!-- <div class="btn btn-success" id="create-pawn" style="display: none;">Create Pawn</div> -->
-                    <!-- <p>
+            <button class="accordion"><i class="far fa-comment-dots"></i> MESSAGE
+                BOARD</button>
+            <div class="panel" id="message-panel">
+                <!-- <div class="btn btn-default" id="update-status" style="display: block;">GET STATUS</div> -->
+                <!-- <div class="btn btn-primary" id="submit-test-num" style="display: block;">START</div> -->
+                <!-- <input type="text" class="test-input" id="test-nums" style="display: block;"> -->
+                <!-- <div class="btn btn-danger" id="end-round" style="display: none;">endRound func</div> -->
+                <!-- <div class="btn btn-success" id="create-pawn" style="display: none;">Create Pawn</div> -->
+                <!-- <p>
                         <em>...AWAITING TRANSMISSION...</em>
                         <hr>
                         From time to time, the signal will be strong enough to receive and send broadcasts to others
                         like you.
                     </p> -->
-                    <%- include ../partials/chat-area.ejs %>
+                <%- include ../partials/chat-area.ejs %>
 
-                </div>
             </div>
         </div>
-
     </div>
-    <%- include ../partials/game-script-tag.ejs %>
+
+</div>
+<%- include ../partials/game-script-tag.ejs %>

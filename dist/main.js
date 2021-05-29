@@ -3612,16 +3612,18 @@ module.exports = moveEnemyPawnFunc = async function (oldSpaceID, newSpaceID, upd
             .then((successMessage) => promiseKeeper(moveEnemyPawnElem, [successMessage]))
             .then((successMessage) => promiseKeeper(animateDeltas, [pawnID, beforeMove, afterMove, newEnemySpace, successMessage]))
             .then((successMessage) => promiseKeeper(updatePawnStatus, [location, pawnID, newParentDiv_ID, successMessage]))
-            .then((successMessage) => promiseKeeper(addFX, [newParentDiv_ID, "halo-drop", successMessage]))
-            .then((successMessage) => promiseKeeper(removeFX, [currentPawnHeld, "halo-glow", successMessage]))
-            .then((successMessage) => promiseKeeper(removeFX, [newParentDiv_ID, "halo-drop", successMessage]))
+        // .then((successMessage) => promiseKeeper(removeFX, [currentPawnHeld, "halo-glow", successMessage]))
+        // .then((successMessage) => promiseKeeper(removeFX, [newParentDiv_ID, "halo-drop", successMessage]))
     };
 
     return promiseKeeper(addFX, [currentPawnHeld, "halo-glow", "promise-chain"])
 
+        .then((successMessage) => promiseKeeper(addFX, [newParentDiv_ID, "halo-drop", successMessage]))
         .then((successMessage) => {
             myConsole(`successMessage before delay: ${successMessage}`);
-            return delay(1250, successMessage);
+            return delay(1250, successMessage)
+                .then((successMessage) => promiseKeeper(removeFX, [currentPawnHeld, "halo-glow", successMessage]))
+                .then((successMessage) => promiseKeeper(removeFX, [newParentDiv_ID, "halo-drop", successMessage]));
             // return delayPromise(1250, successMessage);
         });
 
