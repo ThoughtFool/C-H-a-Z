@@ -2,7 +2,7 @@
 
 #### Cyborgs, Humans, and Zombies
 
-![hello-chaz-name-tag](public\assets\images\chaz-name-tag.png)
+![hello-chaz-name-tag](public/assets/images/chaz-name-tag.png)
 
 ![visitors](https://visitor-badge.glitch.me/badge?page_id=page.id)
 
@@ -15,7 +15,7 @@ Zombies do the opposite. They will attack any pod near them, dealing damage unti
 
 ### Game Play
 
-![hello-chaz-game-play](public\assets\images\hello-chaz-gameplay.gif)
+![hello-chaz-game-play](public/assets/images/hello-chaz-gameplay.gif)
 https://hello-chaz.herokuapp.com/
 
 ### Technology & Tools
