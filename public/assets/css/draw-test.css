@@ -87,14 +87,6 @@ li a:hover {
 }
 
 @keyframes pulse {
-  /* 0% {
-    background-color: #001f3f8e;
-  }
-  100% {
-    background-color: #ff4136;
-    transform: scale(1);
-  } */
-
   0% {
     box-shadow: 0 0 0 0 rgba(229, 42, 253, 0.4);
   }
