@@ -16,7 +16,7 @@ Zombies do the opposite. They will attack any pod near them, dealing damage unti
 ### Game Play
 
 ![hello-chaz-game-play](public/assets/images/hello-chaz-gameplay.gif)
-https://hello-chaz.herokuapp.com/
+https://hello-chaz.herokuapp.com/users/enlist
 
 ### Technology & Tools
 
