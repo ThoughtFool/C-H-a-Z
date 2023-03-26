@@ -13,14 +13,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ThoughtFool/Z-H-C.git"
+    "url": "git+https://github.com/ThoughtFool/C-H-a-Z.git"
   },
   "author": "Heyou ThoughtFool",
   "license": "GPL-3.0-or-later",
   "bugs": {
-    "url": "https://github.com/ThoughtFool/Z-H-C/issues"
+    "url": "https://github.com/ThoughtFool/C-H-a-Z/issues"
   },
-  "homepage": "https://github.com/ThoughtFool/Z-H-C#readme",
+  "homepage": "https://github.com/ThoughtFool/C-H-a-Z#readme",
   "dependencies": {
     "bcrypt": "^5.0.1",
     "ejs": "^2.7.1",
